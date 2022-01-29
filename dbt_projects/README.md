@@ -10,6 +10,8 @@ To add a new dbt project, use `git submodule add`.
 git submodule add https://github.com/dbt-labs/dbt-starter-project dbt_projects/dbt-starter-project
 ```
 
+Then update the `dbt_projects/profiles.yml` file with a new profile for the project.
+
 ### Syncing changes from the submodule's source
 
 If a submodule's source changes, you need to manually update the submodule to use the new commits.

@@ -9,5 +9,5 @@ Open this repository in a Github Codespace. (Click the green `Code` button in th
 #### Testing
 
 ```
-pytest
+poetry run pytest
 ```
