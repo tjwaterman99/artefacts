@@ -9,13 +9,22 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  PGHOST: localhost
+  PGPASSWORD: password
+  PGUSER: artefacts
+  PGDATABASE: artefacts
+  DBT_PROFILES_DIR: ./dbt_projects
 
 jobs:
   build:
     strategy:
       matrix:
         python_version: ["3.7", "3.8", "3.9"]
+        dbt_project_dir: ['./dbt_projects/jaffle_shop']
 
+    env:
+      DBT_PROJECT_DIR: "${{ matrix.dbt_project_dir }}"
 
     runs-on: ubuntu-latest
 
@@ -26,12 +35,7 @@ jobs:
       with:
         python-version: "${{ matrix.python_version }}"
     - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install poetry
-        poetry install
-        git submodule update --init --recursive
-
+      run: bin/postCreateCommand.sh
     - name: Test with pytest
       run: |
         poetry run pytest
