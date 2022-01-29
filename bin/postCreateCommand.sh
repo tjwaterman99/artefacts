@@ -14,5 +14,5 @@ poetry install
 git submodule update --init --recursive
 
 cmd="poetry run dbt build --project-dir $DBT_PROJECT_DIR"
-echo cmd
+echo $cmd
 poetry run dbt build --project-dir $DBT_PROJECT_DIR
