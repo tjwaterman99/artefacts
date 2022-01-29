@@ -1,4 +1,3 @@
 [submodule "dbt_projects/jaffle_shop"]
 	path = dbt_projects/jaffle_shop
 	url = https://github.com/dbt-labs/jaffle_shop.git
-    branch = 3fbdf16fff8c2a3fe91b6b443da19e85e7f43aa9
