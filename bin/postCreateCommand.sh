@@ -5,3 +5,4 @@
 
 pipx install poetry
 poetry install
+git submodule update --init --recursive
