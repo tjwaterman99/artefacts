@@ -11,3 +11,11 @@ Open this repository in a Github Codespace. (Click the green `Code` button in th
 ```
 poetry run pytest
 ```
+
+By default, pytest will test against the dbt project located at `DBT_PROJECT_DIR`. To test against a different dbt project, update that environment variable and build the project.
+
+```
+export DBT_PROJECT_DIR=$PWD/dbt_projects/dbt-starter-project
+poetry run dbt build --project-dir $DBT_PROJECT_DIR
+poetry run pytest
+```
