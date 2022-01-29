@@ -14,8 +14,8 @@ env:
   PGPASSWORD: password
   PGUSER: artefacts
   PGDATABASE: artefacts
-  DBT_PROFILES_DIR: $PWD/dbt_projects
-  DBT_PROJECT_DIR: $PWD/dbt_projects/jaffle_shop
+  DBT_PROFILES_DIR: ./dbt_projects
+  DBT_PROJECT_DIR: ./dbt_projects/jaffle_shop
 
 jobs:
   build:
