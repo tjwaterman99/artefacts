@@ -2,34 +2,33 @@ import os
 import json
 import re
 import pydantic
-from typing import ForwardRef
+import typing
 
 import artefacts.state
-import artefacts.config
+from artefacts.config import Config
 
 
-Metadata = ForwardRef('Metadata')
+conf = Config()
+Metadata = typing.ForwardRef('Metadata')
 
 
 class Artifact:
-    
+
     @classmethod
-    def load(cls):
-        return artefacts.state.get_or_set(cls.name, cls._setup())
+    def path(cls):
+        return os.path.join(conf.dbt_target_dir, cls.name() + '.json')
 
     @classmethod
     def name(cls):
         return re.sub(r'(?<!^)(?=[A-Z])', '_', cls.__name__).lower()
 
     @classmethod
-    def _setup(cls):
-        conf = artefacts.state.get_or_set('config', artefacts.config.Config())
-        artifact_path = os.path.join(conf.dbt_target_dir, cls.name() + '.json')
-
-        with open(artifact_path, 'r') as artifact_fh:
-            raw_artifact = json.load(artifact_fh)
-        
-        return artefacts.state.set(cls.name(), cls.parse_obj(raw_artifact))    
+    def load(cls):
+        if not artefacts.state.exists(cls.name()):
+            with open(cls.path(), 'r') as artifact_fh:
+                raw_artifact = json.load(artifact_fh)
+            artefacts.state.set(cls.name(), cls.parse_obj(raw_artifact))              
+        return artefacts.state.get(cls.name())  
 
 
 # TODO: mixin with convenience methods for accessing the `state` of an

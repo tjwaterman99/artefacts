@@ -4,12 +4,6 @@ need to perform multiple loads or parsing.
 """
 
 
-manifest = None
-run_results = None
-catalog = None
-sources = None
-
-
 def get(key):
     return globals().get(key)
 
@@ -17,6 +11,10 @@ def get(key):
 def set(key, value):
     globals()[key] = value
     return globals()[key]
+
+
+def exists(key):
+    return key in globals()
 
 
 def get_or_set(key, value):
