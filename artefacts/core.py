@@ -1,13 +1,35 @@
+import os
 import json
+import re
 import pydantic
+from typing import ForwardRef
 
 import artefacts.state
 import artefacts.config
 
 
-# TODO: abstract base model with loading functionality
-class Artifact():
-    pass
+Metadata = ForwardRef('Metadata')
+
+
+class Artifact:
+    
+    @classmethod
+    def load(cls):
+        return artefacts.state.get_or_set(cls.name, cls._setup())
+
+    @classmethod
+    def name(cls):
+        return re.sub(r'(?<!^)(?=[A-Z])', '_', cls.__name__).lower()
+
+    @classmethod
+    def _setup(cls):
+        conf = artefacts.state.get_or_set('config', artefacts.config.Config())
+        artifact_path = os.path.join(conf.dbt_target_dir, cls.name() + '.json')
+
+        with open(artifact_path, 'r') as artifact_fh:
+            raw_artifact = json.load(artifact_fh)
+        
+        return artefacts.state.set(cls.name(), cls.parse_obj(raw_artifact))    
 
 
 # TODO: mixin with convenience methods for accessing the `state` of an
@@ -16,20 +38,22 @@ class ArtifactReader():
     pass
 
 
-class Manifest(pydantic.BaseModel):
+class Manifest(Artifact, pydantic.BaseModel):
+    metadata: Metadata
 
-    metadata: dict
 
-    @classmethod
-    def load(cls):
-        return artefacts.state.get_or_set('manifest', cls._setup())
+class RunResults(Artifact, pydantic.BaseModel):
+    metadata: Metadata
 
-    @classmethod
-    def _setup(cls):
-        conf = artefacts.state.get_or_set('config', artefacts.config.Config())
-        
-        with open(conf.manifest_path, 'r') as manifest_fh:
-            raw_manifest = json.load(manifest_fh)
-        
-        return artefacts.state.set('manifest', cls.parse_obj(raw_manifest))
 
+class Catalog(Artifact, pydantic.BaseModel):
+    metadata: Metadata
+
+
+class Metadata(pydantic.BaseModel):
+    dbt_schema_version: str
+
+
+RunResults.update_forward_refs()
+Manifest.update_forward_refs()
+Catalog.update_forward_refs()
