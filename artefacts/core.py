@@ -12,7 +12,9 @@ conf = Config()
 Metadata = typing.ForwardRef('Metadata')
 
 
-class Artifact:
+class Artifact(pydantic.BaseModel):
+
+    metadata: Metadata
 
     @classmethod
     def path(cls):
@@ -37,20 +39,22 @@ class ArtifactReader():
     pass
 
 
-class Manifest(Artifact, pydantic.BaseModel):
-    metadata: Metadata
+class Manifest(Artifact):
+    pass
 
 
-class RunResults(Artifact, pydantic.BaseModel):
-    metadata: Metadata
+class RunResults(Artifact):
+    pass
 
 
-class Catalog(Artifact, pydantic.BaseModel):
-    metadata: Metadata
+class Catalog(Artifact):
+    pass
 
 
 class Metadata(pydantic.BaseModel):
     dbt_schema_version: str
+    dbt_version: str
+    generated_at: str
 
 
 RunResults.update_forward_refs()
