@@ -13,6 +13,11 @@ from artefacts.config import conf
 
 Metadata = typing.ForwardRef('Metadata')
 ManifestNode = typing.ForwardRef('ManifestNode')
+ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
+ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
+ManifestDocsNode = typing.ForwardRef('ManifestDocsNode')
+ManifestExposureNode = typing.ForwardRef('ManifestExposureNode')
+ManifestMetricNode = typing.ForwardRef('ManifestMetricNode')
 RunResultNode = typing.ForwardRef('RunResultNode')
 CatalogNode = typing.ForwardRef('CatalogNode')
 CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
@@ -94,11 +99,11 @@ class ArtifactNodeReader(ArtifactReader):
 class Manifest(Artifact, pydantic.BaseModel):
     metadata: Metadata
     nodes: typing.Dict[str, ManifestNode]
-    sources: dict
-    macros: dict
-    docs: dict
-    exposures: dict
-    metrics: dict
+    sources: typing.Dict[str, ManifestSourceNode]
+    macros: typing.Dict[str, ManifestMacroNode]
+    docs: typing.Dict[str, ManifestDocsNode]
+    exposures: typing.Dict[str, ManifestExposureNode]
+    metrics: typing.Dict[str, ManifestMetricNode]
     selectors: dict
     disabled: typing.Union[dict, None]
     parent_map: typing.Union[dict, None]
@@ -203,6 +208,129 @@ class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
             'db_schema': 'schema',
         }
 
+
+class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
+    fqn: typing.List[str]
+    database: typing.Union[None, str]
+    db_schema: str
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    source_name: str
+    source_description: str
+    loader: str
+    identifier: str
+    resource_type: str
+    quoting: typing.Union[dict, None]  # TODO
+    loaded_at_field: typing.Union[None, str]
+    freshness: typing.Union[None, dict]  # TODO
+    external: typing.Union[None, dict]  # TODO
+    description: typing.Union[None, str]
+    columns: typing.Union[None, dict]  # TODO
+    meta: typing.Union[dict]
+    source_meta: typing.Union[dict]
+    tags: typing.Union[typing.List[str]]
+    config: typing.Union[dict]  # TODO
+    patch_path: typing.Union[str, None]
+    unrendered_config: typing.Union[str, None]
+    relation_name: typing.Union[str, None]
+    created_at: typing.Union[None, float]
+
+    class Config:
+        fields = {
+            'db_schema': 'schema',
+        }
+
+
+class ManifestMacroNode(pydantic.BaseModel):
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    macro_sql: str
+    resource_type: str
+    tags: typing.Union[None, typing.List[str]]
+    patch_path: typing.Union[None, str]
+    created_at: typing.Union[None, float]
+    description: typing.Union[None, str]
+    meta: typing.Union[None, dict]
+    docs: typing.Union[None, dict]  # TODO
+    arguments: typing.Union[None, typing.List[typing.Dict]]  # TODO
+    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]  # TODO
+
+
+class ManifestDocsNode(pydantic.BaseModel):
+   unique_id: str
+   package_name: str
+   root_path: str
+   path: str
+   original_filepath: typing.Union[str, None]
+   name: str
+   block_contents: str
+
+
+class ManifestExposureNode(pydantic.BaseModel):
+    fqn: str
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    node_type: str
+    owner: str
+    resource_type: typing.Union[str, None]
+    description: typing.Union[str, None]
+    maturity: typing.Union[str, None]
+    meta: typing.Union[dict, None]
+    tags: typing.Union[typing.List[str], None]
+    url: typing.Union[str, None]
+    refs: typing.Union[typing.List[list], None]
+    sources: typing.Union[typing.List[list], None]
+    created_at: typing.Union[float, None]
+    depends_on: typing.Union[typing.Dict[str, list]]  # TODO
+
+    class Config:
+        fields = {
+            'db_schema': 'schema',
+            'node_type': 'type'
+        }
+
+
+class ManifestMetricNode(pydantic.BaseModel):
+    fqn: str
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    model: str
+    name: str
+    description: str
+    label: str
+    node_type: str
+    filters: typing.List[dict]  # TODO
+    time_grains: typing.List[str]
+    dimensions: typing.List[str]
+    sql: typing.Union[str, None]
+    timestamp: typing.Union[str, None]
+    resource_type: typing.Union[str, None]
+    meta: typing.Union[dict, None]
+    tags: typing.Union[list, None]
+    sources: typing.Union[typing.List[str], None]
+    refs: typing.Union[typing.List[str], None]
+    created_at: typing.Union[float, None]
+    depends_on: typing.Union[dict, None]  # TODO
+
+    class Config:
+        fields = {
+            'node_type': 'type'
+        }
 
 class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
     metadata: CatalogNodeMetadata
