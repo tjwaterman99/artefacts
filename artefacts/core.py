@@ -86,7 +86,7 @@ class Manifest(Artifact, pydantic.BaseModel):
 
 class RunResults(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    results: list[RunResultNode]
+    results: typing.List[RunResultNode]
     elapsed_time: float
     args: typing.Union[dict, None]
 
@@ -95,12 +95,12 @@ class Catalog(Artifact, pydantic.BaseModel):
     metadata: Metadata
     nodes: typing.Dict[str, dict]
     sources: typing.Dict[str, dict]
-    errors: typing.Union[list[str], None]
+    errors: typing.Union[typing.List[str], None]
 
 
 class Sources(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    results: list[dict]
+    results: typing.List[dict]
     elapsed_time: float
 
 
@@ -132,7 +132,7 @@ class Metadata(pydantic.BaseModel):
 
 class RunResultNode(ArtifactReader, pydantic.BaseModel):
     status: str
-    timing: list[dict]
+    timing: typing.List[dict]
     thread_id: str
     execution_time: float
     adapter_response: dict
@@ -150,7 +150,7 @@ class ManifestNode(ArtifactReader, pydantic.BaseModel):
     compiled: typing.Union[str, None]
     database: typing.Union[str, None]
     db_schema: str
-    fqn: list[str]
+    fqn: typing.List[str]
     unique_id: str
     package_name: str
     root_path: str
