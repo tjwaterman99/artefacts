@@ -48,6 +48,10 @@ class Catalog(Artifact, pydantic.BaseModel):
     metadata: Metadata
 
 
+class Sources(Artifact, pydantic.BaseModel):
+    metadata: Metadata
+
+
 class Metadata(pydantic.BaseModel):
     dbt_schema_version: str
     dbt_version: str
@@ -57,3 +61,4 @@ class Metadata(pydantic.BaseModel):
 RunResults.update_forward_refs()
 Manifest.update_forward_refs()
 Catalog.update_forward_refs()
+Sources.update_forward_refs()

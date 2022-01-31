@@ -15,3 +15,4 @@ git submodule update --init --recursive
 
 poetry run dbt build --project-dir $DBT_PROJECT_DIR
 poetry run dbt docs generate --project-dir $DBT_PROJECT_DIR
+poetry run dbt source freshness --project-dir $DBT_PROJECT_DIR
