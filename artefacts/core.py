@@ -14,6 +14,10 @@ from artefacts.config import conf
 Metadata = typing.ForwardRef('Metadata')
 ManifestNode = typing.ForwardRef('ManifestNode')
 RunResultNode = typing.ForwardRef('RunResultNode')
+CatalogNode = typing.ForwardRef('CatalogNode')
+CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
+CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
+CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
 
 
 class Artifact:
@@ -93,8 +97,8 @@ class RunResults(Artifact, pydantic.BaseModel):
 
 class Catalog(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    nodes: typing.Dict[str, dict]
-    sources: typing.Dict[str, dict]
+    nodes: typing.Dict[str, CatalogNode]
+    sources: typing.Dict[str, CatalogNode]
     errors: typing.Union[typing.List[str], None]
 
 
@@ -167,7 +171,50 @@ class ManifestNode(ArtifactReader, pydantic.BaseModel):
         }
 
 
+class CatalogNode(ArtifactReader, pydantic.BaseModel):
+    metadata: CatalogNodeMetadata
+    columns: typing.Dict[str, CatalogNodeColumn]
+    stats: typing.Dict[str, CatalogNodeStats]
+    unique_id: str
+
+
+class CatalogNodeMetadata(pydantic.BaseModel):
+    node_type: str
+    db_schema: str
+    name: str
+    database: typing.Union[str, None]
+    comment: typing.Union[str, None]
+    owner: typing.Union[str, None]
+
+    class Config:
+        fields = {
+            'db_schema': 'schema',
+            'node_type': 'type'
+        }
+
+
+class CatalogNodeColumn(pydantic.BaseModel):
+    node_type: str
+    index: int
+    name: str
+    comment: typing.Union[str, None]
+
+    class Config:
+        fields = {
+            'node_type': 'type'
+        }
+
+
+class CatalogNodeStats(pydantic.BaseModel):
+    id: str
+    label: str
+    value: typing.Union[str, None]
+    include: bool
+    description: typing.Union[str, None]
+
+
 RunResults.update_forward_refs()
 Manifest.update_forward_refs()
 Catalog.update_forward_refs()
 Sources.update_forward_refs()
+CatalogNode.update_forward_refs()
