@@ -18,6 +18,8 @@ CatalogNode = typing.ForwardRef('CatalogNode')
 CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
 CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
 CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
+SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
+ResultTiming = typing.ForwardRef('ResultTiming')
 
 
 class Artifact:
@@ -72,6 +74,21 @@ class ArtifactReader:
                 raise AttributeError(f"Invalid artifact name: {artifact_name}")
             
             return artifact.load()
+
+
+class ArtifactNodeReader(ArtifactReader):
+    
+    @property
+    def manifest(self):
+        return self.manifest_artifact.nodes.get(self.unique_id)
+
+    @property
+    def catalog(self):
+        return self.catalog_artifact.nodes.get(self.unique_id)
+
+    @property
+    def run_results(self):
+        return [r for r in self.run_results_artifact.results if r.unique_id == self.unique_id]
 
 
 class Manifest(Artifact, pydantic.BaseModel):
@@ -134,9 +151,29 @@ class Metadata(pydantic.BaseModel):
         return packaging.version.Version(self.dbt_version_raw)
 
 
-class RunResultNode(ArtifactReader, pydantic.BaseModel):
+class TimingResult(pydantic.BaseModel):
+    name: str
+    started_at: typing.Union[None, datetime.datetime]
+    completed_at: typing.Union[None, datetime.datetime]
+
+
+class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
+    unique_id: str
     status: str
-    timing: typing.List[dict]
+    error: typing.Union[None, str]
+    max_loaded_at: typing.Union[None, str]
+    snapshotted_at: typing.Union[None, str]
+    max_loaded_at_time_ago_in_s: typing.Union[None, float]
+    criteria: dict  # TODO
+    adapter_response: dict
+    timing: typing.List[TimingResult]
+    thread_id: typing.Union[None, str]
+    execution_time: typing.Union[None, float]
+
+
+class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
+    status: str
+    timing: typing.List[TimingResult]
     thread_id: str
     execution_time: float
     adapter_response: dict
@@ -144,12 +181,8 @@ class RunResultNode(ArtifactReader, pydantic.BaseModel):
     failures: typing.Union[int, None]
     unique_id: str
 
-    @property
-    def manifest(self):
-        return self.manifest_artifact.nodes.get(self.unique_id)
 
-
-class ManifestNode(ArtifactReader, pydantic.BaseModel):
+class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
     raw_sql: str
     compiled: typing.Union[str, None]
     database: typing.Union[str, None]
@@ -171,7 +204,7 @@ class ManifestNode(ArtifactReader, pydantic.BaseModel):
         }
 
 
-class CatalogNode(ArtifactReader, pydantic.BaseModel):
+class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
     metadata: CatalogNodeMetadata
     columns: typing.Dict[str, CatalogNodeColumn]
     stats: typing.Dict[str, CatalogNodeStats]
