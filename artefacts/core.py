@@ -12,7 +12,8 @@ from artefacts.config import conf
 
 
 Metadata = typing.ForwardRef('Metadata')
-Node = typing.ForwardRef('Node')
+ManifestNode = typing.ForwardRef('ManifestNode')
+RunResultNode = typing.ForwardRef('RunResultNode')
 
 
 class Artifact:
@@ -34,15 +35,44 @@ class Artifact:
         return artefacts.state.get(cls.name())  
 
 
-# TODO: mixin with convenience methods for accessing the `state` of an
-# artifact and error notifications if that artifact is not compiled
-class ArtifactReader():
-    pass
+class ArtifactReader:
+
+    @property
+    def run_results_artifact(self):
+        return self.get_artifact('run_results')
+
+    @property
+    def manifest_artifact(self):
+        return self.get_artifact('manifest')
+
+    @property
+    def catalog_artifact(self):
+        return self.get_artifact('catalog')
+
+    @property
+    def sources_artifact(self):
+        return self.get_artifact('sources')
+    
+    def get_artifact(self, artifact_name):
+        if artefacts.state.exists(artifact_name):
+            return artefacts.state.get(artifact_name)
+        else:
+            artifact = {
+                'manifest': Manifest,
+                'run_results': RunResults,
+                'sources': Sources,
+                'catalog': Catalog
+            }.get(artifact_name)
+
+            if artifact is None:
+                raise AttributeError(f"Invalid artifact name: {artifact_name}")
+            
+            return artifact.load()
 
 
 class Manifest(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    nodes: dict[str, Node]
+    nodes: dict[str, ManifestNode]
     sources: dict
     macros: dict
     docs: dict
@@ -56,7 +86,7 @@ class Manifest(Artifact, pydantic.BaseModel):
 
 class RunResults(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    results: list[dict]
+    results: list[RunResultNode]
     elapsed_time: float
     args: typing.Union[dict, None]
 
@@ -100,7 +130,22 @@ class Metadata(pydantic.BaseModel):
         return packaging.version.Version(self.dbt_version_raw)
 
 
-class Node(pydantic.BaseModel):
+class RunResultNode(ArtifactReader, pydantic.BaseModel):
+    status: str
+    timing: list[dict]
+    thread_id: str
+    execution_time: float
+    adapter_response: dict
+    message: typing.Union[str, None]
+    failures: typing.Union[int, None]
+    unique_id: str
+
+    @property
+    def manifest(self):
+        return self.manifest_artifact.nodes.get(self.unique_id)
+
+
+class ManifestNode(ArtifactReader, pydantic.BaseModel):
     raw_sql: str
     compiled: typing.Union[str, None]
     database: typing.Union[str, None]
