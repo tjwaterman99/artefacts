@@ -72,7 +72,7 @@ class ArtifactReader:
 
 class Manifest(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    nodes: dict[str, ManifestNode]
+    nodes: typing.Dict[str, ManifestNode]
     sources: dict
     macros: dict
     docs: dict
@@ -93,8 +93,8 @@ class RunResults(Artifact, pydantic.BaseModel):
 
 class Catalog(Artifact, pydantic.BaseModel):
     metadata: Metadata
-    nodes: dict[str, dict]
-    sources: dict[str, dict]
+    nodes: typing.Dict[str, dict]
+    sources: typing.Dict[str, dict]
     errors: typing.Union[list[str], None]
 
 
