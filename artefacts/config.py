@@ -26,3 +26,6 @@ class Config:
     @property
     def dbt_target_dir(self):
         return os.path.abspath(os.path.join(self._dbt_project_dir, self._dbt_target_dir))
+
+
+conf = Config()

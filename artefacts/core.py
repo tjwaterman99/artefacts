@@ -5,16 +5,13 @@ import pydantic
 import typing
 
 import artefacts.state
-from artefacts.config import Config
+from artefacts.config import conf
 
 
-conf = Config()
 Metadata = typing.ForwardRef('Metadata')
 
 
-class Artifact(pydantic.BaseModel):
-
-    metadata: Metadata
+class Artifact:
 
     @classmethod
     def path(cls):
@@ -39,16 +36,16 @@ class ArtifactReader():
     pass
 
 
-class Manifest(Artifact):
-    pass
+class Manifest(Artifact, pydantic.BaseModel):
+    metadata: Metadata
 
 
-class RunResults(Artifact):
-    pass
+class RunResults(Artifact, pydantic.BaseModel):
+    metadata: Metadata
 
 
-class Catalog(Artifact):
-    pass
+class Catalog(Artifact, pydantic.BaseModel):
+    metadata: Metadata
 
 
 class Metadata(pydantic.BaseModel):
