@@ -169,7 +169,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     max_loaded_at: typing.Union[None, str]
     snapshotted_at: typing.Union[None, str]
     max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: dict  # TODO
+    criteria: dict  # TODO deserialize
     adapter_response: dict
     timing: typing.List[TimingResult]
     thread_id: typing.Union[None, str]
@@ -224,16 +224,16 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
     loader: str
     identifier: str
     resource_type: str
-    quoting: typing.Union[dict, None]  # TODO
+    quoting: typing.Union[dict, None]  # TODO deserialize
     loaded_at_field: typing.Union[None, str]
-    freshness: typing.Union[None, dict]  # TODO
-    external: typing.Union[None, dict]  # TODO
+    freshness: typing.Union[None, dict]  # TODO deserialize
+    external: typing.Union[None, dict]  # TODO deserialize
     description: typing.Union[None, str]
-    columns: typing.Union[None, dict]  # TODO
+    columns: typing.Union[None, dict]  # TODO deserialize
     meta: typing.Union[dict]
     source_meta: typing.Union[dict]
     tags: typing.Union[typing.List[str]]
-    config: typing.Union[dict]  # TODO
+    config: typing.Union[dict]  # TODO deserialize
     patch_path: typing.Union[str, None]
     unrendered_config: typing.Union[str, None]
     relation_name: typing.Union[str, None]
@@ -259,9 +259,9 @@ class ManifestMacroNode(pydantic.BaseModel):
     created_at: typing.Union[None, float]
     description: typing.Union[None, str]
     meta: typing.Union[None, dict]
-    docs: typing.Union[None, dict]  # TODO
-    arguments: typing.Union[None, typing.List[typing.Dict]]  # TODO
-    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]  # TODO
+    docs: typing.Union[None, dict]  # TODO deserialize
+    arguments: typing.Union[None, typing.List[typing.Dict]]  # TODO deserialize
+    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]  # TODO deserialize
 
 
 class ManifestDocsNode(pydantic.BaseModel):
@@ -293,7 +293,7 @@ class ManifestExposureNode(pydantic.BaseModel):
     refs: typing.Union[typing.List[list], None]
     sources: typing.Union[typing.List[list], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[typing.Dict[str, list]]  # TODO
+    depends_on: typing.Union[typing.Dict[str, list]]  # TODO deserialize
 
     class Config:
         fields = {
@@ -314,7 +314,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     description: str
     label: str
     node_type: str
-    filters: typing.List[dict]  # TODO
+    filters: typing.List[dict]  # TODO deserialize
     time_grains: typing.List[str]
     dimensions: typing.List[str]
     sql: typing.Union[str, None]
@@ -325,7 +325,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     sources: typing.Union[typing.List[str], None]
     refs: typing.Union[typing.List[str], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[dict, None]  # TODO
+    depends_on: typing.Union[dict, None]  # TODO deserialize
 
     class Config:
         fields = {
