@@ -316,6 +316,23 @@ all = ["pytz (>=2019.1)"]
 dates = ["pytz (>=2019.1)"]
 
 [[package]]
+name = "furo"
+version = "2022.1.2"
+description = "A clean customisable Sphinx documentation theme."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+beautifulsoup4 = "*"
+pygments = ">=2.7,<3.0"
+sphinx = ">=4.0,<5.0"
+
+[package.extras]
+test = ["pytest", "pytest-cov", "pytest-xdist"]
+doc = ["myst-parser", "sphinx-copybutton", "sphinx-design", "sphinx-inline-tabs"]
+
+[[package]]
 name = "future"
 version = "0.18.2"
 description = "Clean single-source support for Python 3 and 2"
@@ -1061,7 +1078,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "229813368014272f07cb8dc7d8026a77439e9b11951d8d89f547bdc8f8078245"
+content-hash = "480f59599d62bbf9f01b1ac96723aee1739f346bcc35f105b04c1a69fa728112"
 
 [metadata.files]
 agate = [
@@ -1261,6 +1278,10 @@ docutils = [
 domdf-python-tools = [
     {file = "domdf-python-tools-3.2.1.tar.gz", hash = "sha256:e283e6f439e2709d6dc993a9410a4232db4744925950575e4841b44a7de0b183"},
     {file = "domdf_python_tools-3.2.1-py3-none-any.whl", hash = "sha256:cb2770dbeef6ec7babb19c3bf08fd115370c0186adc73b6c4155062602ca8291"},
+]
+furo = [
+    {file = "furo-2022.1.2-py3-none-any.whl", hash = "sha256:958016bfe1387c1e8ddf5b9d71696b69c4eaa5cd8afc9492abfb008aba2d300c"},
+    {file = "furo-2022.1.2.tar.gz", hash = "sha256:b217f218cbcd423ffbfe69baa79389d4ecebf2d86f0d593c44ef31da7b5aed30"},
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
