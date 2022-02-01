@@ -1,7 +1,20 @@
-from artefacts.core import Manifest
+"""
+API
+===
+
+The artefacts API contains helper methods for interacting with dbt's artifacts.
+"""
+
+import typing
+
+from artefacts.core import Manifest, ManifestNode
 
 
-def models():
+def models() -> typing.List[ManifestNode]:
+    """
+    A list of all models in the dbt project.
+    """
+
     result = []
     manifest = Manifest.load()
     for k,v in manifest.nodes.items():
@@ -11,7 +24,11 @@ def models():
         return result
 
 
-def tests():
+def tests() -> typing.List[ManifestNode]:
+    """
+    A list of all tests in the dbt project
+    """
+
     result = []
     manifest = Manifest.load()
     for k,v in manifest.nodes.items():
