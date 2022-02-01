@@ -2,7 +2,7 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Config" href="config.html" /><link rel="prev" title="API" href="api.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Configuration" href="config.html" /><link rel="prev" title="API" href="api.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.01.02"/>
         <title>Reference - artefacts 1.0.0 documentation</title>
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -158,9 +158,11 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 </ul>
 
 </div>
@@ -181,89 +183,29 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <div class="section" id="module-artefacts.core">
-<span id="reference"></span><h1>Reference<a class="headerlink" href="#module-artefacts.core" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="artefacts-core">
-<h2>artefacts.core<a class="headerlink" href="#artefacts-core" title="Permalink to this headline">¶</a></h2>
-<p>The core module contains the deserialized dbt artifacts, and various objects such
-as models, tests, and sources.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">artefacts</span> <span class="kn">import</span> <span class="n">Manifest</span><span class="p">,</span> <span class="n">RunResults</span><span class="p">,</span> <span class="n">Sources</span><span class="p">,</span> <span class="n">Catalog</span>
-</pre></div>
-</div>
-<p>To use an artefact, you first need to <cite>load</cite> it.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-</pre></div>
-</div>
+          <div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="artefacts.core.Manifest">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.core.</span></span><span class="sig-name descname"><span class="pre">Manifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/core.html#Manifest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.core.Manifest" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dbt manifest artifact.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="artefacts.core.Manifest.path">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#artefacts.core.Manifest.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the artifact</p>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="artefacts.core.ManifestNode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.core.</span></span><span class="sig-name descname"><span class="pre">ManifestNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/core.html#ManifestNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.core.ManifestNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>An object representing a node, such as a model, test, or macro.</p>
 </dd></dl>
-</div>
-<span class="target" id="module-artefacts.state"></span><div class="section" id="artefacts-state">
-<h2>artefacts.state<a class="headerlink" href="#artefacts-state" title="Permalink to this headline">¶</a></h2>
-<p>A simple key-value store for holding the parsed artifacts. Using this store
-enables us to avoid loading or parsing the artifacts multiple times. To use
-the store, simply import the module directly.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">artefacts.state</span>
-</pre></div>
-</div>
-<dl class="py function">
-<dt class="sig sig-object py" id="artefacts.state.set">
-<span class="sig-prename descclassname"><span class="pre">artefacts.state.</span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/state.html#set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.state.set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Places an object in the store.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">artefacts</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">'myitem'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-<span class="go">{'a': 1}</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py function">
-<dt class="sig sig-object py" id="artefacts.state.get">
-<span class="sig-prename descclassname"><span class="pre">artefacts.state.</span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/state.html#get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.state.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an object from the store, if it exists.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">artefacts</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'myitem'</span><span class="p">)</span>
-<span class="go">{a: 1}</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py function">
-<dt class="sig sig-object py" id="artefacts.state.exists">
-<span class="sig-prename descclassname"><span class="pre">artefacts.state.</span></span><span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/state.html#exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.state.exists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns <cite>True</cite> if the key exists in the store.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">artefacts</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">'myitem'</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">artefacts</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">'thisdoesnotexist'</span><span class="p">)</span>
-<span class="go">False</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-</div>
 </div>
 
         </article>
@@ -276,7 +218,7 @@ the store, simply import the module directly.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Config</div>
+                <div class="title">Configuration</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -305,28 +247,8 @@ the store, simply import the module directly.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            Contents
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Reference</a><ul>
-<li><a class="reference internal" href="#artefacts-core">artefacts.core</a></li>
-<li><a class="reference internal" href="#artefacts-state">artefacts.state</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

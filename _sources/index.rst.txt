@@ -10,16 +10,14 @@ artefacts
    :maxdepth: 2
    :hidden:
 
+   install
+   tutorial
    api
    reference
    config
 
-
 A deserialization library for dbt artifacts.
 
-Install
--------
-
-.. code-block::
-
-    pip install artefacts
+- goals
+- key features
+- basic usage

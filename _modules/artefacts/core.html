@@ -158,9 +158,11 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../config.html">Configuration</a></li>
 </ul>
 
 </div>
@@ -235,6 +237,10 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The path to the artifact</span>
+<span class="sd">        """</span>
+        
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">dbt_target_dir</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">'.json'</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
