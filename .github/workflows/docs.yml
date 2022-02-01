@@ -15,7 +15,9 @@ jobs:
       with:
         python-version: "${{ matrix.python_version }}"
     - name: Install dependencies
-      run: bin/postCreateCommand.sh
+      run: |
+        pipx install poetry
+        poetry install
     - name: Build docs
       run: cd docs && poetry run make html
     - name: Deploy
