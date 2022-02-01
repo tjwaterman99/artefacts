@@ -1,3 +1,17 @@
+"""
+artefacts.core
+==============
+
+The core module contains the deserialized dbt artifacts, and various objects such
+as models, tests, and sources.
+
+>>> from artefacts import Manifest, RunResults, Sources, Catalog
+
+To use an artefact, you first need to `load` it.
+
+>>> manifest = Manifest.load()
+"""
+
 import datetime
 import uuid
 import os
@@ -31,6 +45,10 @@ class Artifact:
 
     @classmethod
     def path(cls):
+        """
+        The path to the artifact
+        """
+        
         return os.path.join(conf.dbt_target_dir, cls.name() + '.json')
 
     @classmethod
@@ -97,6 +115,10 @@ class ArtifactNodeReader(ArtifactReader):
 
 
 class Manifest(Artifact, pydantic.BaseModel):
+    """
+    The dbt manifest artifact.
+    """
+
     metadata: Metadata
     nodes: typing.Dict[str, ManifestNode]
     sources: typing.Dict[str, ManifestSourceNode]
@@ -188,6 +210,10 @@ class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
+    """
+    An object representing a node, such as a model, test, or macro.
+    """
+
     raw_sql: str
     compiled: typing.Union[str, None]
     database: typing.Union[str, None]
