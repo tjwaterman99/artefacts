@@ -2,9 +2,9 @@ Reference
 =========
 
 
-.. automodule:: artefacts.core
+.. autoclass:: artefacts.core.Manifest
+    :members: path
+
+
+.. autoclass:: artefacts.core.ManifestNode
     :members:
-
-
-.. automodule:: artefacts.state
-    :members: set, get, exists

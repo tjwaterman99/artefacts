@@ -45,6 +45,10 @@ class Artifact:
 
     @classmethod
     def path(cls):
+        """
+        The path to the artifact
+        """
+        
         return os.path.join(conf.dbt_target_dir, cls.name() + '.json')
 
     @classmethod
