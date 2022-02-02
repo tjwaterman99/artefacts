@@ -4,5 +4,6 @@ ENV PGHOST=localhost
 ENV PGPASSWORD=password
 ENV PGUSER=artefacts
 ENV PGDATABASE=artefacts
+ENV PGSCHEMA=poffertjes_shop
 ENV DBT_PROFILES_DIR=dbt_projects
-ENV DBT_PROJECT_DIR=dbt_projects/jaffle_shop
+ENV DBT_PROJECT_DIR=dbt_projects/poffertjes_shop

@@ -11,6 +11,19 @@ jaffle_shop:
       schema: jaffle_shop
       threads: 4
 
+poffertjes_shop:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('PGHOST') }}"
+      password: "{{ env_var('PGPASSWORD') }}"
+      user: "{{ env_var('PGUSER') }}"
+      dbname: "{{ env_var('PGDATABASE') }}"
+      port: 5432
+      schema: poffertjes_shop
+      threads: 4
+
 my_new_project:
   target: dev
   outputs:

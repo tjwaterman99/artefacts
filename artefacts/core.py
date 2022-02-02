@@ -332,7 +332,7 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
     tags: typing.Union[typing.List[str]]
     config: typing.Union[dict]  # TODO deserialize
     patch_path: typing.Union[str, None]
-    unrendered_config: typing.Union[str, None]
+    unrendered_config: typing.Union[dict, None]
     relation_name: typing.Union[str, None]
     created_at: typing.Union[None, float]
 
