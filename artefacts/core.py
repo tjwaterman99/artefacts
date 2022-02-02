@@ -1,7 +1,4 @@
 """
-artefacts.core
-==============
-
 The core module contains the deserialized dbt artifacts, and various objects such
 as models, tests, and sources.
 
@@ -26,6 +23,10 @@ from artefacts.config import conf
 
 
 Metadata = typing.ForwardRef('Metadata')
+RunResults = typing.ForwardRef('RunResults')
+Catalog = typing.ForwardRef('Catalog')
+Sources = typing.ForwardRef('Sources')
+Manifest = typing.ForwardRef('Manifest')
 ManifestNode = typing.ForwardRef('ManifestNode')
 ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
 ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
@@ -45,18 +46,34 @@ class Artifact:
 
     @classmethod
     def path(cls):
-        """
-        The path to the artifact
+        """The path to the artifact.
+        
+        The path is determined by the :ref:`configuration` settings. By default
+        artefacts will look in the `./target` directory of the current working 
+        directory.
         """
         
         return os.path.join(conf.dbt_target_dir, cls.name() + '.json')
 
     @classmethod
     def name(cls):
+        """The name of the artifact in snake_case.
+        """
+
         return re.sub(r'(?<!^)(?=[A-Z])', '_', cls.__name__).lower()
 
     @classmethod
     def load(cls):
+        """Load and deserialize the artifact.
+        
+        The deserialized artifact is cached, so calling this function twice will
+        not update the artifact if it has been rebuilt.
+
+        In general, loading the artifacts is not necessary, and most tasks can
+        be accomplished by using the :ref:`api` module instead of working with
+        the artifact classes directly. 
+        """
+
         if not artefacts.state.exists(cls.name()):
             with open(cls.path(), 'r') as artifact_fh:
                 raw_artifact = json.load(artifact_fh)
@@ -67,19 +84,27 @@ class Artifact:
 class ArtifactReader:
 
     @property
-    def run_results_artifact(self):
+    def run_results_artifact(self) -> RunResults:
+        """A reference to the :class:`RunResults` artifact. """
+
         return self.get_artifact('run_results')
 
     @property
-    def manifest_artifact(self):
+    def manifest_artifact(self) -> Manifest:
+        """A reference to the :class:`Manifest` artifact. """
+        
         return self.get_artifact('manifest')
 
     @property
-    def catalog_artifact(self):
+    def catalog_artifact(self) -> Catalog:
+        """A reference to the :class:`Catalog` artifact. """
+
         return self.get_artifact('catalog')
 
     @property
-    def sources_artifact(self):
+    def sources_artifact(self) -> Sources:
+        """A reference to the :class:`Sources` artifact. """
+
         return self.get_artifact('sources')
     
     def get_artifact(self, artifact_name):
@@ -103,20 +128,40 @@ class ArtifactNodeReader(ArtifactReader):
     
     @property
     def manifest(self):
+        """A reference to details about the node contained in the manifest."""
+
         return self.manifest_artifact.nodes.get(self.unique_id)
 
     @property
     def catalog(self):
+        """A reference to details about the node contained in the catalog."""
+
         return self.catalog_artifact.nodes.get(self.unique_id)
 
     @property
     def run_results(self):
+        """A reference to results from running the node, if it exists."""
+
         return [r for r in self.run_results_artifact.results if r.unique_id == self.unique_id]
 
 
 class Manifest(Artifact, pydantic.BaseModel):
     """
-    The dbt manifest artifact.
+    The manifest artifact.
+
+    Attributes:
+        metadata: reference to the Manifest's metadata
+        nodes: reference to the Manifest's nodes
+        sources: reference to the Manifest's sources
+        macros: reference to the Manifest's macros
+        docs: reference to the Manifest's docs
+        exposures: reference to the Manifest's exposures
+        metrics: reference to the Manifest's metrics
+        selectors: reference to the Manifest's selectors
+        disabled: reference to the Manifest's disabled
+        parent_map: reference to the Manifest's parent_map
+        child_map: reference to the Manifest's child_map
+
     """
 
     metadata: Metadata
@@ -133,6 +178,17 @@ class Manifest(Artifact, pydantic.BaseModel):
 
 
 class RunResults(Artifact, pydantic.BaseModel):
+    """The run_results artifact. 
+    
+    Attributes:
+        metadata: The :class:`Metadata` associated with the run, such as when
+                  the run was generated, the environment variables present
+                  during the run, etc.
+        results: A list of :class:`RunResultNode` s, which contain details 
+                 about how long each node ran, whether it was successful, etc.
+    
+    """
+
     metadata: Metadata
     results: typing.List[RunResultNode]
     elapsed_time: float
@@ -140,6 +196,8 @@ class RunResults(Artifact, pydantic.BaseModel):
 
 
 class Catalog(Artifact, pydantic.BaseModel):
+    """The catalog artifact. """
+
     metadata: Metadata
     nodes: typing.Dict[str, CatalogNode]
     sources: typing.Dict[str, CatalogNode]
@@ -147,12 +205,16 @@ class Catalog(Artifact, pydantic.BaseModel):
 
 
 class Sources(Artifact, pydantic.BaseModel):
+    """The sources artifact. """
+
     metadata: Metadata
     results: typing.List[dict]
     elapsed_time: float
 
 
 class Metadata(pydantic.BaseModel):
+    """Data about the context in which the artifact was generated."""
+    
     dbt_schema_version_raw: str
     dbt_version_raw: str
     generated_at: datetime.datetime
@@ -179,12 +241,16 @@ class Metadata(pydantic.BaseModel):
 
 
 class TimingResult(pydantic.BaseModel):
+    """Timing details from running the node. """
+
     name: str
     started_at: typing.Union[None, datetime.datetime]
     completed_at: typing.Union[None, datetime.datetime]
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
+    """Result details from checking the freshness of a source. """
+
     unique_id: str
     status: str
     error: typing.Union[None, str]
@@ -199,6 +265,9 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
+    """Details about the results of running a specific model, test, etc.
+    """
+
     status: str
     timing: typing.List[TimingResult]
     thread_id: str
@@ -236,6 +305,8 @@ class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
+    """Details about a Source node. """
+
     fqn: typing.List[str]
     database: typing.Union[None, str]
     db_schema: str
@@ -272,6 +343,8 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class ManifestMacroNode(pydantic.BaseModel):
+    """Details about a Macro node. """
+
     unique_id: str
     package_name: str
     root_path: str
@@ -291,6 +364,8 @@ class ManifestMacroNode(pydantic.BaseModel):
 
 
 class ManifestDocsNode(pydantic.BaseModel):
+   """Details about a Docs node. """
+
    unique_id: str
    package_name: str
    root_path: str
@@ -301,6 +376,9 @@ class ManifestDocsNode(pydantic.BaseModel):
 
 
 class ManifestExposureNode(pydantic.BaseModel):
+    """Details about an Exposure node.
+    """
+
     fqn: str
     unique_id: str
     package_name: str
@@ -329,6 +407,8 @@ class ManifestExposureNode(pydantic.BaseModel):
 
 
 class ManifestMetricNode(pydantic.BaseModel):
+    """Details about a Metric node. """
+
     fqn: str
     unique_id: str
     package_name: str
@@ -359,6 +439,8 @@ class ManifestMetricNode(pydantic.BaseModel):
         }
 
 class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
+    """Details about a Catalog node. """
+
     metadata: CatalogNodeMetadata
     columns: typing.Dict[str, CatalogNodeColumn]
     stats: typing.Dict[str, CatalogNodeStats]
@@ -366,6 +448,8 @@ class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class CatalogNodeMetadata(pydantic.BaseModel):
+    """Metadata details about a CatalogNode. """
+
     node_type: str
     db_schema: str
     name: str
@@ -381,6 +465,8 @@ class CatalogNodeMetadata(pydantic.BaseModel):
 
 
 class CatalogNodeColumn(pydantic.BaseModel):
+    """Details about the columns in a CatalogNode. """
+
     node_type: str
     index: int
     name: str
@@ -393,11 +479,21 @@ class CatalogNodeColumn(pydantic.BaseModel):
 
 
 class CatalogNodeStats(pydantic.BaseModel):
+    """Statics about a CatalogNode. 
+    
+    Attributes:
+        description: The description of the statistic
+        id: The id of the statistic
+        include: TODO
+        label: The label of the statistic
+        value: The value of the statistic
+    """
+
+    description: typing.Union[str, None]
     id: str
+    include: bool
     label: str
     value: typing.Union[str, None]
-    include: bool
-    description: typing.Union[str, None]
 
 
 RunResults.update_forward_refs()
