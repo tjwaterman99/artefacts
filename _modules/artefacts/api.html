@@ -191,21 +191,19 @@
         <article role="main">
           <h1>Source code for artefacts.api</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""</span>
-<span class="sd">API</span>
-<span class="sd">===</span>
-
 <span class="sd">The artefacts API contains helper methods for interacting with dbt's artifacts.</span>
 <span class="sd">"""</span>
 
 <span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">artefacts.core</span> <span class="kn">import</span> <span class="n">Manifest</span><span class="p">,</span> <span class="n">ManifestNode</span>
+<span class="kn">from</span> <span class="nn">artefacts.core</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Manifest</span><span class="p">,</span> <span class="n">ManifestNode</span><span class="p">,</span> <span class="n">ManifestSourceNode</span><span class="p">,</span> <span class="n">ManifestDocsNode</span><span class="p">,</span>
+    <span class="n">ManifestExposureNode</span><span class="p">,</span> <span class="n">ManifestMacroNode</span><span class="p">,</span> <span class="n">ManifestMetricNode</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="models"><a class="viewcode-back" href="../../api.html#artefacts.api.models">[docs]</a><span class="k">def</span> <span class="nf">models</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
-    <span class="sd">"""</span>
-<span class="sd">    A list of all models in the dbt project.</span>
-<span class="sd">    """</span>
+    <span class="sd">""" A list of all models in the dbt project. """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -217,9 +215,7 @@
 
 
 <div class="viewcode-block" id="tests"><a class="viewcode-back" href="../../api.html#artefacts.api.tests">[docs]</a><span class="k">def</span> <span class="nf">tests</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
-    <span class="sd">"""</span>
-<span class="sd">    A list of all tests in the dbt project</span>
-<span class="sd">    """</span>
+    <span class="sd">""" A list of all tests in the dbt project. """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -228,6 +224,61 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="seeds"><a class="viewcode-back" href="../../api.html#artefacts.api.seeds">[docs]</a><span class="k">def</span> <span class="nf">seeds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all seeds in the dbt project. """</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'seed'</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="sources"><a class="viewcode-back" href="../../api.html#artefacts.api.sources">[docs]</a><span class="k">def</span> <span class="nf">sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestSourceNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all sources in the dbt project. """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+<span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestDocsNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all documentation nodes in the dbt project. """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="docs"><a class="viewcode-back" href="../../api.html#artefacts.api.docs">[docs]</a><span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMacroNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all macros in the dbt project. """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="exposures"><a class="viewcode-back" href="../../api.html#artefacts.api.exposures">[docs]</a><span class="k">def</span> <span class="nf">exposures</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestExposureNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all exposures defined in the dbt project. """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">exposures</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="metrics"><a class="viewcode-back" href="../../api.html#artefacts.api.metrics">[docs]</a><span class="k">def</span> <span class="nf">metrics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMetricNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all metrics in the dbt project. """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="selectors"><a class="viewcode-back" href="../../api.html#artefacts.api.selectors">[docs]</a><span class="k">def</span> <span class="nf">selectors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">"""A list of all selectors defined in the dbt project. """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">selectors</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
 </pre></div>
         </article>
       </div>
