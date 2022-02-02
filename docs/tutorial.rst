@@ -40,6 +40,16 @@ While it's easy to parse that json yourself using Python's :code:`json.load` fun
 Instead, we can use artefacts simple, documented, stable API for parsing the dbt artifact. Let's try that!
 
 
+Using the artefacts API
+-----------------------
+
+TODO
+
+Running the script from Github Actions
+--------------------------------------
+
+TODO
+
 
 .. rubric:: Footnotes
 
