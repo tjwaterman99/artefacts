@@ -60,7 +60,7 @@ def docs() -> typing.List[ManifestDocsNode]:
     return list(manifest.docs.values())
 
 
-def docs() -> typing.List[ManifestMacroNode]:
+def macros() -> typing.List[ManifestMacroNode]:
     """A list of all macros in the dbt project. """
 
     manifest = Manifest.load()
