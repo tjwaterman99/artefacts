@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "artefacts"
-version = "1.0.0"
+version = "1.0.0-alpha1"
 description = "Deserialization for dbt artifacts"
 authors = ["Tom Waterman <tjwaterman99@gmail.com>"]
 readme = "README.md"
