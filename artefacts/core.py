@@ -22,24 +22,25 @@ import artefacts.state
 from artefacts.config import conf
 
 
-Metadata = typing.ForwardRef('Metadata')
-RunResults = typing.ForwardRef('RunResults')
 Catalog = typing.ForwardRef('Catalog')
-Sources = typing.ForwardRef('Sources')
+CatalogNode = typing.ForwardRef('CatalogNode')
+CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
+CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
+CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
 Manifest = typing.ForwardRef('Manifest')
-ManifestNode = typing.ForwardRef('ManifestNode')
-ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
-ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
 ManifestDocsNode = typing.ForwardRef('ManifestDocsNode')
 ManifestExposureNode = typing.ForwardRef('ManifestExposureNode')
+ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
 ManifestMetricNode = typing.ForwardRef('ManifestMetricNode')
-RunResultNode = typing.ForwardRef('RunResultNode')
-CatalogNode = typing.ForwardRef('CatalogNode')
-CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
-CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
-CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
-SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
+ManifestNode = typing.ForwardRef('ManifestNode')
+ManifestNodeReference = typing.ForwardRef('ManifestNodeReference')
+ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
+Metadata = typing.ForwardRef('Metadata')
 ResultTiming = typing.ForwardRef('ResultTiming')
+RunResultNode = typing.ForwardRef('RunResultNode')
+RunResults = typing.ForwardRef('RunResults')
+Sources = typing.ForwardRef('Sources')
+SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
 class Artifact:
@@ -130,6 +131,8 @@ class ArtifactNodeReader(ArtifactReader):
     def manifest(self):
         """A reference to details about the node contained in the manifest."""
 
+        # TODO: what if the resource_type is `source`? I don't think it will
+        # show up in the `nodes` reference.
         return self.manifest_artifact.nodes.get(self.unique_id)
 
     @property
@@ -143,6 +146,18 @@ class ArtifactNodeReader(ArtifactReader):
         """A reference to results from running the node, if it exists."""
 
         return [r for r in self.run_results_artifact.results if r.unique_id == self.unique_id]
+
+    @property
+    def parents(self):
+        """ A list of the node's parents """
+
+        return self.manifest_artifact.parent_map[self.unique_id]
+
+    @property
+    def children(self):
+        """ A list of the node's children """
+
+        return self.manifest_artifact.child_map[self.unique_id]
 
 
 class Manifest(Artifact, pydantic.BaseModel):
@@ -173,8 +188,11 @@ class Manifest(Artifact, pydantic.BaseModel):
     metrics: typing.Dict[str, ManifestMetricNode]
     selectors: dict
     disabled: typing.Union[dict, None]
-    parent_map: typing.Union[dict, None]
-    child_map: typing.Union[dict, None]
+    parent_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
+    child_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 class RunResults(Artifact, pydantic.BaseModel):
@@ -208,7 +226,7 @@ class Sources(Artifact, pydantic.BaseModel):
     """The sources artifact. """
 
     metadata: Metadata
-    results: typing.List[dict]
+    results: typing.List[SourcesFreshnessResult]
     elapsed_time: float
 
 
@@ -257,9 +275,9 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     max_loaded_at: typing.Union[None, str]
     snapshotted_at: typing.Union[None, str]
     max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: dict  # TODO deserialize
-    adapter_response: dict
-    timing: typing.List[TimingResult]
+    criteria: typing.Union[None, dict]  # TODO deserialize
+    adapter_response: typing.Union[None, dict]
+    timing: typing.Union[None,typing.List[TimingResult]]
     thread_id: typing.Union[None, str]
     execution_time: typing.Union[None, float]
 
@@ -302,6 +320,46 @@ class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
         fields = {
             'db_schema': 'schema',
         }
+
+
+class ManifestNodeReference(ArtifactNodeReader):
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, value):
+        if not isinstance(value, str):
+            raise TypeError('ManifestNodeReferences must be strings')
+        return cls(value)
+
+    def __init__(self, unique_id: str):
+        self.unique_id = unique_id
+    
+    def __repr__(self):
+        return f"<ManifestNodeReference {self.unique_id}>"
+
+    @property
+    def resource_type(self):
+        return self.unique_id.split('.')[0]
+
+    @property
+    def node(self):
+        if self.resource_type in ['seed', 'test', 'operation', 'model', 'snapshot']:
+            return self.manifest_artifact.nodes[self.unique_id]
+        elif self.resource_type == 'source':
+            return self.manifest_artifact.sources[self.unique_id]
+        elif self.resource_type == 'macro':
+            return self.manifest_artifact.macros[self.unique_id]
+        elif self.resource_type == 'exposure':
+            return self.manifest_artifact.exposures[self.unique_id]
+        elif self.resource_type == 'metric':
+            return self.manifest_artifact.metrics[self.unique_id]
+        elif self.resource_type == 'selector':
+            return self.manifest_artifact.selectors[self.unique_id]
+        else:
+            raise AttributeError(f"Unknown resource type: {self.resource_type}")
 
 
 class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
