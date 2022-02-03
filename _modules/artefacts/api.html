@@ -245,14 +245,14 @@
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
-<span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestDocsNode</span><span class="p">]:</span>
+<div class="viewcode-block" id="docs"><a class="viewcode-back" href="../../api.html#artefacts.api.docs">[docs]</a><span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestDocsNode</span><span class="p">]:</span>
     <span class="sd">"""A list of all documentation nodes in the dbt project. """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="docs"><a class="viewcode-back" href="../../api.html#artefacts.api.docs">[docs]</a><span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMacroNode</span><span class="p">]:</span>
+<div class="viewcode-block" id="macros"><a class="viewcode-back" href="../../api.html#artefacts.api.macros">[docs]</a><span class="k">def</span> <span class="nf">macros</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMacroNode</span><span class="p">]:</span>
     <span class="sd">"""A list of all macros in the dbt project. """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
