@@ -46,6 +46,10 @@ Reference
     :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
 
 
+.. autoclass:: artefacts.core.ManifestNodeReference
+    :members:
+
+
 .. autoclass:: artefacts.core.ManifestSourceNode
     :members:
 
