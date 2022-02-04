@@ -1,0 +1,6 @@
+{
+    "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+    "build": {
+        "dockerfile": "Dockerfile"
+    }
+}

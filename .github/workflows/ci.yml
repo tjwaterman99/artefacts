@@ -20,7 +20,7 @@ jobs:
   build:
     strategy:
       matrix:
-        python_version: ["3.7", "3.8", "3.9"]
+        python_version: ["3.7", "3.8", "3.9", "3.10"]
         dbt_project_dir: ['dbt_projects/poffertjes_shop', 'dbt_projects/jaffle_shop']
 
     env:
@@ -35,7 +35,7 @@ jobs:
       with:
         python-version: "${{ matrix.python_version }}"
     - name: Install dependencies
-      run: bin/postCreateCommand.sh
+      run: .devcontainer/postCreateCommand.sh
     - name: Test with pytest
       run: |
         poetry run pytest

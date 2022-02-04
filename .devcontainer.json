@@ -1,6 +1,0 @@
-{
-    "postCreateCommand": "bin/postCreateCommand.sh",
-    "build": {
-        "dockerfile": "Dockerfile"
-    }
-}
