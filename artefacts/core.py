@@ -159,6 +159,18 @@ class ArtifactNodeReader(ArtifactReader):
 
         return self.manifest_artifact.child_map[self.unique_id]
 
+    @property
+    def tests(self):
+        """ A list of any tests that reference the node """
+
+        return [t for t in self.children if t.resource_type == 'test']
+
+    @property
+    def snapshots(self):
+        """ A list of any snapshots that reference the node """
+
+        return [s for s in self.children if s.resource_type == 'snapshot']
+
 
 class Manifest(Artifact, pydantic.BaseModel):
     """
@@ -204,6 +216,8 @@ class RunResults(Artifact, pydantic.BaseModel):
                   during the run, etc.
         results: A list of :class:`RunResultNode` s, which contain details 
                  about how long each node ran, whether it was successful, etc.
+        elapsed_time: The total duration of the run
+        args: The arguments used when at the start of the run or build
     
     """
 
@@ -214,7 +228,15 @@ class RunResults(Artifact, pydantic.BaseModel):
 
 
 class Catalog(Artifact, pydantic.BaseModel):
-    """The catalog artifact. """
+    """The catalog artifact. 
+    
+    Attributes:
+        metadata: The metadata attribute of the catalog
+        nodes: The nodes attribute of the catalog
+        sources: The sources attribute of the catalog
+        errors: The errors attribute of the catalog
+    
+    """
 
     metadata: Metadata
     nodes: typing.Dict[str, CatalogNode]
@@ -231,7 +253,18 @@ class Sources(Artifact, pydantic.BaseModel):
 
 
 class Metadata(pydantic.BaseModel):
-    """Data about the context in which the artifact was generated."""
+    """Data about the context in which the artifact was generated.
+    
+    Attributes:
+        generated_at: The generated_at attribute
+        invocation_id: The invocation_id attribute
+        env: The env attribute
+        project_id: The project_id attribute
+        user_id: The user_id attribute
+        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute
+        adapter_type: The adapter_type attribute
+
+    """
     
     dbt_schema_version_raw: str
     dbt_version_raw: str
@@ -250,11 +283,19 @@ class Metadata(pydantic.BaseModel):
         }
 
     @property
-    def dbt_schema_version(self):
+    def dbt_schema_version(self) -> int:
+        """The artifact's schema version. 
+        
+        See https://schemas.getdbt.com for details.
+        """
+
         return int(self.dbt_schema_version_raw.split('/')[-1].split('.')[0][1])
 
     @property
-    def dbt_version(self):
+    def dbt_version(self) -> str:
+        """The dbt version that generated the artifact.
+        """
+
         return packaging.version.Version(self.dbt_version_raw)
 
 
@@ -299,6 +340,45 @@ class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
 class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
     """
     An object representing a node, such as a model, test, or macro.
+
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+
     """
 
     raw_sql: str
@@ -315,6 +395,28 @@ class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
     resource_type: str
     alias: str
     checksum: dict
+    config: typing.Union[None, typing.Dict]
+    tags: typing.Union[None, typing.List[str]]
+    refs: typing.Union[None, typing.List]
+    sources: typing.Union[None, typing.List[typing.List[str]]]
+    depends_on: typing.Union[None, typing.Dict]
+    description: typing.Union[None, str]
+    columns: typing.Union[None, typing.Dict]
+    meta: typing.Union[None, typing.Dict]
+    docs: typing.Union[None, typing.Dict]
+    patch_path: typing.Union[None, str]
+    compiled_path: typing.Union[None, str]
+    build_path: typing.Union[None, str]
+    deferred: typing.Union[None, bool]
+    unrendered_config: typing.Union[None, dict]
+    created_at: typing.Union[None, float]
+    config_call_dict: typing.Union[None, dict]
+    compiled_sql: typing.Union[None, str]
+    extra_ctes_injected: typing.Union[None, bool]
+    extra_ctes: typing.Union[None, typing.List[typing.Dict]]
+    relation_name: typing.Union[None, str]
+    column_name: typing.Union[None, str]  # only for generic test node
+    file_key_name: typing.Union[None, str]  # only for generic test node
 
     class Config:
         fields = {
@@ -341,11 +443,19 @@ class ManifestNodeReference(ArtifactNodeReader):
         return f"<ManifestNodeReference {self.unique_id}>"
 
     @property
-    def resource_type(self):
+    def resource_type(self) -> str:
+        """
+        The type of resource this reference points to. Eg model, test, source, etc.
+        """
+
         return self.unique_id.split('.')[0]
 
     @property
-    def node(self):
+    def node(self) -> ManifestNode:
+        """
+        The node this reference points to. 
+        """
+
         if self.resource_type in ['seed', 'test', 'operation', 'model', 'snapshot']:
             return self.manifest_artifact.nodes[self.unique_id]
         elif self.resource_type == 'source':
