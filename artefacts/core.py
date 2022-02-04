@@ -245,7 +245,14 @@ class Catalog(Artifact, pydantic.BaseModel):
 
 
 class Sources(Artifact, pydantic.BaseModel):
-    """The sources artifact. """
+    """The sources artifact. 
+    
+    Attributes:
+        metadata: The metadata attribute
+        results: The results attribute
+        elapsed_time: The elapsed_time attribute
+
+    """
 
     metadata: Metadata
     results: typing.List[SourcesFreshnessResult]
@@ -300,7 +307,14 @@ class Metadata(pydantic.BaseModel):
 
 
 class TimingResult(pydantic.BaseModel):
-    """Timing details from running the node. """
+    """Timing details from running the node. 
+    
+    Attributes:
+        name: the name attribute
+        started_at: the started_at attribute
+        completed_at: the completed_at attribute
+
+    """
 
     name: str
     started_at: typing.Union[None, datetime.datetime]
@@ -308,7 +322,22 @@ class TimingResult(pydantic.BaseModel):
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
-    """Result details from checking the freshness of a source. """
+    """Result details from checking the freshness of a source. 
+    
+    Attributes:
+        unique_id: The unique_id attribute
+        status: The status attribute
+        error: The error attribute
+        max_loaded_at: The max_loaded_at attribute
+        snapshotted_at: The snapshotted_at attribute
+        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute
+        criteria: The criteria attribute
+        adapter_response: The adapter_response attribute
+        timing: The timing attribute
+        thread_id: The thread_id attribute
+        execution_time: The execution_time attribute
+
+    """
 
     unique_id: str
     status: str
@@ -325,6 +354,17 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
 
 class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
     """Details about the results of running a specific model, test, etc.
+
+    Attributes:
+        status: The status attribute
+        timing: The timing attribute
+        thread_id: The thread_id attribute
+        execution_time: The execution_time attribute
+        adapter_response: The adapter_response attribute
+        message: The message attribute
+        failures: The failures attribute
+        unique_id: The unique_id attribute
+
     """
 
     status: str
@@ -473,7 +513,39 @@ class ManifestNodeReference(ArtifactNodeReader):
 
 
 class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
-    """Details about a Source node. """
+    """Details about a Source node. 
+    
+    Attributes:
+        fqn: The fqn attribute
+        database: The database attribute
+        db_schema: The db_schema attribute
+        unique_id: The unique_id attribute
+        package_name: The package_name attribute
+        root_path: The root_path attribute
+        path: The path attribute
+        original_file_path: The original_file_path attribute
+        name: The name attribute
+        source_name: The source_name attribute
+        source_description: The source_description attribute
+        loader: The loader attribute
+        identifier: The identifier attribute
+        resource_type: The resource_type attribute
+        quoting: The quoting attribute
+        loaded_at_field: The loaded_at_field attribute
+        freshness: The freshness attribute
+        external: The external attribute
+        description: The description attribute
+        columns: The columns attribute
+        meta: The meta attribute
+        source_meta: The source_meta attribute
+        tags: The tags attribute
+        config: The config attribute
+        patch_path: The patch_path attribute
+        unrendered_config: The unrendered_config attribute
+        relation_name: The relation_name attribute
+        created_at: The created_at attribute
+
+    """
 
     fqn: typing.List[str]
     database: typing.Union[None, str]
@@ -511,7 +583,27 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class ManifestMacroNode(pydantic.BaseModel):
-    """Details about a Macro node. """
+    """Details about a Macro node. 
+    
+    Attributes:
+        unique_id: The unique_id attribute
+        package_name: The package_name attribute
+        root_path: The root_path attribute
+        path: The path attribute
+        original_file_path: The original_file_path attribute
+        name: The name attribute
+        macro_sql: The macro_sql attribute
+        resource_type: The resource_type attribute
+        tags: The tags attribute
+        patch_path: The patch_path attribute
+        created_at: The created_at attribute
+        description: The description attribute
+        meta: The meta attribute
+        docs: The docs attribute
+        arguments: The arguments attribute
+        depends_on: The depends_on attribute
+
+    """
 
     unique_id: str
     package_name: str
@@ -532,19 +624,52 @@ class ManifestMacroNode(pydantic.BaseModel):
 
 
 class ManifestDocsNode(pydantic.BaseModel):
-   """Details about a Docs node. """
+    """Details about a Docs node. 
 
-   unique_id: str
-   package_name: str
-   root_path: str
-   path: str
-   original_filepath: typing.Union[str, None]
-   name: str
-   block_contents: str
+    Attributes:
+        unique_id: The unique_id attribute
+        package_name: The package_name attribute
+        root_path: The root_path attribute
+        path: The path attribute
+        original_filepath: The original_filepath attribute
+        name: The name attribute
+        block_contents: The block_contents attribute
+
+    """
+
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_filepath: typing.Union[str, None]
+    name: str
+    block_contents: str
 
 
 class ManifestExposureNode(pydantic.BaseModel):
     """Details about an Exposure node.
+
+    Attributes:
+        fqn: Details about a fqn attribute 
+        unique_id: Details about a unique_id attribute 
+        package_name: Details about a package_name attribute 
+        root_path: Details about a root_path attribute 
+        path: Details about a path attribute 
+        original_file_path: Details about a original_file_path attribute 
+        name: Details about a name attribute 
+        node_type: Details about a node_type attribute 
+        owner: Details about a owner attribute 
+        resource_type: Details about a resource_type attribute 
+        description: Details about a description attribute 
+        maturity: Details about a maturity attribute 
+        meta: Details about a meta attribute 
+        tags: Details about a tags attribute 
+        url: Details about a url attribute 
+        refs: Details about a refs attribute 
+        sources: Details about a sources attribute 
+        created_at: Details about a created_at attribute 
+        depends_on: Details about a depends_on attribute 
+
     """
 
     fqn: str
@@ -575,7 +700,34 @@ class ManifestExposureNode(pydantic.BaseModel):
 
 
 class ManifestMetricNode(pydantic.BaseModel):
-    """Details about a Metric node. """
+    """Details about a Metric node. 
+
+    Attributes:
+        fqn: The fqn attribute
+        unique_id: The unique_id attribute
+        package_name: The package_name attribute
+        root_path: The root_path attribute
+        path: The path attribute
+        original_file_path: The original_file_path attribute
+        model: The model attribute
+        name: The name attribute
+        description: The description attribute
+        label: The label attribute
+        node_type: The node_type attribute
+        filters: The filters attribute
+        time_grains: The time_grains attribute
+        dimensions: The dimensions attribute
+        sql: The sql attribute
+        timestamp: The timestamp attribute
+        resource_type: The resource_type attribute
+        meta: The meta attribute
+        tags: The tags attribute
+        sources: The sources attribute
+        refs: The refs attribute
+        created_at: The created_at attribute
+        depends_on: The depends_on attribute
+
+    """
 
     fqn: str
     unique_id: str
@@ -607,7 +759,15 @@ class ManifestMetricNode(pydantic.BaseModel):
         }
 
 class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
-    """Details about a Catalog node. """
+    """Details about a Catalog node. 
+
+    Attributes:
+        metadata: The metadata attribute 
+        columns: The columns attribute 
+        stats: The stats attribute 
+        unique_id: The unique_id attribute
+    
+    """
 
     metadata: CatalogNodeMetadata
     columns: typing.Dict[str, CatalogNodeColumn]
@@ -616,7 +776,17 @@ class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
 
 
 class CatalogNodeMetadata(pydantic.BaseModel):
-    """Metadata details about a CatalogNode. """
+    """Metadata details about a CatalogNode. 
+
+    Attributes:    
+        node_type: The node_type attribute
+        db_schema: The db_schema attribute
+        name: The name attribute
+        database: The database attribute
+        comment: The comment attribute
+        owner: The owner attribute
+
+    """
 
     node_type: str
     db_schema: str
@@ -633,7 +803,15 @@ class CatalogNodeMetadata(pydantic.BaseModel):
 
 
 class CatalogNodeColumn(pydantic.BaseModel):
-    """Details about the columns in a CatalogNode. """
+    """Details about the columns in a CatalogNode. 
+    
+    Attributes:
+        node_type: The node_type attribute
+        index: The index attribute
+        name: The name attribute
+        comment: The comment attribute
+    
+    """
 
     node_type: str
     index: int
