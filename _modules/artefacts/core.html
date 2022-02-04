@@ -351,6 +351,18 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">child_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">""" A list of any tests that reference the node """</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'test'</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">snapshots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">""" A list of any snapshots that reference the node """</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'snapshot'</span><span class="p">]</span>
+
 
 <div class="viewcode-block" id="Manifest"><a class="viewcode-back" href="../../reference.html#artefacts.core.Manifest">[docs]</a><span class="k">class</span> <span class="nc">Manifest</span><span class="p">(</span><span class="n">Artifact</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="sd">"""</span>
@@ -396,6 +408,8 @@
 <span class="sd">                  during the run, etc.</span>
 <span class="sd">        results: A list of :class:`RunResultNode` s, which contain details </span>
 <span class="sd">                 about how long each node ran, whether it was successful, etc.</span>
+<span class="sd">        elapsed_time: The total duration of the run</span>
+<span class="sd">        args: The arguments used when at the start of the run or build</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
@@ -406,7 +420,15 @@
 
 
 <div class="viewcode-block" id="Catalog"><a class="viewcode-back" href="../../reference.html#artefacts.core.Catalog">[docs]</a><span class="k">class</span> <span class="nc">Catalog</span><span class="p">(</span><span class="n">Artifact</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""The catalog artifact. """</span>
+    <span class="sd">"""The catalog artifact. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: The metadata attribute of the catalog</span>
+<span class="sd">        nodes: The nodes attribute of the catalog</span>
+<span class="sd">        sources: The sources attribute of the catalog</span>
+<span class="sd">        errors: The errors attribute of the catalog</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNode</span><span class="p">]</span>
@@ -423,7 +445,18 @@
 
 
 <div class="viewcode-block" id="Metadata"><a class="viewcode-back" href="../../reference.html#artefacts.core.Metadata">[docs]</a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Data about the context in which the artifact was generated."""</span>
+    <span class="sd">"""Data about the context in which the artifact was generated.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        generated_at: The generated_at attribute</span>
+<span class="sd">        invocation_id: The invocation_id attribute</span>
+<span class="sd">        env: The env attribute</span>
+<span class="sd">        project_id: The project_id attribute</span>
+<span class="sd">        user_id: The user_id attribute</span>
+<span class="sd">        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute</span>
+<span class="sd">        adapter_type: The adapter_type attribute</span>
+
+<span class="sd">    """</span>
     
     <span class="n">dbt_schema_version_raw</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">dbt_version_raw</span><span class="p">:</span> <span class="nb">str</span>
@@ -442,11 +475,19 @@
         <span class="p">}</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dbt_schema_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">dbt_schema_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">"""The artifact's schema version. </span>
+<span class="sd">        </span>
+<span class="sd">        See https://schemas.getdbt.com for details.</span>
+<span class="sd">        """</span>
+
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_schema_version_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dbt_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">dbt_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">"""The dbt version that generated the artifact.</span>
+<span class="sd">        """</span>
+
         <span class="k">return</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_version_raw</span><span class="p">)</span></div>
 
 
@@ -491,6 +532,45 @@
 <div class="viewcode-block" id="ManifestNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.ManifestNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    An object representing a node, such as a model, test, or macro.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        raw_sql: the raw_sql attribute</span>
+<span class="sd">        compiled: the compiled attribute</span>
+<span class="sd">        database: the database attribute</span>
+<span class="sd">        db_schema: the db_schema attribute</span>
+<span class="sd">        fqn: the fqn attribute</span>
+<span class="sd">        unique_id: the unique_id attribute</span>
+<span class="sd">        package_name: the package_name attribute</span>
+<span class="sd">        root_path: the root_path attribute</span>
+<span class="sd">        path: the path attribute</span>
+<span class="sd">        original_file_path: the original_file_path attribute</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        resource_type: the resource_type attribute</span>
+<span class="sd">        alias: the alias attribute</span>
+<span class="sd">        checksum: the checksum attribute</span>
+<span class="sd">        config: the config attribute</span>
+<span class="sd">        tags: the tags attribute</span>
+<span class="sd">        refs: the refs attribute</span>
+<span class="sd">        sources: the sources attribute</span>
+<span class="sd">        depends_on: the depends_on attribute</span>
+<span class="sd">        description: the description attribute</span>
+<span class="sd">        columns: the columns attribute</span>
+<span class="sd">        meta: the meta attribute</span>
+<span class="sd">        docs: the docs attribute</span>
+<span class="sd">        patch_path: the patch_path attribute</span>
+<span class="sd">        compiled_path: the compiled_path attribute</span>
+<span class="sd">        build_path: the build_path attribute</span>
+<span class="sd">        deferred: the deferred attribute</span>
+<span class="sd">        unrendered_config: the unrendered_config attribute</span>
+<span class="sd">        created_at: the created_at attribute</span>
+<span class="sd">        config_call_dict: the config_call_dict attribute</span>
+<span class="sd">        compiled_sql: the compiled_sql attribute</span>
+<span class="sd">        extra_ctes_injected: the extra_ctes_injected attribute</span>
+<span class="sd">        extra_ctes: the extra_ctes attribute</span>
+<span class="sd">        relation_name: the relation_name attribute</span>
+<span class="sd">        column_name: the column_name attribute</span>
+<span class="sd">        file_key_name: the file_key_name attribute</span>
+
 <span class="sd">    """</span>
 
     <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
@@ -507,6 +587,28 @@
     <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">column_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>  <span class="c1"># only for generic test node</span>
+    <span class="n">file_key_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>  <span class="c1"># only for generic test node</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
@@ -533,11 +635,19 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;ManifestNodeReference </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="si">}</span><span class="s2">&gt;"</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">resource_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">resource_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        The type of resource this reference points to. Eg model, test, source, etc.</span>
+<span class="sd">        """</span>
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ManifestNode</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        The node this reference points to. </span>
+<span class="sd">        """</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'seed'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'operation'</span><span class="p">,</span> <span class="s1">'model'</span><span class="p">,</span> <span class="s1">'snapshot'</span><span class="p">]:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'source'</span><span class="p">:</span>
