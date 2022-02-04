@@ -1,11 +1,3 @@
-"""
-Config
-======
-
-artefacts can be configured through environment variables or a `pyproject.toml`
-file.
-"""
-
 import toml
 import os
 
