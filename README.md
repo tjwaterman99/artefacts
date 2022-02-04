@@ -48,3 +48,11 @@ export DBT_PROJECT_DIR=$PWD/dbt_projects/dbt-starter-project
 poetry run dbt build --project-dir $DBT_PROJECT_DIR
 poetry run pytest
 ```
+
+#### Documentation site
+
+Use `sphinx-livereload` to run the docs site on port `8000`.
+
+```
+poetry run sphinx-autobuild docs/ docs/_build
+```
