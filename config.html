@@ -189,17 +189,33 @@
           </label>
         </div>
         <article role="main">
-          <div class="section" id="module-artefacts.config">
-<span id="configuration"></span><h1>Configuration<a class="headerlink" href="#module-artefacts.config" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="config">
-<h2>Config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h2>
-<p>artefacts can be configured through environment variables or a <cite>pyproject.toml</cite>
-file.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="artefacts.config.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="_modules/artefacts/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.config.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>artefacts configuration object.</p>
-</dd></dl>
+          <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>artefacts can be configured through environment variables or a <cite>pyproject.toml</cite> file.</p>
+<p>The following configuration options are supported.</p>
+<div class="section" id="dbt-project-directory">
+<h2>dbt project directory<a class="headerlink" href="#dbt-project-directory" title="Permalink to this headline">¶</a></h2>
+<p>The directory that artefacts will search for your dbt project. Defaults to the current working directory (<code class="code docutils literal notranslate"><span class="pre">os.getcwd()</span></code>).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">DBT_PROJECT_DIR</span><span class="o">=</span>dbt_projects/poffertjes_shop
+</pre></div>
+</div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># pyproject.toml</span><span class="w"></span>
+<span class="k">[artefacts]</span><span class="w"></span>
+<span class="n">dbt_project_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"dbt_projects/poffertjes_shop"</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dbt-target-directory">
+<h2>dbt target directory<a class="headerlink" href="#dbt-target-directory" title="Permalink to this headline">¶</a></h2>
+<p>The directory that artefacts will search for your compiled artifacts, relative to <code class="code docutils literal notranslate"><span class="pre">$DBT_PROJECT_DIR</span></code>. Defaults to <code class="code docutils literal notranslate"><span class="pre">target</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">DBT_TARGET_DIR</span><span class="o">=</span>target
+</pre></div>
+</div>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># pyproject.toml</span><span class="w"></span>
+<span class="k">[artefacts]</span><span class="w"></span>
+<span class="n">dbt_target_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"target"</span><span class="w"></span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -247,7 +263,8 @@ file.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Configuration</a><ul>
-<li><a class="reference internal" href="#config">Config</a></li>
+<li><a class="reference internal" href="#dbt-project-directory">dbt project directory</a></li>
+<li><a class="reference internal" href="#dbt-target-directory">dbt target directory</a></li>
 </ul>
 </li>
 </ul>
