@@ -1,3 +1,6 @@
+[tool.pytest.ini_options]
+addopts = "-v --doctest-glob='*.md'"
+
 [tool.poetry]
 name = "artefacts"
 version = "1.0.0a2"
@@ -13,7 +16,7 @@ dbt-postgres = "^1.0.1"
 toml = "^0.10.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.0"
 Sphinx = "^4.4.0"
 sphinx-toolbox = "^2.16.1"
 furo = "^2022.1.2"
