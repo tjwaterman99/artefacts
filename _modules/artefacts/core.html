@@ -437,7 +437,14 @@
 
 
 <div class="viewcode-block" id="Sources"><a class="viewcode-back" href="../../reference.html#artefacts.core.Sources">[docs]</a><span class="k">class</span> <span class="nc">Sources</span><span class="p">(</span><span class="n">Artifact</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""The sources artifact. """</span>
+    <span class="sd">"""The sources artifact. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: The metadata attribute</span>
+<span class="sd">        results: The results attribute</span>
+<span class="sd">        elapsed_time: The elapsed_time attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">results</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">SourcesFreshnessResult</span><span class="p">]</span>
@@ -492,7 +499,14 @@
 
 
 <div class="viewcode-block" id="TimingResult"><a class="viewcode-back" href="../../reference.html#artefacts.core.TimingResult">[docs]</a><span class="k">class</span> <span class="nc">TimingResult</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Timing details from running the node. """</span>
+    <span class="sd">"""Timing details from running the node. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        started_at: the started_at attribute</span>
+<span class="sd">        completed_at: the completed_at attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">started_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -500,7 +514,22 @@
 
 
 <div class="viewcode-block" id="SourcesFreshnessResult"><a class="viewcode-back" href="../../reference.html#artefacts.core.SourcesFreshnessResult">[docs]</a><span class="k">class</span> <span class="nc">SourcesFreshnessResult</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Result details from checking the freshness of a source. """</span>
+    <span class="sd">"""Result details from checking the freshness of a source. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">        status: The status attribute</span>
+<span class="sd">        error: The error attribute</span>
+<span class="sd">        max_loaded_at: The max_loaded_at attribute</span>
+<span class="sd">        snapshotted_at: The snapshotted_at attribute</span>
+<span class="sd">        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute</span>
+<span class="sd">        criteria: The criteria attribute</span>
+<span class="sd">        adapter_response: The adapter_response attribute</span>
+<span class="sd">        timing: The timing attribute</span>
+<span class="sd">        thread_id: The thread_id attribute</span>
+<span class="sd">        execution_time: The execution_time attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
@@ -517,6 +546,17 @@
 
 <div class="viewcode-block" id="RunResultNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.RunResultNode">[docs]</a><span class="k">class</span> <span class="nc">RunResultNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="sd">"""Details about the results of running a specific model, test, etc.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        status: The status attribute</span>
+<span class="sd">        timing: The timing attribute</span>
+<span class="sd">        thread_id: The thread_id attribute</span>
+<span class="sd">        execution_time: The execution_time attribute</span>
+<span class="sd">        adapter_response: The adapter_response attribute</span>
+<span class="sd">        message: The message attribute</span>
+<span class="sd">        failures: The failures attribute</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+
 <span class="sd">    """</span>
 
     <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
@@ -665,7 +705,39 @@
 
 
 <div class="viewcode-block" id="ManifestSourceNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.ManifestSourceNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSourceNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Details about a Source node. """</span>
+    <span class="sd">"""Details about a Source node. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        fqn: The fqn attribute</span>
+<span class="sd">        database: The database attribute</span>
+<span class="sd">        db_schema: The db_schema attribute</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">        package_name: The package_name attribute</span>
+<span class="sd">        root_path: The root_path attribute</span>
+<span class="sd">        path: The path attribute</span>
+<span class="sd">        original_file_path: The original_file_path attribute</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        source_name: The source_name attribute</span>
+<span class="sd">        source_description: The source_description attribute</span>
+<span class="sd">        loader: The loader attribute</span>
+<span class="sd">        identifier: The identifier attribute</span>
+<span class="sd">        resource_type: The resource_type attribute</span>
+<span class="sd">        quoting: The quoting attribute</span>
+<span class="sd">        loaded_at_field: The loaded_at_field attribute</span>
+<span class="sd">        freshness: The freshness attribute</span>
+<span class="sd">        external: The external attribute</span>
+<span class="sd">        description: The description attribute</span>
+<span class="sd">        columns: The columns attribute</span>
+<span class="sd">        meta: The meta attribute</span>
+<span class="sd">        source_meta: The source_meta attribute</span>
+<span class="sd">        tags: The tags attribute</span>
+<span class="sd">        config: The config attribute</span>
+<span class="sd">        patch_path: The patch_path attribute</span>
+<span class="sd">        unrendered_config: The unrendered_config attribute</span>
+<span class="sd">        relation_name: The relation_name attribute</span>
+<span class="sd">        created_at: The created_at attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">fqn</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">database</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
@@ -703,7 +775,27 @@
 
 
 <div class="viewcode-block" id="ManifestMacroNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.ManifestMacroNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMacroNode</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Details about a Macro node. """</span>
+    <span class="sd">"""Details about a Macro node. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">        package_name: The package_name attribute</span>
+<span class="sd">        root_path: The root_path attribute</span>
+<span class="sd">        path: The path attribute</span>
+<span class="sd">        original_file_path: The original_file_path attribute</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        macro_sql: The macro_sql attribute</span>
+<span class="sd">        resource_type: The resource_type attribute</span>
+<span class="sd">        tags: The tags attribute</span>
+<span class="sd">        patch_path: The patch_path attribute</span>
+<span class="sd">        created_at: The created_at attribute</span>
+<span class="sd">        description: The description attribute</span>
+<span class="sd">        meta: The meta attribute</span>
+<span class="sd">        docs: The docs attribute</span>
+<span class="sd">        arguments: The arguments attribute</span>
+<span class="sd">        depends_on: The depends_on attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
@@ -724,19 +816,52 @@
 
 
 <div class="viewcode-block" id="ManifestDocsNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.ManifestDocsNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestDocsNode</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-   <span class="sd">"""Details about a Docs node. """</span>
+    <span class="sd">"""Details about a Docs node. </span>
 
-   <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
-   <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
-   <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
-   <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
-   <span class="n">original_filepath</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-   <span class="n">block_contents</span><span class="p">:</span> <span class="nb">str</span></div>
+<span class="sd">    Attributes:</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">        package_name: The package_name attribute</span>
+<span class="sd">        root_path: The root_path attribute</span>
+<span class="sd">        path: The path attribute</span>
+<span class="sd">        original_filepath: The original_filepath attribute</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        block_contents: The block_contents attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">original_filepath</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">block_contents</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
 <div class="viewcode-block" id="ManifestExposureNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.ManifestExposureNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestExposureNode</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="sd">"""Details about an Exposure node.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        fqn: Details about a fqn attribute </span>
+<span class="sd">        unique_id: Details about a unique_id attribute </span>
+<span class="sd">        package_name: Details about a package_name attribute </span>
+<span class="sd">        root_path: Details about a root_path attribute </span>
+<span class="sd">        path: Details about a path attribute </span>
+<span class="sd">        original_file_path: Details about a original_file_path attribute </span>
+<span class="sd">        name: Details about a name attribute </span>
+<span class="sd">        node_type: Details about a node_type attribute </span>
+<span class="sd">        owner: Details about a owner attribute </span>
+<span class="sd">        resource_type: Details about a resource_type attribute </span>
+<span class="sd">        description: Details about a description attribute </span>
+<span class="sd">        maturity: Details about a maturity attribute </span>
+<span class="sd">        meta: Details about a meta attribute </span>
+<span class="sd">        tags: Details about a tags attribute </span>
+<span class="sd">        url: Details about a url attribute </span>
+<span class="sd">        refs: Details about a refs attribute </span>
+<span class="sd">        sources: Details about a sources attribute </span>
+<span class="sd">        created_at: Details about a created_at attribute </span>
+<span class="sd">        depends_on: Details about a depends_on attribute </span>
+
 <span class="sd">    """</span>
 
     <span class="n">fqn</span><span class="p">:</span> <span class="nb">str</span>
@@ -767,7 +892,34 @@
 
 
 <div class="viewcode-block" id="ManifestMetricNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.ManifestMetricNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMetricNode</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Details about a Metric node. """</span>
+    <span class="sd">"""Details about a Metric node. </span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        fqn: The fqn attribute</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">        package_name: The package_name attribute</span>
+<span class="sd">        root_path: The root_path attribute</span>
+<span class="sd">        path: The path attribute</span>
+<span class="sd">        original_file_path: The original_file_path attribute</span>
+<span class="sd">        model: The model attribute</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        description: The description attribute</span>
+<span class="sd">        label: The label attribute</span>
+<span class="sd">        node_type: The node_type attribute</span>
+<span class="sd">        filters: The filters attribute</span>
+<span class="sd">        time_grains: The time_grains attribute</span>
+<span class="sd">        dimensions: The dimensions attribute</span>
+<span class="sd">        sql: The sql attribute</span>
+<span class="sd">        timestamp: The timestamp attribute</span>
+<span class="sd">        resource_type: The resource_type attribute</span>
+<span class="sd">        meta: The meta attribute</span>
+<span class="sd">        tags: The tags attribute</span>
+<span class="sd">        sources: The sources attribute</span>
+<span class="sd">        refs: The refs attribute</span>
+<span class="sd">        created_at: The created_at attribute</span>
+<span class="sd">        depends_on: The depends_on attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">fqn</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -799,7 +951,15 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="CatalogNode"><a class="viewcode-back" href="../../reference.html#artefacts.core.CatalogNode">[docs]</a><span class="k">class</span> <span class="nc">CatalogNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Details about a Catalog node. """</span>
+    <span class="sd">"""Details about a Catalog node. </span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: The metadata attribute </span>
+<span class="sd">        columns: The columns attribute </span>
+<span class="sd">        stats: The stats attribute </span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">CatalogNodeMetadata</span>
     <span class="n">columns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNodeColumn</span><span class="p">]</span>
@@ -808,7 +968,17 @@
 
 
 <div class="viewcode-block" id="CatalogNodeMetadata"><a class="viewcode-back" href="../../reference.html#artefacts.core.CatalogNodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeMetadata</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Metadata details about a CatalogNode. """</span>
+    <span class="sd">"""Metadata details about a CatalogNode. </span>
+
+<span class="sd">    Attributes:    </span>
+<span class="sd">        node_type: The node_type attribute</span>
+<span class="sd">        db_schema: The db_schema attribute</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        database: The database attribute</span>
+<span class="sd">        comment: The comment attribute</span>
+<span class="sd">        owner: The owner attribute</span>
+
+<span class="sd">    """</span>
 
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
@@ -825,7 +995,15 @@
 
 
 <div class="viewcode-block" id="CatalogNodeColumn"><a class="viewcode-back" href="../../reference.html#artefacts.core.CatalogNodeColumn">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeColumn</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">"""Details about the columns in a CatalogNode. """</span>
+    <span class="sd">"""Details about the columns in a CatalogNode. </span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        node_type: The node_type attribute</span>
+<span class="sd">        index: The index attribute</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        comment: The comment attribute</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
