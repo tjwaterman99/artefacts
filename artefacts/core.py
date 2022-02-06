@@ -672,7 +672,7 @@ class ManifestExposureNode(pydantic.BaseModel):
 
     """
 
-    fqn: str
+    fqn: typing.List[str]
     unique_id: str
     package_name: str
     root_path: str
@@ -680,7 +680,7 @@ class ManifestExposureNode(pydantic.BaseModel):
     original_file_path: str
     name: str
     node_type: str
-    owner: str
+    owner: dict
     resource_type: typing.Union[str, None]
     description: typing.Union[str, None]
     maturity: typing.Union[str, None]
@@ -729,7 +729,7 @@ class ManifestMetricNode(pydantic.BaseModel):
 
     """
 
-    fqn: str
+    fqn: typing.List[str]
     unique_id: str
     package_name: str
     root_path: str
@@ -749,7 +749,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     meta: typing.Union[dict, None]
     tags: typing.Union[list, None]
     sources: typing.Union[typing.List[str], None]
-    refs: typing.Union[typing.List[str], None]
+    refs: typing.Union[typing.List[typing.List[str]], None]
     created_at: typing.Union[float, None]
     depends_on: typing.Union[dict, None]  # TODO deserialize
 
