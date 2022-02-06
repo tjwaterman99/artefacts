@@ -191,6 +191,16 @@ class Manifest(Artifact, pydantic.BaseModel):
 
     """
 
+    # TODO: improve the way we validate minimum dbt versions.
+    @pydantic.validator('metadata')
+    def validate_metadata(cls, metadata):
+        if metadata.dbt_version < packaging.version.parse('1.0'):
+            raise ValueError(
+                f"\n\tUnsupported dbt version: {metadata.dbt_version}. "
+                "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
+            )
+        return metadata
+
     metadata: Metadata
     nodes: typing.Dict[str, ManifestNode]
     sources: typing.Dict[str, ManifestSourceNode]
