@@ -30,8 +30,9 @@ def get(key: str) -> typing.Union[typing.Any, None]:
     """
     Returns an object from the store, if it exists.
 
+    >>> result = artefacts.state.set('myitem', {'a': 1})
     >>> artefacts.state.get('myitem')
-    {a: 1}
+    {'a': 1}
 
     """
 
@@ -42,6 +43,7 @@ def exists(key: str) -> bool:
     """
     Returns `True` if the key exists in the store.
 
+    >>> result = artefacts.state.set('myitem', {'a': 1})
     >>> artefacts.state.exists('myitem')
     True
     >>> artefacts.state.exists('thisdoesnotexist')

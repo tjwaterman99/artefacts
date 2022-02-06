@@ -1,6 +1,7 @@
 import pytest
 
 from artefacts import Manifest, RunResults, Catalog, Sources
+import artefacts
 
 
 @pytest.fixture(scope='session', params=[Manifest, RunResults, Catalog, Sources])

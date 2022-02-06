@@ -11,7 +11,15 @@ from artefacts.core import (
 
 
 def models() -> typing.List[ManifestNode]:
-    """ A list of all models in the dbt project. """
+    """ A list of all models in the dbt project. 
+    
+    >>> model = artefacts.api.models()[0]
+    >>> model.resource_type
+    'model'
+    >>> type(model)
+    <class 'artefacts.core.ManifestNode'>
+
+    """
 
     result = []
     manifest = Manifest.load()
