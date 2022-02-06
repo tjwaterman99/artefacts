@@ -43,6 +43,15 @@ Sources = typing.ForwardRef('Sources')
 SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
+class Deserializer(pydantic.BaseModel):
+    
+    def __repr__(self):
+        if not hasattr(self, "resource_type"):
+            return f"<{self.__class__.__name__}>"
+        else:
+            return f"<{self.__class__.__name__} resource_type={self.resource_type}>"
+
+
 class Artifact:
 
     @classmethod
@@ -172,7 +181,7 @@ class ArtifactNodeReader(ArtifactReader):
         return [s for s in self.children if s.resource_type == 'snapshot']
 
 
-class Manifest(Artifact, pydantic.BaseModel):
+class Manifest(Artifact, Deserializer):
     """
     The manifest artifact.
 
@@ -217,7 +226,7 @@ class Manifest(Artifact, pydantic.BaseModel):
         arbitrary_types_allowed = True
 
 
-class RunResults(Artifact, pydantic.BaseModel):
+class RunResults(Artifact, Deserializer):
     """The run_results artifact. 
     
     Attributes:
@@ -237,7 +246,7 @@ class RunResults(Artifact, pydantic.BaseModel):
     args: typing.Union[dict, None]
 
 
-class Catalog(Artifact, pydantic.BaseModel):
+class Catalog(Artifact, Deserializer):
     """The catalog artifact. 
     
     Attributes:
@@ -254,7 +263,7 @@ class Catalog(Artifact, pydantic.BaseModel):
     errors: typing.Union[typing.List[str], None]
 
 
-class Sources(Artifact, pydantic.BaseModel):
+class Sources(Artifact, Deserializer):
     """The sources artifact. 
     
     Attributes:
@@ -269,7 +278,7 @@ class Sources(Artifact, pydantic.BaseModel):
     elapsed_time: float
 
 
-class Metadata(pydantic.BaseModel):
+class Metadata(Deserializer):
     """Data about the context in which the artifact was generated.
     
     Attributes:
@@ -316,6 +325,7 @@ class Metadata(pydantic.BaseModel):
         return packaging.version.Version(self.dbt_version_raw)
 
 
+<<<<<<< HEAD
 class Quoting(pydantic.BaseModel):
     """Details about quoting requirements for database objects
 
@@ -398,6 +408,9 @@ class ColumnInfo(pydantic.BaseModel):
 
 
 class TimingResult(pydantic.BaseModel):
+=======
+class TimingResult(Deserializer):
+>>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Timing details from running the node. 
     
     Attributes:
@@ -412,6 +425,7 @@ class TimingResult(pydantic.BaseModel):
     completed_at: typing.Union[None, datetime.datetime]
 
 
+<<<<<<< HEAD
 class SourceConfig(pydantic.BaseModel):
     """An object containing details about a source's config
 
@@ -453,6 +467,9 @@ class FreshnessThreshold(pydantic.BaseModel):
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
+=======
+class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
+>>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Result details from checking the freshness of a source. 
     
     Attributes:
@@ -483,7 +500,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     execution_time: typing.Union[None, float]
 
 
-class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
+class RunResultNode(ArtifactNodeReader, Deserializer):
     """Details about the results of running a specific model, test, etc.
 
     Attributes:
@@ -508,7 +525,7 @@ class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
     unique_id: str
 
 
-class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
+class ManifestNode(ArtifactNodeReader, Deserializer):
     """
     An object representing a node, such as a model, test, or macro.
 
@@ -643,7 +660,7 @@ class ManifestNodeReference(ArtifactNodeReader):
             raise AttributeError(f"Unknown resource type: {self.resource_type}")
 
 
-class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
+class ManifestSourceNode(ArtifactNodeReader, Deserializer):
     """Details about a Source node. 
     
     Attributes:
@@ -713,6 +730,7 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
         }
 
 
+<<<<<<< HEAD
 class MacroArgument(pydantic.BaseModel):
     """Details about the arguments of a macro
 
@@ -729,6 +747,9 @@ class MacroArgument(pydantic.BaseModel):
 
 
 class ManifestMacroNode(pydantic.BaseModel):
+=======
+class ManifestMacroNode(Deserializer):
+>>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Details about a Macro node. 
     
     Attributes:
@@ -769,7 +790,7 @@ class ManifestMacroNode(pydantic.BaseModel):
     depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
 
 
-class ManifestDocsNode(pydantic.BaseModel):
+class ManifestDocsNode(Deserializer):
     """Details about a Docs node. 
 
     Attributes:
@@ -792,7 +813,7 @@ class ManifestDocsNode(pydantic.BaseModel):
     block_contents: str
 
 
-class ManifestExposureNode(pydantic.BaseModel):
+class ManifestExposureNode(Deserializer):
     """Details about an Exposure node.
 
     Attributes:
@@ -845,6 +866,7 @@ class ManifestExposureNode(pydantic.BaseModel):
         }
 
 
+<<<<<<< HEAD
 class MetricFilter(pydantic.BaseModel):
     """Details about a Metric filter.
 
@@ -860,6 +882,9 @@ class MetricFilter(pydantic.BaseModel):
 
 
 class ManifestMetricNode(pydantic.BaseModel):
+=======
+class ManifestMetricNode(Deserializer):
+>>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Details about a Metric node. 
 
     Attributes:
@@ -918,7 +943,7 @@ class ManifestMetricNode(pydantic.BaseModel):
             'node_type': 'type'
         }
 
-class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
+class CatalogNode(ArtifactNodeReader, Deserializer):
     """Details about a Catalog node. 
 
     Attributes:
@@ -935,7 +960,7 @@ class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
     unique_id: str
 
 
-class CatalogNodeMetadata(pydantic.BaseModel):
+class CatalogNodeMetadata(Deserializer):
     """Metadata details about a CatalogNode. 
 
     Attributes:    
@@ -962,7 +987,7 @@ class CatalogNodeMetadata(pydantic.BaseModel):
         }
 
 
-class CatalogNodeColumn(pydantic.BaseModel):
+class CatalogNodeColumn(Deserializer):
     """Details about the columns in a CatalogNode. 
     
     Attributes:
@@ -984,7 +1009,7 @@ class CatalogNodeColumn(pydantic.BaseModel):
         }
 
 
-class CatalogNodeStats(pydantic.BaseModel):
+class CatalogNodeStats(Deserializer):
     """Statics about a CatalogNode. 
     
     Attributes:
