@@ -37,10 +37,10 @@ jobs:
     - name: Install dependencies
       run: .devcontainer/postCreateCommand.sh
     - name: Test with --doctest-modules
-      if: ${{ env.DBT_PROJECT_DIR == "dbt_projects/poffertjes_shop" }}
+      if: matrix.dbt_project_dir == "dbt_projects/poffertjes_shop"
       run: |
         poetry run pytest --doctest-modules --doctest-continue-on-failure
     - name: Test without doctests
-      if: ${{ env.DBT_PROJECT_DIR != "dbt_projects/poffertjes_shop" }}
+      if: matrix.dbt_project_dir != "dbt_projects/poffertjes_shop"
       run: |
-        poetry run pytest --doctest-modules --doctest-continue-on-failure
+        poetry run pytest
