@@ -383,6 +383,16 @@
 
 <span class="sd">    """</span>
 
+    <span class="c1"># TODO: improve the way we validate minimum dbt versions.</span>
+    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">'1.0'</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">Unsupported dbt version: </span><span class="si">{</span><span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="s2">"</span><span class="se">\n\t</span><span class="s2">Please upgrade dbt to at least v1.0 to use artefacts"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestNode</span><span class="p">]</span>
     <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestSourceNode</span><span class="p">]</span>
