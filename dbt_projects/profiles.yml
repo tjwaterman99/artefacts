@@ -24,7 +24,7 @@ poffertjes_shop:
       schema: poffertjes_shop
       threads: 4
 
-my_new_project:
+starter_project:
   target: dev
   outputs:
     dev:
