@@ -1,35 +1,44 @@
 # artefacts
 
-A deserialization library for dbt artifacts.
+_A deserialization library for dbt artifacts._
 
-### Usage
+```
+pip install artefacts
+```
 
-The simplest way to use artefacts is by importing the `api`.
+The `artefacts.api` module aims to provide simple, easy to use python objects for interacting with your dbt project. Here's an example that identifies models in your project that are missing tests or descriptions.
 
 ```py
 >>> import artefacts.api
+>>> for model in artefacts.api.models():
+...     if model.description is None or len(model.tests) == 0:
+...         print(f"Incomplete model: {model.name}")
 
 ```
 
-The `api` provides convenient methods for interacting with your dbt project's compiled artifacts.
+### Usage
 
-#### `artefacts.api.models()`
+After installing artefacts, you first need to _compile_ your dbt project.
+
+```
+dbt compile
+```
+
+You can then start using the api.
 
 ```py
->>> models = artefacts.api.models()
->>> len(models) > 0
-True
-
+>>> import artefacts.api
 ```
 
-#### `artefacts.api.tests()`
+### Docs
 
-```py
->>> tests = artefacts.api.tests()
->>> len(tests) > 0
-True
+Documentation for all methods of the api is available on this project's Github Pages site.
 
-```
+> https://tjwaterman99.github.io/artefacts/
+
+References for the objects returned by the api is available in the References section.
+
+> https://tjwaterman99.github.io/artefacts/reference.html
 
 ### Development Setup
 

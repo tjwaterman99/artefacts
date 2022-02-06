@@ -1,5 +1,5 @@
 [tool.pytest.ini_options]
-addopts = "-v --doctest-glob='*.md'"
+addopts = "-v"
 
 [tool.poetry]
 name = "artefacts"
