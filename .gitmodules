@@ -1,9 +1,6 @@
 [submodule "dbt_projects/jaffle_shop"]
 	path = dbt_projects/jaffle_shop
 	url = https://github.com/dbt-labs/jaffle_shop.git
-[submodule "dbt_projects/dbt-starter-project"]
-	path = dbt_projects/dbt-starter-project
-	url = https://github.com/dbt-labs/dbt-starter-project
 [submodule "dbt_projects/poffertjes_shop"]
 	path = dbt_projects/poffertjes_shop
 	url = https://github.com/tjwaterman99/poffertjes_shop
