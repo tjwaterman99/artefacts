@@ -37,5 +37,6 @@ jobs:
     - name: Install dependencies
       run: .devcontainer/postCreateCommand.sh
     - name: Test with pytest
+      if: "${{ matrix.dbt_project_dir }} == dbt_projects/poffertjes_shop"
       run: |
         poetry run pytest
