@@ -31,7 +31,15 @@ def models() -> typing.List[ManifestNode]:
 
 
 def tests() -> typing.List[ManifestNode]:
-    """ A list of all tests in the dbt project. """
+    """ A list of all tests in the dbt project. 
+
+    >>> test = artefacts.api.tests()[0]
+    >>> test.resource_type
+    'test'
+    >>> type(test)
+    <class 'artefacts.core.ManifestNode'>
+    
+    """
 
     result = []
     manifest = Manifest.load()
