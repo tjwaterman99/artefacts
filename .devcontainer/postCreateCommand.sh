@@ -13,6 +13,7 @@ pipx install poetry
 poetry install
 git submodule update --init --recursive
 
+poetry run dbt init starter_project --skip-profile-setup && mv starter_project dbt_projects/
 poetry run dbt deps --project-dir $DBT_PROJECT_DIR
 poetry run dbt build --project-dir $DBT_PROJECT_DIR
 poetry run dbt docs generate --project-dir $DBT_PROJECT_DIR
