@@ -1027,7 +1027,7 @@ directory.</p>
 <dd><p>The arguments attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, List[Dict]]</p>
+<dd class="field-odd"><p>Union[None, List[artefacts.core.MacroArgument]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1162,7 +1162,7 @@ directory.</p>
 <dd><p>The filters attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[dict]</p>
+<dd class="field-odd"><p>List[artefacts.core.MetricFilter]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1856,7 +1856,7 @@ directory.</p>
 <dd><p>The quoting attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[dict]</p>
+<dd class="field-odd"><p>Optional[artefacts.core.Quoting]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1876,7 +1876,7 @@ directory.</p>
 <dd><p>The freshness attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, dict]</p>
+<dd class="field-odd"><p>Union[None, <a class="reference internal" href="#artefacts.core.FreshnessThreshold" title="artefacts.core.FreshnessThreshold">artefacts.core.FreshnessThreshold</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1886,7 +1886,7 @@ directory.</p>
 <dd><p>The external attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, dict]</p>
+<dd class="field-odd"><p>Union[None, artefacts.core.ExternalTable]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1906,7 +1906,7 @@ directory.</p>
 <dd><p>The columns attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, dict]</p>
+<dd class="field-odd"><p>Union[None, Dict[str, artefacts.core.ColumnInfo]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1946,7 +1946,7 @@ directory.</p>
 <dd><p>The config attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>Optional[artefacts.core.SourceConfig]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2371,7 +2371,7 @@ directory.</p>
 <dd><p>The criteria attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, dict]</p>
+<dd class="field-odd"><p>Union[None, <a class="reference internal" href="#artefacts.core.FreshnessThreshold" title="artefacts.core.FreshnessThreshold">artefacts.core.FreshnessThreshold</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2447,6 +2447,70 @@ directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Union[None, datetime.datetime]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.core.FreshnessThreshold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.core.</span></span><span class="sig-name descname"><span class="pre">FreshnessThreshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/core.html#FreshnessThreshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.core.FreshnessThreshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Details of the criteria used when checking a source’s freshness</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.core.FreshnessThreshold.warn_after">
+<span class="sig-name descname"><span class="pre">warn_after</span></span><a class="headerlink" href="#artefacts.core.FreshnessThreshold.warn_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>The freshness criteria after which a freshness check will
+raise a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#artefacts.core.Time" title="artefacts.core.Time">artefacts.core.Time</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.core.FreshnessThreshold.error_after">
+<span class="sig-name descname"><span class="pre">error_after</span></span><a class="headerlink" href="#artefacts.core.FreshnessThreshold.error_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>The freshness criteria after which a freshness check will
+raise an error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#artefacts.core.Time" title="artefacts.core.Time">artefacts.core.Time</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.core.FreshnessThreshold.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><a class="headerlink" href="#artefacts.core.FreshnessThreshold.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SQL statement used to filter the table when running a
+freshness check.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.core.Time">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.core.</span></span><span class="sig-name descname"><span class="pre">Time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/core.html#Time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.core.Time" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object representing a time interval, used for example when
+configuring a source freshness check</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.core.Time.period">
+<span class="sig-name descname"><span class="pre">period</span></span><a class="headerlink" href="#artefacts.core.Time.period" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length of the time interval, eg days, hours, seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.core.Time.count">
+<span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#artefacts.core.Time.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of periods associed with the time interval</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[int]</p>
 </dd>
 </dl>
 </dd></dl>
