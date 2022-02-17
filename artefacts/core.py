@@ -764,7 +764,7 @@ class ManifestMacroNode(pydantic.BaseModel):
     created_at: typing.Union[None, float]
     description: typing.Union[None, str]
     meta: typing.Union[None, dict]
-    docs: typing.Union[None, dict]  # TODO deserialize
+    docs: typing.Union[None, dict]
     arguments: typing.Union[None, typing.List[MacroArgument]]
     depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
 
@@ -836,13 +836,27 @@ class ManifestExposureNode(pydantic.BaseModel):
     refs: typing.Union[typing.List[list], None]
     sources: typing.Union[typing.List[list], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[typing.Dict[str, list]]  # TODO deserialize
+    depends_on: typing.Union[typing.Dict[str, list]]
 
     class Config:
         fields = {
             'db_schema': 'schema',
             'node_type': 'type'
         }
+
+
+class MetricFilter(pydantic.BaseModel):
+    """Details about a Metric filter.
+
+    Attributes:
+        field: The field attribute
+        operator: The operator attribute
+        value: The value attribute
+    """
+
+    field: str
+    operator: str
+    value: str
 
 
 class ManifestMetricNode(pydantic.BaseModel):
@@ -886,7 +900,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     description: str
     label: str
     node_type: str
-    filters: typing.List[dict]  # TODO deserialize
+    filters: typing.List[MetricFilter]
     time_grains: typing.List[str]
     dimensions: typing.List[str]
     sql: typing.Union[str, None]
@@ -897,7 +911,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     sources: typing.Union[typing.List[str], None]
     refs: typing.Union[typing.List[typing.List[str]], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[dict, None]  # TODO deserialize
+    depends_on: typing.Union[dict, None]
 
     class Config:
         fields = {
