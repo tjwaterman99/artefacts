@@ -43,6 +43,12 @@ Sources = typing.ForwardRef('Sources')
 SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
+class Deserializer(pydantic.BaseModel):
+    
+    def __repr__(self):
+        return f"<{self.__class__.__name__}>"
+
+
 class Artifact:
 
     @classmethod
@@ -172,7 +178,7 @@ class ArtifactNodeReader(ArtifactReader):
         return [s for s in self.children if s.resource_type == 'snapshot']
 
 
-class Manifest(Artifact, pydantic.BaseModel):
+class Manifest(Artifact, Deserializer):
     """
     The manifest artifact.
 
@@ -217,7 +223,7 @@ class Manifest(Artifact, pydantic.BaseModel):
         arbitrary_types_allowed = True
 
 
-class RunResults(Artifact, pydantic.BaseModel):
+class RunResults(Artifact, Deserializer):
     """The run_results artifact. 
     
     Attributes:
@@ -237,7 +243,7 @@ class RunResults(Artifact, pydantic.BaseModel):
     args: typing.Union[dict, None]
 
 
-class Catalog(Artifact, pydantic.BaseModel):
+class Catalog(Artifact, Deserializer):
     """The catalog artifact. 
     
     Attributes:
@@ -254,7 +260,7 @@ class Catalog(Artifact, pydantic.BaseModel):
     errors: typing.Union[typing.List[str], None]
 
 
-class Sources(Artifact, pydantic.BaseModel):
+class Sources(Artifact, Deserializer):
     """The sources artifact. 
     
     Attributes:
@@ -269,7 +275,7 @@ class Sources(Artifact, pydantic.BaseModel):
     elapsed_time: float
 
 
-class Metadata(pydantic.BaseModel):
+class Metadata(Deserializer):
     """Data about the context in which the artifact was generated.
     
     Attributes:
@@ -316,7 +322,7 @@ class Metadata(pydantic.BaseModel):
         return packaging.version.Version(self.dbt_version_raw)
 
 
-class Quoting(pydantic.BaseModel):
+class Quoting(Deserializer):
     """Details about quoting requirements for database objects
 
     Attributes:
@@ -338,7 +344,7 @@ class Quoting(pydantic.BaseModel):
         }
 
 
-class ExternalPartition(pydantic.BaseModel):
+class ExternalPartition(Deserializer):
     """
     Object representing a partition on an external table
 
@@ -356,7 +362,7 @@ class ExternalPartition(pydantic.BaseModel):
     meta: typing.Union[dict, None]
 
 
-class ExternalTable(pydantic.BaseModel):
+class ExternalTable(Deserializer):
     """
     Object representing an external table
 
@@ -376,7 +382,7 @@ class ExternalTable(pydantic.BaseModel):
     partitions: typing.Union[typing.List[ExternalPartition], None]
 
 
-class ColumnInfo(pydantic.BaseModel):
+class ColumnInfo(Deserializer):
     """Column details of a documented model
 
     Attributes:
@@ -397,7 +403,7 @@ class ColumnInfo(pydantic.BaseModel):
     tags: typing.Union[None, typing.List[str]]
 
 
-class TimingResult(pydantic.BaseModel):
+class TimingResult(Deserializer):
     """Timing details from running the node. 
     
     Attributes:
@@ -412,7 +418,7 @@ class TimingResult(pydantic.BaseModel):
     completed_at: typing.Union[None, datetime.datetime]
 
 
-class SourceConfig(pydantic.BaseModel):
+class SourceConfig(Deserializer):
     """An object containing details about a source's config
 
     Attributes:
@@ -422,7 +428,7 @@ class SourceConfig(pydantic.BaseModel):
     enabled: typing.Union[bool, None]
 
 
-class Time(pydantic.BaseModel):
+class Time(Deserializer):
     """An object representing a time interval, used for example when
     configuring a source freshness check
 
@@ -435,7 +441,7 @@ class Time(pydantic.BaseModel):
     period: typing.Union[str, None]
 
 
-class FreshnessThreshold(pydantic.BaseModel):
+class FreshnessThreshold(Deserializer):
     """Details of the criteria used when checking a source's freshness
 
     Attributes:
@@ -452,7 +458,7 @@ class FreshnessThreshold(pydantic.BaseModel):
     filter: typing.Union[str, None]
 
 
-class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
+class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
     """Result details from checking the freshness of a source. 
     
     Attributes:
@@ -483,7 +489,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     execution_time: typing.Union[None, float]
 
 
-class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
+class RunResultNode(ArtifactNodeReader, Deserializer):
     """Details about the results of running a specific model, test, etc.
 
     Attributes:
@@ -508,7 +514,7 @@ class RunResultNode(ArtifactNodeReader, pydantic.BaseModel):
     unique_id: str
 
 
-class ManifestNode(ArtifactNodeReader, pydantic.BaseModel):
+class ManifestNode(ArtifactNodeReader, Deserializer):
     """
     An object representing a node, such as a model, test, or macro.
 
@@ -643,7 +649,7 @@ class ManifestNodeReference(ArtifactNodeReader):
             raise AttributeError(f"Unknown resource type: {self.resource_type}")
 
 
-class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
+class ManifestSourceNode(ArtifactNodeReader, Deserializer):
     """Details about a Source node. 
     
     Attributes:
@@ -713,7 +719,7 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
         }
 
 
-class MacroArgument(pydantic.BaseModel):
+class MacroArgument(Deserializer):
     """Details about the arguments of a macro
 
     Attributes:
@@ -728,7 +734,7 @@ class MacroArgument(pydantic.BaseModel):
     description: typing.Union[str, None]
 
 
-class ManifestMacroNode(pydantic.BaseModel):
+class ManifestMacroNode(Deserializer):
     """Details about a Macro node. 
     
     Attributes:
@@ -769,7 +775,7 @@ class ManifestMacroNode(pydantic.BaseModel):
     depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
 
 
-class ManifestDocsNode(pydantic.BaseModel):
+class ManifestDocsNode(Deserializer):
     """Details about a Docs node. 
 
     Attributes:
@@ -792,7 +798,7 @@ class ManifestDocsNode(pydantic.BaseModel):
     block_contents: str
 
 
-class ManifestExposureNode(pydantic.BaseModel):
+class ManifestExposureNode(Deserializer):
     """Details about an Exposure node.
 
     Attributes:
@@ -845,7 +851,7 @@ class ManifestExposureNode(pydantic.BaseModel):
         }
 
 
-class MetricFilter(pydantic.BaseModel):
+class MetricFilter(Deserializer):
     """Details about a Metric filter.
 
     Attributes:
@@ -859,7 +865,7 @@ class MetricFilter(pydantic.BaseModel):
     value: str
 
 
-class ManifestMetricNode(pydantic.BaseModel):
+class ManifestMetricNode(Deserializer):
     """Details about a Metric node. 
 
     Attributes:
@@ -918,7 +924,7 @@ class ManifestMetricNode(pydantic.BaseModel):
             'node_type': 'type'
         }
 
-class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
+class CatalogNode(ArtifactNodeReader, Deserializer):
     """Details about a Catalog node. 
 
     Attributes:
@@ -935,7 +941,7 @@ class CatalogNode(ArtifactNodeReader, pydantic.BaseModel):
     unique_id: str
 
 
-class CatalogNodeMetadata(pydantic.BaseModel):
+class CatalogNodeMetadata(Deserializer):
     """Metadata details about a CatalogNode. 
 
     Attributes:    
@@ -962,7 +968,7 @@ class CatalogNodeMetadata(pydantic.BaseModel):
         }
 
 
-class CatalogNodeColumn(pydantic.BaseModel):
+class CatalogNodeColumn(Deserializer):
     """Details about the columns in a CatalogNode. 
     
     Attributes:
@@ -984,7 +990,7 @@ class CatalogNodeColumn(pydantic.BaseModel):
         }
 
 
-class CatalogNodeStats(pydantic.BaseModel):
+class CatalogNodeStats(Deserializer):
     """Statics about a CatalogNode. 
     
     Attributes:
