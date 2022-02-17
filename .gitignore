@@ -1,5 +1,6 @@
 # dbt generated files
 dbt_projects/.user.yml
+dbt_projects/starter_project/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

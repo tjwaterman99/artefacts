@@ -63,5 +63,5 @@ poetry run pytest
 Use `sphinx-livereload` to run the docs site on port `8000`.
 
 ```
-poetry run sphinx-autobuild docs/ docs/_build
+poetry run sphinx-autobuild docs/ docs/_build --watch artefacts
 ```
