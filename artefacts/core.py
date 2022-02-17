@@ -316,6 +316,87 @@ class Metadata(pydantic.BaseModel):
         return packaging.version.Version(self.dbt_version_raw)
 
 
+class Quoting(pydantic.BaseModel):
+    """Details about quoting requirements for database objects
+
+    Attributes:
+        database: Whether to quote the "database" component of an object path
+        identifier: Whether to quote the "identifier" component of an object path
+        db_schema: Whether to quote the "db_schema" component of an object path
+        column: Whether to quote the "column" component of an object path
+
+    """
+    
+    database: typing.Union[bool, None]
+    identifier: typing.Union[bool, None]
+    db_schema: typing.Union[bool, None]
+    column: typing.Union[bool, None]
+
+    class Config:
+        fields = {
+            'db_schema': 'schema',
+        }
+
+
+class ExternalPartition(pydantic.BaseModel):
+    """
+    Object representing a partition on an external table
+
+    Attributes:
+        name: The name attribute
+        description: The description attribute
+        data_type: The data_type attribute
+        meta: The meta attribute
+   
+    """
+
+    name: typing.Union[str, None]
+    description: typing.Union[str, None]
+    data_type: typing.Union[str, None]
+    meta: typing.Union[dict, None]
+
+
+class ExternalTable(pydantic.BaseModel):
+    """
+    Object representing an external table
+
+    Attributes:
+        location: The location attribute
+        file_format: The file_format attribute
+        row_format: The row_format attribute
+        tbl_properties: The tbl_properties attribute
+        partitions: The partitions attribute
+
+    """
+
+    location: typing.Union[None, str]
+    file_format: typing.Union[None, str]
+    row_format: typing.Union[None, str]
+    tbl_properties: typing.Union[None, str]
+    partitions: typing.Union[typing.List[ExternalPartition], None]
+
+
+class ColumnInfo(pydantic.BaseModel):
+    """Column details of a documented model
+
+    Attributes:
+        name: The name attribute
+        description: The description attribute
+        meta: The meta attribute
+        data_type: The data_type attribute
+        quote: The quote attribute
+        tags: The tags attribute
+
+    """
+
+    name: str
+    description: typing.Union[None, str]
+    meta: typing.Union[None, dict]
+    data_type: typing.Union[None, str]
+    quote: typing.Union[None, bool]
+    tags: typing.Union[None, typing.List[str]]
+
+
 class TimingResult(pydantic.BaseModel):
     """Timing details from running the node. 
     
@@ -329,6 +410,46 @@ class TimingResult(pydantic.BaseModel):
     name: str
     started_at: typing.Union[None, datetime.datetime]
     completed_at: typing.Union[None, datetime.datetime]
+
+
+class SourceConfig(pydantic.BaseModel):
+    """An object containing details about a source's config
+
+    Attributes:
+        enabled: Whether the source is enabled
+    """
+
+    enabled: typing.Union[bool, None]
+
+
+class Time(pydantic.BaseModel):
+    """An object representing a time interval, used for example when
+    configuring a source freshness check
+
+    Attributes:
+        period: The length of the time interval, eg days, hours, seconds
+        count: The number of periods associed with the time interval
+    """
+
+    count: typing.Union[int, None]
+    period: typing.Union[str, None]
+
+
+class FreshnessThreshold(pydantic.BaseModel):
+    """Details of the criteria used when checking a source's freshness
+
+    Attributes:
+        warn_after: The freshness criteria after which a freshness check will
+                    raise a warning.
+        error_after: The freshness criteria after which a freshness check will
+                     raise an error.
+        filter: A SQL statement used to filter the table when running a
+                freshness check.
+    """
+
+    warn_after: typing.Union[Time, None]
+    error_after: typing.Union[Time, None]
+    filter: typing.Union[str, None]
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
@@ -355,7 +476,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     max_loaded_at: typing.Union[None, str]
     snapshotted_at: typing.Union[None, str]
     max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: typing.Union[None, dict]  # TODO deserialize
+    criteria: typing.Union[None, FreshnessThreshold]
     adapter_response: typing.Union[None, dict]
     timing: typing.Union[None,typing.List[TimingResult]]
     thread_id: typing.Union[None, str]
@@ -571,16 +692,16 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
     loader: str
     identifier: str
     resource_type: str
-    quoting: typing.Union[dict, None]  # TODO deserialize
+    quoting: typing.Union[Quoting, None]
     loaded_at_field: typing.Union[None, str]
-    freshness: typing.Union[None, dict]  # TODO deserialize
-    external: typing.Union[None, dict]  # TODO deserialize
+    freshness: typing.Union[None, FreshnessThreshold]
+    external: typing.Union[None, ExternalTable]
     description: typing.Union[None, str]
-    columns: typing.Union[None, dict]  # TODO deserialize
+    columns: typing.Union[None, typing.Dict[str, ColumnInfo]]
     meta: typing.Union[dict]
     source_meta: typing.Union[dict]
     tags: typing.Union[typing.List[str]]
-    config: typing.Union[dict]  # TODO deserialize
+    config: typing.Union[SourceConfig, None]
     patch_path: typing.Union[str, None]
     unrendered_config: typing.Union[dict, None]
     relation_name: typing.Union[str, None]
@@ -590,6 +711,21 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
         fields = {
             'db_schema': 'schema',
         }
+
+
+class MacroArgument(pydantic.BaseModel):
+    """Details about the arguments of a macro
+
+    Attributes:
+        name: The name attribute
+        type: The type attribute
+        description: The description attribute
+
+    """
+
+    name: str
+    type: typing.Union[str, None]
+    description: typing.Union[str, None]
 
 
 class ManifestMacroNode(pydantic.BaseModel):
@@ -628,9 +764,9 @@ class ManifestMacroNode(pydantic.BaseModel):
     created_at: typing.Union[None, float]
     description: typing.Union[None, str]
     meta: typing.Union[None, dict]
-    docs: typing.Union[None, dict]  # TODO deserialize
-    arguments: typing.Union[None, typing.List[typing.Dict]]  # TODO deserialize
-    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]  # TODO deserialize
+    docs: typing.Union[None, dict]
+    arguments: typing.Union[None, typing.List[MacroArgument]]
+    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
 
 
 class ManifestDocsNode(pydantic.BaseModel):
@@ -700,13 +836,27 @@ class ManifestExposureNode(pydantic.BaseModel):
     refs: typing.Union[typing.List[list], None]
     sources: typing.Union[typing.List[list], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[typing.Dict[str, list]]  # TODO deserialize
+    depends_on: typing.Union[typing.Dict[str, list]]
 
     class Config:
         fields = {
             'db_schema': 'schema',
             'node_type': 'type'
         }
+
+
+class MetricFilter(pydantic.BaseModel):
+    """Details about a Metric filter.
+
+    Attributes:
+        field: The field attribute
+        operator: The operator attribute
+        value: The value attribute
+    """
+
+    field: str
+    operator: str
+    value: str
 
 
 class ManifestMetricNode(pydantic.BaseModel):
@@ -750,7 +900,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     description: str
     label: str
     node_type: str
-    filters: typing.List[dict]  # TODO deserialize
+    filters: typing.List[MetricFilter]
     time_grains: typing.List[str]
     dimensions: typing.List[str]
     sql: typing.Union[str, None]
@@ -761,7 +911,7 @@ class ManifestMetricNode(pydantic.BaseModel):
     sources: typing.Union[typing.List[str], None]
     refs: typing.Union[typing.List[typing.List[str]], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[dict, None]  # TODO deserialize
+    depends_on: typing.Union[dict, None]
 
     class Config:
         fields = {
