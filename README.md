@@ -32,11 +32,15 @@ You can then start using the api.
 
 ### Docs
 
-Documentation for all methods of the api is available on this project's Github Pages site.
+Documentation for the project is available on the Github Pages site.
 
 > https://tjwaterman99.github.io/artefacts/
 
-References for the objects returned by the api is available in the References section.
+All methods exposed by the api are documented with usage examples in the API section.
+
+> https://tjwaterman99.github.io/artefacts/api.html
+
+References for the objects returned by the api are available in the References section.
 
 > https://tjwaterman99.github.io/artefacts/reference.html
 
@@ -59,6 +63,10 @@ poetry run pytest
 ```
 
 To run the doctests use the `--doctest-modules` flag. Note that the doctests are intended to pass only when using the [`poffertjes_shop`](https://github.com/tjwaterman99/poffertjes_shop) project.
+
+```
+poetry run pytest --doctest-modules
+```
 
 #### Documentation site
 
