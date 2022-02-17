@@ -46,10 +46,7 @@ SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 class Deserializer(pydantic.BaseModel):
     
     def __repr__(self):
-        if not hasattr(self, "resource_type"):
-            return f"<{self.__class__.__name__}>"
-        else:
-            return f"<{self.__class__.__name__} resource_type={self.resource_type}>"
+        return f"<{self.__class__.__name__}>"
 
 
 class Artifact:
@@ -325,8 +322,7 @@ class Metadata(Deserializer):
         return packaging.version.Version(self.dbt_version_raw)
 
 
-<<<<<<< HEAD
-class Quoting(pydantic.BaseModel):
+class Quoting(Deserializer):
     """Details about quoting requirements for database objects
 
     Attributes:
@@ -348,7 +344,7 @@ class Quoting(pydantic.BaseModel):
         }
 
 
-class ExternalPartition(pydantic.BaseModel):
+class ExternalPartition(Deserializer):
     """
     Object representing a partition on an external table
 
@@ -366,7 +362,7 @@ class ExternalPartition(pydantic.BaseModel):
     meta: typing.Union[dict, None]
 
 
-class ExternalTable(pydantic.BaseModel):
+class ExternalTable(Deserializer):
     """
     Object representing an external table
 
@@ -386,7 +382,7 @@ class ExternalTable(pydantic.BaseModel):
     partitions: typing.Union[typing.List[ExternalPartition], None]
 
 
-class ColumnInfo(pydantic.BaseModel):
+class ColumnInfo(Deserializer):
     """Column details of a documented model
 
     Attributes:
@@ -407,10 +403,7 @@ class ColumnInfo(pydantic.BaseModel):
     tags: typing.Union[None, typing.List[str]]
 
 
-class TimingResult(pydantic.BaseModel):
-=======
 class TimingResult(Deserializer):
->>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Timing details from running the node. 
     
     Attributes:
@@ -425,8 +418,7 @@ class TimingResult(Deserializer):
     completed_at: typing.Union[None, datetime.datetime]
 
 
-<<<<<<< HEAD
-class SourceConfig(pydantic.BaseModel):
+class SourceConfig(Deserializer):
     """An object containing details about a source's config
 
     Attributes:
@@ -436,7 +428,7 @@ class SourceConfig(pydantic.BaseModel):
     enabled: typing.Union[bool, None]
 
 
-class Time(pydantic.BaseModel):
+class Time(Deserializer):
     """An object representing a time interval, used for example when
     configuring a source freshness check
 
@@ -449,7 +441,7 @@ class Time(pydantic.BaseModel):
     period: typing.Union[str, None]
 
 
-class FreshnessThreshold(pydantic.BaseModel):
+class FreshnessThreshold(Deserializer):
     """Details of the criteria used when checking a source's freshness
 
     Attributes:
@@ -466,10 +458,7 @@ class FreshnessThreshold(pydantic.BaseModel):
     filter: typing.Union[str, None]
 
 
-class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
-=======
 class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
->>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Result details from checking the freshness of a source. 
     
     Attributes:
@@ -730,8 +719,7 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
         }
 
 
-<<<<<<< HEAD
-class MacroArgument(pydantic.BaseModel):
+class MacroArgument(Deserializer):
     """Details about the arguments of a macro
 
     Attributes:
@@ -746,10 +734,7 @@ class MacroArgument(pydantic.BaseModel):
     description: typing.Union[str, None]
 
 
-class ManifestMacroNode(pydantic.BaseModel):
-=======
 class ManifestMacroNode(Deserializer):
->>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Details about a Macro node. 
     
     Attributes:
@@ -866,8 +851,7 @@ class ManifestExposureNode(Deserializer):
         }
 
 
-<<<<<<< HEAD
-class MetricFilter(pydantic.BaseModel):
+class MetricFilter(Deserializer):
     """Details about a Metric filter.
 
     Attributes:
@@ -881,10 +865,7 @@ class MetricFilter(pydantic.BaseModel):
     value: str
 
 
-class ManifestMetricNode(pydantic.BaseModel):
-=======
 class ManifestMetricNode(Deserializer):
->>>>>>> bf89f49 (Less logging in __repr__ of serializers)
     """Details about a Metric node. 
 
     Attributes:
