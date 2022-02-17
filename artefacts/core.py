@@ -376,6 +376,27 @@ class ExternalTable(pydantic.BaseModel):
     partitions: typing.Union[typing.List[ExternalPartition], None]
 
 
+class ColumnInfo(pydantic.BaseModel):
+    """Column details of a documented model
+
+    Attributes:
+        name: The name attribute
+        description: The description attribute
+        meta: The meta attribute
+        data_type: The data_type attribute
+        quote: The quote attribute
+        tags: The tags attribute
+
+    """
+
+    name: str
+    description: typing.Union[None, str]
+    meta: typing.Union[None, dict]
+    data_type: typing.Union[None, str]
+    quote: typing.Union[None, bool]
+    tags: typing.Union[None, typing.List[str]]
+
+
 class TimingResult(pydantic.BaseModel):
     """Timing details from running the node. 
     
@@ -389,6 +410,16 @@ class TimingResult(pydantic.BaseModel):
     name: str
     started_at: typing.Union[None, datetime.datetime]
     completed_at: typing.Union[None, datetime.datetime]
+
+
+class SourceConfig(pydantic.BaseModel):
+    """An object containing details about a source's config
+
+    Attributes:
+        enabled: Whether the source is enabled
+    """
+
+    enabled: typing.Union[bool, None]
 
 
 class Time(pydantic.BaseModel):
@@ -666,11 +697,11 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
     freshness: typing.Union[None, FreshnessThreshold]
     external: typing.Union[None, ExternalTable]
     description: typing.Union[None, str]
-    columns: typing.Union[None, dict]  # TODO deserialize
+    columns: typing.Union[None, typing.Dict[str, ColumnInfo]]
     meta: typing.Union[dict]
     source_meta: typing.Union[dict]
     tags: typing.Union[typing.List[str]]
-    config: typing.Union[dict]  # TODO deserialize
+    config: typing.Union[SourceConfig, None]
     patch_path: typing.Union[str, None]
     unrendered_config: typing.Union[dict, None]
     relation_name: typing.Union[str, None]
