@@ -58,6 +58,8 @@ poetry run dbt build --project-dir $DBT_PROJECT_DIR
 poetry run pytest
 ```
 
+To run the doctests use the `--doctest-modules` flag. Note that the doctests are intended to pass only when using the [`poffertjes_shop`](https://github.com/tjwaterman99/poffertjes_shop) project.
+
 #### Documentation site
 
 Use `sphinx-livereload` to run the docs site on port `8000`.
