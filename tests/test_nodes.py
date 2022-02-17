@@ -18,8 +18,3 @@ def test_manifest_child_map(manifest):
         for node_reference in v:
             assert node_reference.node is not None
             assert node_reference.resource_type == node_reference.node.resource_type
-
-
-def test_node_repr_has_node_resource_type(manifest):
-    for k, v in manifest.nodes.items():
-        assert v.resource_type in str(v)
