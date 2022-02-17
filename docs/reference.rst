@@ -78,7 +78,7 @@ Reference
     :members:
 
 
-.. autoclass:: artefacts.core.SourcesFreshnessCriteria
+.. autoclass:: artefacts.core.FreshnessThreshold
     :members:
 
 

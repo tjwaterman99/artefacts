@@ -316,6 +316,66 @@ class Metadata(pydantic.BaseModel):
         return packaging.version.Version(self.dbt_version_raw)
 
 
+class Quoting(pydantic.BaseModel):
+    """Details about quoting requirements for database objects
+
+    Attributes:
+        database: Whether to quote the "database" component of an object path
+        identifier: Whether to quote the "identifier" component of an object path
+        db_schema: Whether to quote the "db_schema" component of an object path
+        column: Whether to quote the "column" component of an object path
+
+    """
+    
+    database: typing.Union[bool, None]
+    identifier: typing.Union[bool, None]
+    db_schema: typing.Union[bool, None]
+    column: typing.Union[bool, None]
+
+    class Config:
+        fields = {
+            'db_schema': 'schema',
+        }
+
+
+class ExternalPartition(pydantic.BaseModel):
+    """
+    Object representing a partition on an external table
+
+    Attributes:
+        name: The name attribute
+        description: The description attribute
+        data_type: The data_type attribute
+        meta: The meta attribute
+   
+    """
+
+    name: typing.Union[str, None]
+    description: typing.Union[str, None]
+    data_type: typing.Union[str, None]
+    meta: typing.Union[dict, None]
+
+
+class ExternalTable(pydantic.BaseModel):
+    """
+    Object representing an external table
+
+    Attributes:
+        location: The location attribute
+        file_format: The file_format attribute
+        row_format: The row_format attribute
+        tbl_properties: The tbl_properties attribute
+        partitions: The partitions attribute
+
+    """
+
+    location: typing.Union[None, str]
+    file_format: typing.Union[None, str]
+    row_format: typing.Union[None, str]
+    tbl_properties: typing.Union[None, str]
+    partitions: typing.Union[typing.List[ExternalPartition], None]
+
+
 class TimingResult(pydantic.BaseModel):
     """Timing details from running the node. 
     
@@ -344,7 +404,7 @@ class Time(pydantic.BaseModel):
     period: typing.Union[str, None]
 
 
-class SourcesFreshnessCriteria(pydantic.BaseModel):
+class FreshnessThreshold(pydantic.BaseModel):
     """Details of the criteria used when checking a source's freshness
 
     Attributes:
@@ -385,7 +445,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     max_loaded_at: typing.Union[None, str]
     snapshotted_at: typing.Union[None, str]
     max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: typing.Union[None, SourcesFreshnessCriteria]
+    criteria: typing.Union[None, FreshnessThreshold]
     adapter_response: typing.Union[None, dict]
     timing: typing.Union[None,typing.List[TimingResult]]
     thread_id: typing.Union[None, str]
@@ -601,10 +661,10 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
     loader: str
     identifier: str
     resource_type: str
-    quoting: typing.Union[dict, None]  # TODO deserialize
+    quoting: typing.Union[Quoting, None]
     loaded_at_field: typing.Union[None, str]
-    freshness: typing.Union[None, dict]  # TODO deserialize
-    external: typing.Union[None, dict]  # TODO deserialize
+    freshness: typing.Union[None, FreshnessThreshold]
+    external: typing.Union[None, ExternalTable]
     description: typing.Union[None, str]
     columns: typing.Union[None, dict]  # TODO deserialize
     meta: typing.Union[dict]
