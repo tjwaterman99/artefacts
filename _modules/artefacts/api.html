@@ -203,7 +203,15 @@
 
 
 <div class="viewcode-block" id="models"><a class="viewcode-back" href="../../api.html#artefacts.api.models">[docs]</a><span class="k">def</span> <span class="nf">models</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
-    <span class="sd">""" A list of all models in the dbt project. """</span>
+    <span class="sd">""" A list of all models in the dbt project. </span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; model = artefacts.api.models()[0]</span>
+<span class="sd">    &gt;&gt;&gt; model.resource_type</span>
+<span class="sd">    'model'</span>
+<span class="sd">    &gt;&gt;&gt; type(model)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestNode'&gt;</span>
+
+<span class="sd">    """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -215,7 +223,15 @@
 
 
 <div class="viewcode-block" id="tests"><a class="viewcode-back" href="../../api.html#artefacts.api.tests">[docs]</a><span class="k">def</span> <span class="nf">tests</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
-    <span class="sd">""" A list of all tests in the dbt project. """</span>
+    <span class="sd">""" A list of all tests in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; test = artefacts.api.tests()[0]</span>
+<span class="sd">    &gt;&gt;&gt; test.resource_type</span>
+<span class="sd">    'test'</span>
+<span class="sd">    &gt;&gt;&gt; type(test)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -227,7 +243,15 @@
 
 
 <div class="viewcode-block" id="seeds"><a class="viewcode-back" href="../../api.html#artefacts.api.seeds">[docs]</a><span class="k">def</span> <span class="nf">seeds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
-    <span class="sd">"""A list of all seeds in the dbt project. """</span>
+    <span class="sd">"""A list of all seeds in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; seed = artefacts.api.seeds()[0]</span>
+<span class="sd">    &gt;&gt;&gt; seed.resource_type</span>
+<span class="sd">    'seed'</span>
+<span class="sd">    &gt;&gt;&gt; type(seed)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
@@ -239,42 +263,86 @@
 
 
 <div class="viewcode-block" id="sources"><a class="viewcode-back" href="../../api.html#artefacts.api.sources">[docs]</a><span class="k">def</span> <span class="nf">sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestSourceNode</span><span class="p">]:</span>
-    <span class="sd">"""A list of all sources in the dbt project. """</span>
+    <span class="sd">"""A list of all sources in the dbt project. </span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; source = artefacts.api.sources()[0]</span>
+<span class="sd">    &gt;&gt;&gt; source.resource_type</span>
+<span class="sd">    'source'</span>
+<span class="sd">    &gt;&gt;&gt; type(source)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestSourceNode'&gt;</span>
+
+<span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="docs"><a class="viewcode-back" href="../../api.html#artefacts.api.docs">[docs]</a><span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestDocsNode</span><span class="p">]:</span>
-    <span class="sd">"""A list of all documentation nodes in the dbt project. """</span>
+    <span class="sd">"""A list of all documentation nodes in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; doc = artefacts.api.docs()[0]</span>
+<span class="sd">    &gt;&gt;&gt; type(doc)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestDocsNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="macros"><a class="viewcode-back" href="../../api.html#artefacts.api.macros">[docs]</a><span class="k">def</span> <span class="nf">macros</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMacroNode</span><span class="p">]:</span>
-    <span class="sd">"""A list of all macros in the dbt project. """</span>
+    <span class="sd">"""A list of all macros in the dbt project. </span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; macro = artefacts.api.macros()[0]</span>
+<span class="sd">    &gt;&gt;&gt; macro.resource_type</span>
+<span class="sd">    'macro'</span>
+<span class="sd">    &gt;&gt;&gt; type(macro)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestMacroNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="exposures"><a class="viewcode-back" href="../../api.html#artefacts.api.exposures">[docs]</a><span class="k">def</span> <span class="nf">exposures</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestExposureNode</span><span class="p">]:</span>
-    <span class="sd">"""A list of all exposures defined in the dbt project. """</span>
+    <span class="sd">"""A list of all exposures defined in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; exposure = artefacts.api.exposures()[0]</span>
+<span class="sd">    &gt;&gt;&gt; exposure.resource_type</span>
+<span class="sd">    'exposure'</span>
+<span class="sd">    &gt;&gt;&gt; type(exposure)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestExposureNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">exposures</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="metrics"><a class="viewcode-back" href="../../api.html#artefacts.api.metrics">[docs]</a><span class="k">def</span> <span class="nf">metrics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMetricNode</span><span class="p">]:</span>
-    <span class="sd">"""A list of all metrics in the dbt project. """</span>
+    <span class="sd">"""A list of all metrics in the dbt project. </span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; metric = artefacts.api.metrics()[0]</span>
+<span class="sd">    &gt;&gt;&gt; metric.resource_type</span>
+<span class="sd">    'metric'</span>
+<span class="sd">    &gt;&gt;&gt; type(metric)</span>
+<span class="sd">    &lt;class 'artefacts.core.ManifestMetricNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="selectors"><a class="viewcode-back" href="../../api.html#artefacts.api.selectors">[docs]</a><span class="k">def</span> <span class="nf">selectors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">"""A list of all selectors defined in the dbt project. """</span>
+<div class="viewcode-block" id="selectors"><a class="viewcode-back" href="../../api.html#artefacts.api.selectors">[docs]</a><span class="k">def</span> <span class="nf">selectors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">"""A list of all selectors defined in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; selector = artefacts.api.selectors()[0]</span>
+<span class="sd">    &gt;&gt;&gt; type(selector)</span>
+<span class="sd">    &lt;class 'dict'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">selectors</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>

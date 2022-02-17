@@ -196,6 +196,13 @@
 <dt class="sig sig-object py" id="artefacts.api.models">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.models" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all models in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">models</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'model'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestNode" title="artefacts.core.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
@@ -206,6 +213,13 @@
 <dt class="sig sig-object py" id="artefacts.api.tests">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">tests</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.tests" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all tests in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">tests</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'test'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestNode" title="artefacts.core.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
@@ -216,6 +230,13 @@
 <dt class="sig sig-object py" id="artefacts.api.seeds">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">seeds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#seeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.seeds" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all seeds in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seed</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">seeds</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seed</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'seed'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestNode" title="artefacts.core.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
@@ -226,6 +247,13 @@
 <dt class="sig sig-object py" id="artefacts.api.sources">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#sources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.sources" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all sources in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">sources</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'source'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestSourceNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestSourceNode" title="artefacts.core.ManifestSourceNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSourceNode</span></code></a>]</p>
@@ -236,6 +264,11 @@
 <dt class="sig sig-object py" id="artefacts.api.docs">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">docs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#docs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.docs" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all documentation nodes in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">docs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestDocsNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestDocsNode" title="artefacts.core.ManifestDocsNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestDocsNode</span></code></a>]</p>
@@ -246,6 +279,13 @@
 <dt class="sig sig-object py" id="artefacts.api.macros">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">macros</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#macros"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.macros" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all macros in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">macro</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">macros</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">macro</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'macro'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">macro</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestMacroNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestMacroNode" title="artefacts.core.ManifestMacroNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestMacroNode</span></code></a>]</p>
@@ -256,6 +296,13 @@
 <dt class="sig sig-object py" id="artefacts.api.exposures">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">exposures</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#exposures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.exposures" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all exposures defined in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exposure</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">exposures</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exposure</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'exposure'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">exposure</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestExposureNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestExposureNode" title="artefacts.core.ManifestExposureNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestExposureNode</span></code></a>]</p>
@@ -266,6 +313,13 @@
 <dt class="sig sig-object py" id="artefacts.api.metrics">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all metrics in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">metrics</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'metric'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.core.ManifestMetricNode'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.core.ManifestMetricNode" title="artefacts.core.ManifestMetricNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestMetricNode</span></code></a>]</p>
@@ -276,9 +330,14 @@
 <dt class="sig sig-object py" id="artefacts.api.selectors">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">selectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#selectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.selectors" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all selectors defined in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">selector</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">selectors</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
+<span class="go">&lt;class 'dict'&gt;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
