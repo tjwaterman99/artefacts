@@ -713,6 +713,21 @@ class ManifestSourceNode(ArtifactNodeReader, pydantic.BaseModel):
         }
 
 
+class MacroArgument(pydantic.BaseModel):
+    """Details about the arguments of a macro
+
+    Attributes:
+        name: The name attribute
+        type: The type attribute
+        description: The description attribute
+
+    """
+
+    name: str
+    type: typing.Union[str, None]
+    description: typing.Union[str, None]
+
+
 class ManifestMacroNode(pydantic.BaseModel):
     """Details about a Macro node. 
     
@@ -750,8 +765,8 @@ class ManifestMacroNode(pydantic.BaseModel):
     description: typing.Union[None, str]
     meta: typing.Union[None, dict]
     docs: typing.Union[None, dict]  # TODO deserialize
-    arguments: typing.Union[None, typing.List[typing.Dict]]  # TODO deserialize
-    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]  # TODO deserialize
+    arguments: typing.Union[None, typing.List[MacroArgument]]
+    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
 
 
 class ManifestDocsNode(pydantic.BaseModel):
