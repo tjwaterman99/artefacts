@@ -1,4 +1,4 @@
-# Validate that the dbt_projects have been initialized.
+# Validate that the project has been set up correctly.
 
 import os
 import pytest
