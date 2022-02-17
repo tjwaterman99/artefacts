@@ -2,7 +2,7 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Installation" href="install.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API" href="api.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.01.02"/>
         <title>artefacts 1.0.0 documentation</title>
@@ -158,11 +158,10 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="alternatives.html">Alternatives</a></li>
 </ul>
 
 </div>
@@ -189,95 +188,27 @@
           </label>
         </div>
         <article role="main">
-          <div class="section" id="artefacts">
+          <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="artefacts">
 <h1>artefacts<a class="headerlink" href="#artefacts" title="Permalink to this headline">¶</a></h1>
 <p><cite>A python deserialization library for dbt artifacts.</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">artefacts</span>
+</pre></div>
+</div>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>The artefacts API aims to provide a set of simple, well documented Python objects for building functionality into your dbt project by using dbt’s artifacts <a class="footnote-reference brackets" href="#f1" id="id1">1</a> <a class="footnote-reference brackets" href="#f2" id="id2">2</a>. The project’s goal is to make it easier to build features including linters, CI/CD runners, notifications, and others.</p>
-<p>Here’s an example that shows how to use the API to check that all models in a project have at least 1 test.</p>
+<p>The artefacts API aims to provide a set of simple, well documented Python objects for building functionality into your dbt project. The project’s goal is to make it easier to build features including linters, CI/CD runners, notifications, and others.</p>
+<p>Here’s an example that shows how to use the API to check that all models in a dbt project have at least 1 test.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">artefacts.api</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">models</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">models</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">tests</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<p>There are other methods in the <code class="code docutils literal notranslate"><span class="pre">artefacts.api</span></code> you can use to interact with your dbt project. Please see the <a class="reference internal" href="api.html#module-artefacts.api"><span class="std std-ref">API</span></a> documentation for more details, as well as the <a class="reference internal" href="reference.html#reference"><span class="std std-ref">Reference</span></a> for detailed information about the various objects returned by the API.</p>
-<p>To get started, please see the <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a> instructions. We also provide a <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorial</span></a> that demonstrates how to use artefacts to build a “conventions linter” for your dbt project.</p>
-</div>
-<div class="section" id="alternatives">
-<h2>Alternatives<a class="headerlink" href="#alternatives" title="Permalink to this headline">¶</a></h2>
-<p>There are several alternatives to using a library like artefacts for working with your dbt project. We discuss some of the trade-offs associated with those alternatives below.</p>
-<div class="section" id="using-dbt-core">
-<h3><strong>Using</strong> <code class="code docutils literal notranslate"><span class="pre">dbt-core</span></code><a class="headerlink" href="#using-dbt-core" title="Permalink to this headline">¶</a></h3>
-<p>The dbt-core library is likely the better long term solution to using artifacts, and is already being used by projects like <a class="reference external" href="https://github.com/fal-ai/fal">fal</a>.</p>
-<p>But currently dbt does not support a Python API for interacting with your dbt project <a class="footnote-reference brackets" href="#f3" id="id3">3</a>. The lack of first-class support means there is no documentation for using the various Python objects provided by <code class="code docutils literal notranslate"><span class="pre">dbt-core</span></code>, so you’ll need to read and understand the complex Python source code to accomplish simple tasks like iterating over the models in your project.</p>
-<p>While this is possible, we felt that there was a benefit to having an easier way to programmatically interact with your dbt project.</p>
-<p>Eventually we expect that features like the work-in-progress <a class="reference external" href="https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/lib.py">dbt.lib</a> will eventually supplant the benefits of a 3rd party library like artefacts. But until features like that are released and supported, we feel a library like artefacts can be useful for analytics engineers that want to start building new functionality into their dbt projects right now.</p>
-</div>
-<div class="section" id="using-dbt-s-jinja-context">
-<h3><strong>Using</strong> dbt’s <code class="code docutils literal notranslate"><span class="pre">jinja</span></code> context<a class="headerlink" href="#using-dbt-s-jinja-context" title="Permalink to this headline">¶</a></h3>
-<p>Another way to interact programmatically with your dbt project is by using the Jinja context available to a dbt model. This is the approach taken by some dbt packages including <a class="reference external" href="https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest/">dbt_meta_testing</a>.</p>
-<p>The Jinja context contains python objects like <a class="reference external" href="https://docs.getdbt.com/reference/dbt-jinja-functions/graph">graph</a>, which can be used for accomplishing tasks like identifying the models in your project that are missing documentation.</p>
-<p>But using the Jinja context is often more complex than it might seem. Compare the following two code examples, both of which print the models in a specific package that have an incremental materialization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">execute</span> <span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-    <span class="o">|</span> <span class="n">selectattr</span><span class="p">(</span><span class="s2">"resource_type"</span><span class="p">,</span> <span class="s2">"equalto"</span><span class="p">,</span> <span class="s2">"model"</span><span class="p">)</span>
-    <span class="o">|</span> <span class="n">selectattr</span><span class="p">(</span><span class="s2">"package_name"</span><span class="p">,</span> <span class="s2">"equalto"</span><span class="p">,</span> <span class="s2">"snowplow"</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
-
-    <span class="p">{</span><span class="o">%</span> <span class="n">do</span> <span class="n">log</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">unique_id</span> <span class="o">~</span> <span class="s2">", materialized: "</span> <span class="o">~</span> <span class="n">node</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">materialized</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="n">true</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
-
-<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">artefacts.api</span>
-<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">models</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">package_name</span> <span class="o">==</span> <span class="s1">'snowplow'</span> <span class="ow">and</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">materialized</span> <span class="o">==</span> <span class="s1">'table'</span>
-    <span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">unique_id</span><span class="si">}</span><span class="s2"> ~ materialized: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">materialized</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>While an “embedded” language like Jinja is fantastic for features like writing macros, it is challenging to for moderately complex projects. We feel that using Python will make it easier and faster to program new functionality into your project.</p>
-</div>
-<div class="section" id="using-json-load">
-<h3><strong>Using</strong> <code class="code docutils literal notranslate"><span class="pre">json.load</span></code><a class="headerlink" href="#using-json-load" title="Permalink to this headline">¶</a></h3>
-<p>The last way we’ll discuss for programmatically interacting with your dbt project is by using the raw artifacts directly.</p>
-<p>You can load and parse the raw artifacts with Python’s built in <code class="code docutils literal notranslate"><span class="pre">json</span></code> library.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'target/manifest.json'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The <code class="code docutils literal notranslate"><span class="pre">manifest</span></code> above is a simple Python dictionary, and that approach is probably the simplest possible for various scripts.</p>
-<p>A deserialization library like artefacts essentially extends this approach, by converting that simple Python dictionary <code class="code docutils literal notranslate"><span class="pre">manifest</span></code> into a more full-featured Python object.</p>
-<p>The more full-featured Python object can then make it trivial to perform tasks like traversing the graph of dbt nodes. For example, you can easily pull data from the <code class="code docutils literal notranslate"><span class="pre">catalog</span></code> into an object from the manifest.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">artefacts.api</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">models</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">column_name</span><span class="p">,</span> <span class="n">column_details</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">column_name</span><span class="p">,</span> <span class="n">column_details</span><span class="o">.</span><span class="n">node_type</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<p class="rubric">Footnotes</p>
-<dl class="footnote brackets">
-<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>See the dbt documentation for more details about the various types of dbt artifacts and how they are generated: <a class="reference external" href="https://docs.getdbt.com/reference/artifacts/dbt-artifacts">https://docs.getdbt.com/reference/artifacts/dbt-artifacts</a>. You can also find a quick intro to more types of functionality that you can build with dbt artifacts in this excellent blog post on <a class="reference external" href="https://guitton.co/posts/dbt-artifacts">guitton.io</a> .</p>
-</dd>
-<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>See <a class="reference external" href="https://schemas.getdbt.com">https://schemas.getdbt.com</a> for more details about the specific data contained in the dbt artifacts</p>
-</dd>
-<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p>See the dbt notes about using Python to work with a dbt project: <a class="reference external" href="https://docs.getdbt.com/docs/running-a-dbt-project/dbt-api">https://docs.getdbt.com/docs/running-a-dbt-project/dbt-api</a></p>
-</dd>
-</dl>
-</div>
+<p>Please see the <a class="reference internal" href="api.html#module-artefacts.api"><span class="std std-ref">API</span></a> documentation for a full list of all methods exposed by the API, as well as the <a class="reference internal" href="reference.html#reference"><span class="std std-ref">Reference</span></a> section for detailed information about the various objects that the API returns.</p>
+<p>There are several alternatives to using artefacts, and we discuss their trade-offs in the <a class="reference internal" href="alternatives.html#alternatives"><span class="std std-ref">Alternatives</span></a> section.</p>
+<p>To get started, please see the <code class="code docutils literal notranslate"><span class="pre">Usage</span></code> section in the project’s <a class="reference external" href="https://github.com/tjwaterman99/artefacts#usage">README on Github</a></p>
 </div>
 </div>
 
@@ -286,12 +217,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="install.html">
+          <a class="next-page" href="api.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Installation</div>
+                <div class="title">API</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -324,12 +255,6 @@
             <ul>
 <li><a class="reference internal" href="#">artefacts</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#alternatives">Alternatives</a><ul>
-<li><a class="reference internal" href="#using-dbt-core"><strong>Using</strong> <code class="code docutils literal notranslate"><span class="pre">dbt-core</span></code></a></li>
-<li><a class="reference internal" href="#using-dbt-s-jinja-context"><strong>Using</strong> dbt’s <code class="code docutils literal notranslate"><span class="pre">jinja</span></code> context</a></li>
-<li><a class="reference internal" href="#using-json-load"><strong>Using</strong> <code class="code docutils literal notranslate"><span class="pre">json.load</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
