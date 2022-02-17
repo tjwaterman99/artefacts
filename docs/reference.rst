@@ -76,3 +76,11 @@ Reference
 
 .. autoclass:: artefacts.core.TimingResult
     :members:
+
+
+.. autoclass:: artefacts.core.SourcesFreshnessCriteria
+    :members:
+
+
+.. autoclass:: artefacts.core.Time
+    :members:

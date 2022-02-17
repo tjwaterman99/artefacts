@@ -331,6 +331,36 @@ class TimingResult(pydantic.BaseModel):
     completed_at: typing.Union[None, datetime.datetime]
 
 
+class Time(pydantic.BaseModel):
+    """An object representing a time interval, used for example when
+    configuring a source freshness check
+
+    Attributes:
+        period: The length of the time interval, eg days, hours, seconds
+        count: The number of periods associed with the time interval
+    """
+
+    count: typing.Union[int, None]
+    period: typing.Union[str, None]
+
+
+class SourcesFreshnessCriteria(pydantic.BaseModel):
+    """Details of the criteria used when checking a source's freshness
+
+    Attributes:
+        warn_after: The freshness criteria after which a freshness check will
+                    raise a warning.
+        error_after: The freshness criteria after which a freshness check will
+                     raise an error.
+        filter: A SQL statement used to filter the table when running a
+                freshness check.
+    """
+
+    warn_after: typing.Union[Time, None]
+    error_after: typing.Union[Time, None]
+    filter: typing.Union[str, None]
+
+
 class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     """Result details from checking the freshness of a source. 
     
@@ -355,7 +385,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, pydantic.BaseModel):
     max_loaded_at: typing.Union[None, str]
     snapshotted_at: typing.Union[None, str]
     max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: typing.Union[None, dict]  # TODO deserialize
+    criteria: typing.Union[None, SourcesFreshnessCriteria]
     adapter_response: typing.Union[None, dict]
     timing: typing.Union[None,typing.List[TimingResult]]
     thread_id: typing.Union[None, str]
