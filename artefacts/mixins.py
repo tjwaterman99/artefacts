@@ -39,6 +39,8 @@ class ArtifactReader:
 
         return self.get_artifact('sources')
     
+    # TODO: the Deserializer is normally called with **config_kwargs, but the
+    # mixin is not propagating those.
     def get_artifact(self, artifact_name):
         import artefacts.deserializers
 
