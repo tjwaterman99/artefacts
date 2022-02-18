@@ -1,14 +1,10 @@
 import abc
 
-from .models import ManifestModel
-from .models import RunResultsModel
-from .models import SourcesModel
-from .models import CatalogModel
+from .models import ManifestModel, RunResultsModel, SourcesModel, CatalogModel
 from .loaders import FileSystemLoader
 from .config import Config
 
 import artefacts.state
-
 
 
 class ArtifactDeserializer(abc.ABC):

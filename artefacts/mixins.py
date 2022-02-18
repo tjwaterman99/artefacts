@@ -13,45 +13,6 @@ Catalog = typing.ForwardRef('Catalog')
 Sources = typing.ForwardRef('Sources')
 
 
-class Artifact:
-
-    @classmethod
-    def path(cls):
-        """The path to the artifact.
-        
-        The path is determined by the :ref:`configuration` settings. By default
-        artefacts will look in the `./target` directory of the current working 
-        directory.
-        """
-        
-        return os.path.join(conf.dbt_target_dir, cls.name() + '.json')
-
-    @classmethod
-    def name(cls):
-        """The name of the artifact in snake_case.
-        """
-
-        return re.sub(r'(?<!^)(?=[A-Z])', '_', cls.__name__).lower()
-
-    @classmethod
-    def load(cls):
-        """Load and deserialize the artifact.
-        
-        The deserialized artifact is cached, so calling this function twice will
-        not update the artifact if it has been rebuilt.
-
-        In general, loading the artifacts is not necessary, and most tasks can
-        be accomplished by using the :ref:`api` module instead of working with
-        the artifact classes directly. 
-        """
-
-        if not artefacts.state.exists(cls.name()):
-            with open(cls.path(), 'r') as artifact_fh:
-                raw_artifact = json.load(artifact_fh)
-            artefacts.state.set(cls.name(), cls.parse_obj(raw_artifact))              
-        return artefacts.state.get(cls.name())  
-
-
 class ArtifactReader:
 
     @property
