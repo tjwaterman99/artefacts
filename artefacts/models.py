@@ -20,15 +20,15 @@ import packaging.version
 
 import artefacts.state
 from artefacts.config import conf
-from artefacts.mixins import Artifact, ArtifactReader, ArtifactNodeReader
+from artefacts.mixins import ArtifactReader, ArtifactNodeReader
 
 
-Catalog = typing.ForwardRef('Catalog')
+CatalogModel = typing.ForwardRef('CatalogModel')
 CatalogNode = typing.ForwardRef('CatalogNode')
 CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
 CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
 CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
-Manifest = typing.ForwardRef('Manifest')
+ManifestModel = typing.ForwardRef('ManifestModel')
 ManifestDocsNode = typing.ForwardRef('ManifestDocsNode')
 ManifestExposureNode = typing.ForwardRef('ManifestExposureNode')
 ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
@@ -39,8 +39,8 @@ ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
 Metadata = typing.ForwardRef('Metadata')
 ResultTiming = typing.ForwardRef('ResultTiming')
 RunResultNode = typing.ForwardRef('RunResultNode')
-RunResults = typing.ForwardRef('RunResults')
-Sources = typing.ForwardRef('Sources')
+RunResultsModel = typing.ForwardRef('RunResultsModel')
+SourcesModel = typing.ForwardRef('SourcesModel')
 SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
@@ -50,7 +50,7 @@ class Deserializer(pydantic.BaseModel):
         return f"<{self.__class__.__name__}>"
 
 
-class Manifest(Artifact, Deserializer):
+class ManifestModel(Deserializer):
     """
     The manifest artifact.
 
@@ -95,7 +95,7 @@ class Manifest(Artifact, Deserializer):
         arbitrary_types_allowed = True
 
 
-class RunResults(Artifact, Deserializer):
+class RunResultsModel(Deserializer):
     """The run_results artifact. 
     
     Attributes:
@@ -115,7 +115,7 @@ class RunResults(Artifact, Deserializer):
     args: typing.Union[dict, None]
 
 
-class Catalog(Artifact, Deserializer):
+class CatalogModel(Deserializer):
     """The catalog artifact. 
     
     Attributes:
@@ -132,7 +132,7 @@ class Catalog(Artifact, Deserializer):
     errors: typing.Union[typing.List[str], None]
 
 
-class Sources(Artifact, Deserializer):
+class SourcesModel(Deserializer):
     """The sources artifact. 
     
     Attributes:
@@ -880,8 +880,8 @@ class CatalogNodeStats(Deserializer):
     value: typing.Union[str, None]
 
 
-RunResults.update_forward_refs()
-Manifest.update_forward_refs()
-Catalog.update_forward_refs()
-Sources.update_forward_refs()
+RunResultsModel.update_forward_refs()
+ManifestModel.update_forward_refs()
+CatalogModel.update_forward_refs()
+SourcesModel.update_forward_refs()
 CatalogNode.update_forward_refs()

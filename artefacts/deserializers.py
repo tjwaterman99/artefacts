@@ -1,9 +1,9 @@
 import abc
 
-from .models import Manifest as ManifestModel
-from .models import RunResults as RunResultsModel
-from .models import Sources as SourcesModel
-from .models import Catalog as CatalogModel
+from .models import ManifestModel
+from .models import RunResultsModel
+from .models import SourcesModel
+from .models import CatalogModel
 from .loaders import FileSystemLoader
 from .config import Config
 

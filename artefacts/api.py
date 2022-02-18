@@ -4,8 +4,14 @@ The artefacts API contains helper methods for interacting with dbt's artifacts.
 
 import typing
 
+from artefacts.deserializers import (
+    Manifest,
+    Sources,
+    RunResults,
+    Catalog
+)
 from artefacts.models import (
-    Manifest, ManifestNode, ManifestSourceNode, ManifestDocsNode,
+    ManifestNode, ManifestSourceNode, ManifestDocsNode,
     ManifestExposureNode, ManifestMacroNode, ManifestMetricNode
 )
 
@@ -22,7 +28,7 @@ def models() -> typing.List[ManifestNode]:
     """
 
     result = []
-    manifest = Manifest.load()
+    manifest = Manifest()
     for k,v in manifest.nodes.items():
         if v.resource_type == 'model':
             result.append(v)
@@ -42,7 +48,7 @@ def tests() -> typing.List[ManifestNode]:
     """
 
     result = []
-    manifest = Manifest.load()
+    manifest = Manifest()
     for k,v in manifest.nodes.items():
         if v.resource_type == 'test':
             result.append(v)
@@ -62,7 +68,7 @@ def seeds() -> typing.List[ManifestNode]:
     """
 
     result = []
-    manifest = Manifest.load()
+    manifest = Manifest()
     for k,v in manifest.nodes.items():
         if v.resource_type == 'seed':
             result.append(v)
@@ -81,7 +87,7 @@ def sources() -> typing.List[ManifestSourceNode]:
 
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.sources.values())
 
 
@@ -94,7 +100,7 @@ def docs() -> typing.List[ManifestDocsNode]:
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.docs.values())
 
 
@@ -109,7 +115,7 @@ def macros() -> typing.List[ManifestMacroNode]:
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.macros.values())
 
 
@@ -124,7 +130,7 @@ def exposures() -> typing.List[ManifestExposureNode]:
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.exposures.values())
 
 
@@ -139,7 +145,7 @@ def metrics() -> typing.List[ManifestMetricNode]:
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.metrics.values())
 
 
@@ -152,6 +158,6 @@ def selectors() -> typing.List[dict]:
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.selectors.values())
 
