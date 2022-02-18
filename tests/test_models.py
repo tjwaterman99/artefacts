@@ -1,41 +1,23 @@
 import pytest
 
 import artefacts.state
-from artefacts.core import (
-    ArtifactReader, 
+from artefacts.deserializers import (
     Manifest, 
     Catalog, 
+    Sources,
+    RunResults
+)
+from artefacts.models import (
+    ManifestModel,
+    ArtifactReader,
     RunResultNode, 
     ManifestNode, 
-    RunResults, 
-    Sources
+    RunResultsModel
 )
 
 
-@pytest.mark.parametrize("artifact_name", ['manifest', 'run_results', 'catalog', 'sources'])
-def test_artifact_reader_loads(artifact_name):
-    reader = ArtifactReader()
-    assert reader.get_artifact(artifact_name).name() == artifact_name
-
-
-@pytest.mark.parametrize("artifact_name", ['manifest', 'run_results', 'catalog', 'sources'])
-def test_artifact_reader_has_artifact_attribute(artifact_name):
-    reader = ArtifactReader()
-    assert getattr(reader, f"{artifact_name}_artifact").name() == artifact_name
-
-
-def test_catalog_loads():
-    catalog = Catalog.load()
-    assert artefacts.state.catalog == catalog
-
-
-def test_manifest_loads():
-    manifest = Manifest.load()
-    assert artefacts.state.manifest == manifest
-
-
 def test_manifest_validates_dbt_version(manifest):
-    assert Manifest.validate_metadata(manifest.metadata)
+    assert ManifestModel.validate_metadata(manifest.metadata)
 
     # Quick way to check that some validation is being ran.
     outdated_metadata = manifest.metadata.copy(deep=True)
@@ -43,15 +25,14 @@ def test_manifest_validates_dbt_version(manifest):
     assert outdated_metadata.dbt_version.major == 0
 
     with pytest.raises(ValueError):
-        Manifest.validate_metadata(outdated_metadata)
-
+        ManifestModel.validate_metadata(outdated_metadata)
 
 
 def test_metadata_dbt_schema_version(all_artifacts):
     assert all_artifacts.metadata.dbt_schema_version > 0
 
 
-def test_metdata_dbt_version(all_artifacts):
+def test_metadata_dbt_version(all_artifacts):
     assert all_artifacts.metadata.dbt_version.major > 0
 
 
@@ -75,10 +56,10 @@ def test_manifest_child_map(manifest):
 
 
 def test_run_results_loads():
-    run_results = RunResults.load()
+    run_results = RunResults()
     assert artefacts.state.run_results == run_results
 
 
 def test_sources_loads():
-    sources = Sources.load()
+    sources = Sources()
     assert artefacts.state.sources == sources

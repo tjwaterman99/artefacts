@@ -1,14 +1,3 @@
-"""
-The core module contains the deserialized dbt artifacts, and various objects such
-as models, tests, and sources.
-
->>> from artefacts import Manifest, RunResults, Sources, Catalog
-
-To use an artefact, you first need to `load` it.
-
->>> manifest = Manifest.load()
-"""
-
 import datetime
 import uuid
 import os
@@ -20,14 +9,15 @@ import packaging.version
 
 import artefacts.state
 from artefacts.config import conf
+from artefacts.mixins import ArtifactReader, ArtifactNodeReader
 
 
-Catalog = typing.ForwardRef('Catalog')
+CatalogModel = typing.ForwardRef('CatalogModel')
 CatalogNode = typing.ForwardRef('CatalogNode')
 CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
 CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
 CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
-Manifest = typing.ForwardRef('Manifest')
+ManifestModel = typing.ForwardRef('ManifestModel')
 ManifestDocsNode = typing.ForwardRef('ManifestDocsNode')
 ManifestExposureNode = typing.ForwardRef('ManifestExposureNode')
 ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
@@ -38,8 +28,8 @@ ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
 Metadata = typing.ForwardRef('Metadata')
 ResultTiming = typing.ForwardRef('ResultTiming')
 RunResultNode = typing.ForwardRef('RunResultNode')
-RunResults = typing.ForwardRef('RunResults')
-Sources = typing.ForwardRef('Sources')
+RunResultsModel = typing.ForwardRef('RunResultsModel')
+SourcesModel = typing.ForwardRef('SourcesModel')
 SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
@@ -49,136 +39,7 @@ class Deserializer(pydantic.BaseModel):
         return f"<{self.__class__.__name__}>"
 
 
-class Artifact:
-
-    @classmethod
-    def path(cls):
-        """The path to the artifact.
-        
-        The path is determined by the :ref:`configuration` settings. By default
-        artefacts will look in the `./target` directory of the current working 
-        directory.
-        """
-        
-        return os.path.join(conf.dbt_target_dir, cls.name() + '.json')
-
-    @classmethod
-    def name(cls):
-        """The name of the artifact in snake_case.
-        """
-
-        return re.sub(r'(?<!^)(?=[A-Z])', '_', cls.__name__).lower()
-
-    @classmethod
-    def load(cls):
-        """Load and deserialize the artifact.
-        
-        The deserialized artifact is cached, so calling this function twice will
-        not update the artifact if it has been rebuilt.
-
-        In general, loading the artifacts is not necessary, and most tasks can
-        be accomplished by using the :ref:`api` module instead of working with
-        the artifact classes directly. 
-        """
-
-        if not artefacts.state.exists(cls.name()):
-            with open(cls.path(), 'r') as artifact_fh:
-                raw_artifact = json.load(artifact_fh)
-            artefacts.state.set(cls.name(), cls.parse_obj(raw_artifact))              
-        return artefacts.state.get(cls.name())  
-
-
-class ArtifactReader:
-
-    @property
-    def run_results_artifact(self) -> RunResults:
-        """A reference to the :class:`RunResults` artifact. """
-
-        return self.get_artifact('run_results')
-
-    @property
-    def manifest_artifact(self) -> Manifest:
-        """A reference to the :class:`Manifest` artifact. """
-        
-        return self.get_artifact('manifest')
-
-    @property
-    def catalog_artifact(self) -> Catalog:
-        """A reference to the :class:`Catalog` artifact. """
-
-        return self.get_artifact('catalog')
-
-    @property
-    def sources_artifact(self) -> Sources:
-        """A reference to the :class:`Sources` artifact. """
-
-        return self.get_artifact('sources')
-    
-    def get_artifact(self, artifact_name):
-        if artefacts.state.exists(artifact_name):
-            return artefacts.state.get(artifact_name)
-        else:
-            artifact = {
-                'manifest': Manifest,
-                'run_results': RunResults,
-                'sources': Sources,
-                'catalog': Catalog
-            }.get(artifact_name)
-
-            if artifact is None:
-                raise AttributeError(f"Invalid artifact name: {artifact_name}")
-            
-            return artifact.load()
-
-
-class ArtifactNodeReader(ArtifactReader):
-    
-    @property
-    def manifest(self):
-        """A reference to details about the node contained in the manifest."""
-
-        # TODO: what if the resource_type is `source`? I don't think it will
-        # show up in the `nodes` reference.
-        return self.manifest_artifact.nodes.get(self.unique_id)
-
-    @property
-    def catalog(self):
-        """A reference to details about the node contained in the catalog."""
-
-        return self.catalog_artifact.nodes.get(self.unique_id)
-
-    @property
-    def run_results(self):
-        """A reference to results from running the node, if it exists."""
-
-        return [r for r in self.run_results_artifact.results if r.unique_id == self.unique_id]
-
-    @property
-    def parents(self):
-        """ A list of the node's parents """
-
-        return self.manifest_artifact.parent_map[self.unique_id]
-
-    @property
-    def children(self):
-        """ A list of the node's children """
-
-        return self.manifest_artifact.child_map[self.unique_id]
-
-    @property
-    def tests(self):
-        """ A list of any tests that reference the node """
-
-        return [t for t in self.children if t.resource_type == 'test']
-
-    @property
-    def snapshots(self):
-        """ A list of any snapshots that reference the node """
-
-        return [s for s in self.children if s.resource_type == 'snapshot']
-
-
-class Manifest(Artifact, Deserializer):
+class ManifestModel(Deserializer):
     """
     The manifest artifact.
 
@@ -223,7 +84,7 @@ class Manifest(Artifact, Deserializer):
         arbitrary_types_allowed = True
 
 
-class RunResults(Artifact, Deserializer):
+class RunResultsModel(Deserializer):
     """The run_results artifact. 
     
     Attributes:
@@ -243,7 +104,7 @@ class RunResults(Artifact, Deserializer):
     args: typing.Union[dict, None]
 
 
-class Catalog(Artifact, Deserializer):
+class CatalogModel(Deserializer):
     """The catalog artifact. 
     
     Attributes:
@@ -260,7 +121,7 @@ class Catalog(Artifact, Deserializer):
     errors: typing.Union[typing.List[str], None]
 
 
-class Sources(Artifact, Deserializer):
+class SourcesModel(Deserializer):
     """The sources artifact. 
     
     Attributes:
@@ -1008,8 +869,8 @@ class CatalogNodeStats(Deserializer):
     value: typing.Union[str, None]
 
 
-RunResults.update_forward_refs()
-Manifest.update_forward_refs()
-Catalog.update_forward_refs()
-Sources.update_forward_refs()
+RunResultsModel.update_forward_refs()
+ManifestModel.update_forward_refs()
+CatalogModel.update_forward_refs()
+SourcesModel.update_forward_refs()
 CatalogNode.update_forward_refs()

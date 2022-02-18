@@ -4,11 +4,6 @@ import os
 import pytest
 
 
-@pytest.fixture
-def dbt_project_dir():
-    return os.environ['DBT_PROJECT_DIR']
-
-
 def test_dbt_project_exists(dbt_project_dir):
     assert len(os.listdir(dbt_project_dir)) > 0
 

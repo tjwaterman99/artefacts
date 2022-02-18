@@ -4,8 +4,14 @@ The artefacts API contains helper methods for interacting with dbt's artifacts.
 
 import typing
 
-from artefacts.core import (
-    Manifest, ManifestNode, ManifestSourceNode, ManifestDocsNode,
+from artefacts.deserializers import (
+    Manifest,
+    Sources,
+    RunResults,
+    Catalog
+)
+from artefacts.models import (
+    ManifestNode, ManifestSourceNode, ManifestDocsNode,
     ManifestExposureNode, ManifestMacroNode, ManifestMetricNode
 )
 
@@ -17,12 +23,12 @@ def models() -> typing.List[ManifestNode]:
     >>> model.resource_type
     'model'
     >>> type(model)
-    <class 'artefacts.core.ManifestNode'>
+    <class 'artefacts.models.ManifestNode'>
 
     """
 
     result = []
-    manifest = Manifest.load()
+    manifest = Manifest()
     for k,v in manifest.nodes.items():
         if v.resource_type == 'model':
             result.append(v)
@@ -37,12 +43,12 @@ def tests() -> typing.List[ManifestNode]:
     >>> test.resource_type
     'test'
     >>> type(test)
-    <class 'artefacts.core.ManifestNode'>
+    <class 'artefacts.models.ManifestNode'>
     
     """
 
     result = []
-    manifest = Manifest.load()
+    manifest = Manifest()
     for k,v in manifest.nodes.items():
         if v.resource_type == 'test':
             result.append(v)
@@ -57,12 +63,12 @@ def seeds() -> typing.List[ManifestNode]:
     >>> seed.resource_type
     'seed'
     >>> type(seed)
-    <class 'artefacts.core.ManifestNode'>
+    <class 'artefacts.models.ManifestNode'>
     
     """
 
     result = []
-    manifest = Manifest.load()
+    manifest = Manifest()
     for k,v in manifest.nodes.items():
         if v.resource_type == 'seed':
             result.append(v)
@@ -77,11 +83,11 @@ def sources() -> typing.List[ManifestSourceNode]:
     >>> source.resource_type
     'source'
     >>> type(source)
-    <class 'artefacts.core.ManifestSourceNode'>
+    <class 'artefacts.models.ManifestSourceNode'>
 
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.sources.values())
 
 
@@ -90,11 +96,11 @@ def docs() -> typing.List[ManifestDocsNode]:
 
     >>> doc = artefacts.api.docs()[0]
     >>> type(doc)
-    <class 'artefacts.core.ManifestDocsNode'>
+    <class 'artefacts.models.ManifestDocsNode'>
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.docs.values())
 
 
@@ -105,11 +111,11 @@ def macros() -> typing.List[ManifestMacroNode]:
     >>> macro.resource_type
     'macro'
     >>> type(macro)
-    <class 'artefacts.core.ManifestMacroNode'>
+    <class 'artefacts.models.ManifestMacroNode'>
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.macros.values())
 
 
@@ -120,11 +126,11 @@ def exposures() -> typing.List[ManifestExposureNode]:
     >>> exposure.resource_type
     'exposure'
     >>> type(exposure)
-    <class 'artefacts.core.ManifestExposureNode'>
+    <class 'artefacts.models.ManifestExposureNode'>
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.exposures.values())
 
 
@@ -135,11 +141,11 @@ def metrics() -> typing.List[ManifestMetricNode]:
     >>> metric.resource_type
     'metric'
     >>> type(metric)
-    <class 'artefacts.core.ManifestMetricNode'>
+    <class 'artefacts.models.ManifestMetricNode'>
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.metrics.values())
 
 
@@ -152,6 +158,6 @@ def selectors() -> typing.List[dict]:
     
     """
 
-    manifest = Manifest.load()
+    manifest = Manifest()
     return list(manifest.selectors.values())
 
