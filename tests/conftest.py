@@ -1,3 +1,4 @@
+import os
 import pytest
 
 from artefacts.deserializers import Manifest, RunResults, Catalog, Sources

@@ -1,7 +1,7 @@
 import pytest
 
 import artefacts.state
-from artefacts.core import (
+from artefacts.models import (
     ArtifactReader, 
     Manifest, 
     Catalog, 

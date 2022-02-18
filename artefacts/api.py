@@ -4,7 +4,7 @@ The artefacts API contains helper methods for interacting with dbt's artifacts.
 
 import typing
 
-from artefacts.core import (
+from artefacts.models import (
     Manifest, ManifestNode, ManifestSourceNode, ManifestDocsNode,
     ManifestExposureNode, ManifestMacroNode, ManifestMetricNode
 )
@@ -17,7 +17,7 @@ def models() -> typing.List[ManifestNode]:
     >>> model.resource_type
     'model'
     >>> type(model)
-    <class 'artefacts.core.ManifestNode'>
+    <class 'artefacts.models.ManifestNode'>
 
     """
 
@@ -37,7 +37,7 @@ def tests() -> typing.List[ManifestNode]:
     >>> test.resource_type
     'test'
     >>> type(test)
-    <class 'artefacts.core.ManifestNode'>
+    <class 'artefacts.models.ManifestNode'>
     
     """
 
@@ -57,7 +57,7 @@ def seeds() -> typing.List[ManifestNode]:
     >>> seed.resource_type
     'seed'
     >>> type(seed)
-    <class 'artefacts.core.ManifestNode'>
+    <class 'artefacts.models.ManifestNode'>
     
     """
 
@@ -77,7 +77,7 @@ def sources() -> typing.List[ManifestSourceNode]:
     >>> source.resource_type
     'source'
     >>> type(source)
-    <class 'artefacts.core.ManifestSourceNode'>
+    <class 'artefacts.models.ManifestSourceNode'>
 
     """
 
@@ -90,7 +90,7 @@ def docs() -> typing.List[ManifestDocsNode]:
 
     >>> doc = artefacts.api.docs()[0]
     >>> type(doc)
-    <class 'artefacts.core.ManifestDocsNode'>
+    <class 'artefacts.models.ManifestDocsNode'>
     
     """
 
@@ -105,7 +105,7 @@ def macros() -> typing.List[ManifestMacroNode]:
     >>> macro.resource_type
     'macro'
     >>> type(macro)
-    <class 'artefacts.core.ManifestMacroNode'>
+    <class 'artefacts.models.ManifestMacroNode'>
     
     """
 
@@ -120,7 +120,7 @@ def exposures() -> typing.List[ManifestExposureNode]:
     >>> exposure.resource_type
     'exposure'
     >>> type(exposure)
-    <class 'artefacts.core.ManifestExposureNode'>
+    <class 'artefacts.models.ManifestExposureNode'>
     
     """
 
@@ -135,7 +135,7 @@ def metrics() -> typing.List[ManifestMetricNode]:
     >>> metric.resource_type
     'metric'
     >>> type(metric)
-    <class 'artefacts.core.ManifestMetricNode'>
+    <class 'artefacts.models.ManifestMetricNode'>
     
     """
 
