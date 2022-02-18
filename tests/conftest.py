@@ -5,6 +5,22 @@ from artefacts.deserializers import Manifest, RunResults, Catalog, Sources
 import artefacts
 
 
+def iter_base_models():
+    import artefacts.models
+    for name in dir(artefacts.models):
+        obj = getattr(artefacts.models, name)
+        try:
+            if issubclass(obj, artefacts.models.Deserializer):
+                yield obj
+        except TypeError:  # Raised when `obj` is not a class
+            pass
+
+
+@pytest.fixture(scope='session', params=list(iter_base_models()))
+def base_model(request):
+    yield request.param
+
+
 @pytest.fixture
 def dbt_project_dir():
     return os.environ['DBT_PROJECT_DIR']

@@ -1,5 +1,7 @@
 import pytest
 
+from .conftest import iter_base_models
+
 import artefacts.state
 from artefacts.deserializers import (
     Manifest, 
@@ -14,6 +16,11 @@ from artefacts.models import (
     ManifestNode, 
     RunResultsModel
 )
+
+
+@pytest.mark.skip
+def test_models_have_reference_defined(base_model):
+    assert base_model.__name__.startswith('artefacts')
 
 
 def test_manifest_validates_dbt_version(manifest):
