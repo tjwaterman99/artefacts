@@ -195,8 +195,14 @@
 
 <span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">artefacts.core</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Manifest</span><span class="p">,</span> <span class="n">ManifestNode</span><span class="p">,</span> <span class="n">ManifestSourceNode</span><span class="p">,</span> <span class="n">ManifestDocsNode</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">artefacts.deserializers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Manifest</span><span class="p">,</span>
+    <span class="n">Sources</span><span class="p">,</span>
+    <span class="n">RunResults</span><span class="p">,</span>
+    <span class="n">Catalog</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">artefacts.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ManifestNode</span><span class="p">,</span> <span class="n">ManifestSourceNode</span><span class="p">,</span> <span class="n">ManifestDocsNode</span><span class="p">,</span>
     <span class="n">ManifestExposureNode</span><span class="p">,</span> <span class="n">ManifestMacroNode</span><span class="p">,</span> <span class="n">ManifestMetricNode</span>
 <span class="p">)</span>
 
@@ -208,12 +214,12 @@
 <span class="sd">    &gt;&gt;&gt; model.resource_type</span>
 <span class="sd">    'model'</span>
 <span class="sd">    &gt;&gt;&gt; type(model)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestNode'&gt;</span>
 
 <span class="sd">    """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'model'</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
@@ -228,12 +234,12 @@
 <span class="sd">    &gt;&gt;&gt; test.resource_type</span>
 <span class="sd">    'test'</span>
 <span class="sd">    &gt;&gt;&gt; type(test)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestNode'&gt;</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'test'</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
@@ -248,12 +254,12 @@
 <span class="sd">    &gt;&gt;&gt; seed.resource_type</span>
 <span class="sd">    'seed'</span>
 <span class="sd">    &gt;&gt;&gt; type(seed)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestNode'&gt;</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'seed'</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
@@ -268,11 +274,11 @@
 <span class="sd">    &gt;&gt;&gt; source.resource_type</span>
 <span class="sd">    'source'</span>
 <span class="sd">    &gt;&gt;&gt; type(source)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestSourceNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestSourceNode'&gt;</span>
 
 <span class="sd">    """</span>
 
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
@@ -281,11 +287,11 @@
 
 <span class="sd">    &gt;&gt;&gt; doc = artefacts.api.docs()[0]</span>
 <span class="sd">    &gt;&gt;&gt; type(doc)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestDocsNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestDocsNode'&gt;</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
@@ -296,11 +302,11 @@
 <span class="sd">    &gt;&gt;&gt; macro.resource_type</span>
 <span class="sd">    'macro'</span>
 <span class="sd">    &gt;&gt;&gt; type(macro)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestMacroNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestMacroNode'&gt;</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
@@ -311,11 +317,11 @@
 <span class="sd">    &gt;&gt;&gt; exposure.resource_type</span>
 <span class="sd">    'exposure'</span>
 <span class="sd">    &gt;&gt;&gt; type(exposure)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestExposureNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestExposureNode'&gt;</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">exposures</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
@@ -326,11 +332,11 @@
 <span class="sd">    &gt;&gt;&gt; metric.resource_type</span>
 <span class="sd">    'metric'</span>
 <span class="sd">    &gt;&gt;&gt; type(metric)</span>
-<span class="sd">    &lt;class 'artefacts.core.ManifestMetricNode'&gt;</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestMetricNode'&gt;</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
@@ -343,7 +349,7 @@
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
-    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">selectors</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 </pre></div>

@@ -2,85 +2,85 @@ Reference
 =========
 
 
-.. autoclass:: artefacts.core.Catalog
+.. autoclass:: artefacts.models.Catalog
     :members: load, name, path
 
 
-.. autoclass:: artefacts.core.CatalogNode
+.. autoclass:: artefacts.models.CatalogNode
     :members:
 
 
-.. autoclass:: artefacts.core.CatalogNodeColumn
+.. autoclass:: artefacts.models.CatalogNodeColumn
     :members:
 
 
-.. autoclass:: artefacts.core.CatalogNodeMetadata
+.. autoclass:: artefacts.models.CatalogNodeMetadata
     :members:
 
 
-.. autoclass:: artefacts.core.CatalogNodeStats
+.. autoclass:: artefacts.models.CatalogNodeStats
     :members:
 
 
-.. autoclass:: artefacts.core.Manifest
+.. autoclass:: artefacts.models.Manifest
     :members: load, name, path
 
 
-.. autoclass:: artefacts.core.ManifestDocsNode
+.. autoclass:: artefacts.models.ManifestDocsNode
     :members:
 
 
-.. autoclass:: artefacts.core.ManifestExposureNode
+.. autoclass:: artefacts.models.ManifestExposureNode
     :members:
 
 
-.. autoclass:: artefacts.core.ManifestMacroNode
+.. autoclass:: artefacts.models.ManifestMacroNode
     :members:
 
 
-.. autoclass:: artefacts.core.ManifestMetricNode
+.. autoclass:: artefacts.models.ManifestMetricNode
     :members:
 
 
-.. autoclass:: artefacts.core.ManifestNode
+.. autoclass:: artefacts.models.ManifestNode
     :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
 
 
-.. autoclass:: artefacts.core.ManifestNodeReference
+.. autoclass:: artefacts.models.ManifestNodeReference
     :members:
 
 
-.. autoclass:: artefacts.core.ManifestSourceNode
+.. autoclass:: artefacts.models.ManifestSourceNode
     :members:
 
 
-.. autoclass:: artefacts.core.Metadata
+.. autoclass:: artefacts.models.Metadata
     :members:
 
 
-.. autoclass:: artefacts.core.RunResultNode
+.. autoclass:: artefacts.models.RunResultNode
     :members:
 
 
-.. autoclass:: artefacts.core.RunResults
+.. autoclass:: artefacts.models.RunResults
     :members: load, name, path
 
 
-.. autoclass:: artefacts.core.Sources
+.. autoclass:: artefacts.models.Sources
     :members: load, name, path
 
 
-.. autoclass:: artefacts.core.SourcesFreshnessResult
+.. autoclass:: artefacts.models.SourcesFreshnessResult
     :members:
 
 
-.. autoclass:: artefacts.core.TimingResult
+.. autoclass:: artefacts.models.TimingResult
     :members:
 
 
-.. autoclass:: artefacts.core.FreshnessThreshold
+.. autoclass:: artefacts.models.FreshnessThreshold
     :members:
 
 
-.. autoclass:: artefacts.core.Time
+.. autoclass:: artefacts.models.Time
     :members:
