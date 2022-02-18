@@ -1,14 +1,3 @@
-"""
-The core module contains the deserialized dbt artifacts, and various objects such
-as models, tests, and sources.
-
->>> from artefacts import Manifest, RunResults, Sources, Catalog
-
-To use an artefact, you first need to `load` it.
-
->>> manifest = Manifest.load()
-"""
-
 import datetime
 import uuid
 import os
