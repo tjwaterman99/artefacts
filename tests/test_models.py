@@ -35,6 +35,7 @@ def test_models_have_reference_defined(base_model, reference_docs):
     assert base_model._qualpath() in reference_docs
 
 
+@pytest.mark.skipif("not testing_poffertjes_shop")
 def test_models_are_deserialized_at_least_once(manifest, sources, run_results, catalog, base_model):
     if not hasattr(base_model, '_test_path'):
         pytest.skip()
