@@ -243,6 +243,40 @@
 </dl>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="artefacts.api.snapshots">
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">snapshots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#snapshots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.snapshots" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all snapshots in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">snapshot</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">snapshots</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">snapshot</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'snapshot'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="artefacts.api.operations">
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">operations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#operations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.operations" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all operations in the dbt project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">operation</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">operations</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">operation</span><span class="o">.</span><span class="n">resource_type</span>
+<span class="go">'operation'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.sources">
 <span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#sources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.sources" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all sources in the dbt project.</p>

@@ -262,6 +262,36 @@
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">))</span></div>
 
 
+<div class="viewcode-block" id="snapshots"><a class="viewcode-back" href="../../api.html#artefacts.api.snapshots">[docs]</a><span class="k">def</span> <span class="nf">snapshots</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all snapshots in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; snapshot = artefacts.api.snapshots()[0]</span>
+<span class="sd">    &gt;&gt;&gt; snapshot.resource_type</span>
+<span class="sd">    'snapshot'</span>
+<span class="sd">    &gt;&gt;&gt; type(snapshot)</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'snapshot'</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="operations"><a class="viewcode-back" href="../../api.html#artefacts.api.operations">[docs]</a><span class="k">def</span> <span class="nf">operations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNode</span><span class="p">]:</span>
+    <span class="sd">"""A list of all operations in the dbt project. </span>
+
+<span class="sd">    &gt;&gt;&gt; operation = artefacts.api.operations()[0]</span>
+<span class="sd">    &gt;&gt;&gt; operation.resource_type</span>
+<span class="sd">    'operation'</span>
+<span class="sd">    &gt;&gt;&gt; type(operation)</span>
+<span class="sd">    &lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'operation'</span><span class="p">))</span></div>
+
+
 <div class="viewcode-block" id="sources"><a class="viewcode-back" href="../../api.html#artefacts.api.sources">[docs]</a><span class="k">def</span> <span class="nf">sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestSourceNode</span><span class="p">]:</span>
     <span class="sd">"""A list of all sources in the dbt project. </span>
 <span class="sd">    </span>
