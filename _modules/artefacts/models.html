@@ -229,9 +229,20 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&gt;"</span>
 
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> has no attribute '</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">'.</span><span class="se">\n\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"Please see </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_docs_path</span><span class="p">()</span><span class="si">}</span><span class="s2"> for available attributes"</span>
+            <span class="sa">f</span><span class="s2">" of this model."</span>
+        <span class="p">)</span>
+
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_qualpath</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_docs_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"https://tjwaterman99.github.io/artefacts/reference.html#</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_qualpath</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
 
 
 <div class="viewcode-block" id="ManifestModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel">[docs]</a><span class="k">class</span> <span class="nc">ManifestModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
