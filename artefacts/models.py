@@ -38,6 +38,10 @@ class Deserializer(pydantic.BaseModel):
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
 
+    @classmethod
+    def _qualpath(cls):
+        return f"{cls.__module__}" + "." + f"{cls.__qualname__}"
+
 
 class ManifestModel(Deserializer):
     """

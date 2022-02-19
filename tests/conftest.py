@@ -10,10 +10,19 @@ def iter_base_models():
     for name in dir(artefacts.models):
         obj = getattr(artefacts.models, name)
         try:
-            if issubclass(obj, artefacts.models.Deserializer):
+            if (
+                issubclass(obj, artefacts.models.Deserializer) \
+                and obj != artefacts.models.Deserializer
+            ):
                 yield obj
         except TypeError:  # Raised when `obj` is not a class
             pass
+
+
+@pytest.fixture(scope='session')
+def reference_docs():
+    with open('docs/reference.rst', 'r') as fh:
+        return fh.read()
 
 
 @pytest.fixture(scope='session', params=list(iter_base_models()))

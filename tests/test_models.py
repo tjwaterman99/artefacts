@@ -18,9 +18,8 @@ from artefacts.models import (
 )
 
 
-@pytest.mark.skip
-def test_models_have_reference_defined(base_model):
-    assert base_model.__name__.startswith('artefacts')
+def test_models_have_reference_defined(base_model, reference_docs):
+    assert base_model._qualpath() in reference_docs
 
 
 def test_manifest_validates_dbt_version(manifest):
