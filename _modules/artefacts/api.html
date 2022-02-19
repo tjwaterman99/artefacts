@@ -258,13 +258,8 @@
 <span class="sd">    </span>
 <span class="sd">    """</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">manifest</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'seed'</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="sources"><a class="viewcode-back" href="../../api.html#artefacts.api.sources">[docs]</a><span class="k">def</span> <span class="nf">sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestSourceNode</span><span class="p">]:</span>
@@ -279,7 +274,7 @@
 <span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'source'</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="docs"><a class="viewcode-back" href="../../api.html#artefacts.api.docs">[docs]</a><span class="k">def</span> <span class="nf">docs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestDocsNode</span><span class="p">]:</span>
@@ -307,7 +302,7 @@
 <span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">macros</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'macro'</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="exposures"><a class="viewcode-back" href="../../api.html#artefacts.api.exposures">[docs]</a><span class="k">def</span> <span class="nf">exposures</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestExposureNode</span><span class="p">]:</span>
@@ -322,7 +317,7 @@
 <span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">exposures</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'exposure'</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="metrics"><a class="viewcode-back" href="../../api.html#artefacts.api.metrics">[docs]</a><span class="k">def</span> <span class="nf">metrics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMetricNode</span><span class="p">]:</span>
@@ -337,7 +332,7 @@
 <span class="sd">    """</span>
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">iter_resource_type</span><span class="p">(</span><span class="s1">'metric'</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="selectors"><a class="viewcode-back" href="../../api.html#artefacts.api.selectors">[docs]</a><span class="k">def</span> <span class="nf">selectors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>

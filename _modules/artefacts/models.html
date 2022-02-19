@@ -253,15 +253,8 @@
 
 <span class="sd">    """</span>
 
-    <span class="c1"># TODO: improve the way we validate minimum dbt versions.</span>
-    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">validate_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">'1.0'</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">Unsupported dbt version: </span><span class="si">{</span><span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span><span class="si">}</span><span class="s2">. "</span>
-                <span class="s2">"</span><span class="se">\n\t</span><span class="s2">Please upgrade dbt to at least v1.0 to use artefacts"</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">metadata</span>
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestNode</span><span class="p">]</span>
@@ -275,8 +268,31 @@
     <span class="n">parent_map</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNodeReference</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">child_map</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNodeReference</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
 
-    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span></div>
+    <span class="c1"># TODO: improve the way we validate minimum dbt versions. We should</span>
+    <span class="c1"># probably do the validation on every artifact.</span>
+    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">'1.0'</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">Unsupported dbt version: </span><span class="si">{</span><span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="s2">"</span><span class="se">\n\t</span><span class="s2">Please upgrade dbt to at least v1.0 to use artefacts"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">resources</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">macros</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">exposures</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">iter_resource_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="n">resource_type</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">v</span></div>
 
 
 <div class="viewcode-block" id="RunResultsModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.RunResultsModel">[docs]</a><span class="k">class</span> <span class="nc">RunResultsModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
@@ -686,23 +702,10 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ManifestNode</span><span class="p">:</span>
         <span class="sd">"""</span>
-<span class="sd">        The node this reference points to. </span>
+<span class="sd">        The manifest node this reference points to. </span>
 <span class="sd">        """</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'seed'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'operation'</span><span class="p">,</span> <span class="s1">'model'</span><span class="p">,</span> <span class="s1">'snapshot'</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'source'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'macro'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">macros</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'exposure'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">exposures</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'metric'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="s1">'selector'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">selectors</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown resource type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="ManifestSourceNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestSourceNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSourceNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
