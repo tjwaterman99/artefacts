@@ -27,13 +27,8 @@ def models() -> typing.List[ManifestNode]:
 
     """
 
-    result = []
     manifest = Manifest()
-    for k,v in manifest.nodes.items():
-        if v.resource_type == 'model':
-            result.append(v)
-    else:
-        return result
+    return list(manifest.iter_resource_type('model'))
 
 
 def tests() -> typing.List[ManifestNode]:
@@ -47,13 +42,8 @@ def tests() -> typing.List[ManifestNode]:
     
     """
 
-    result = []
     manifest = Manifest()
-    for k,v in manifest.nodes.items():
-        if v.resource_type == 'test':
-            result.append(v)
-    else:
-        return result
+    return list(manifest.iter_resource_type('test'))
 
 
 def seeds() -> typing.List[ManifestNode]:
