@@ -236,7 +236,7 @@ class Quoting(Deserializer):
 
     """
     
-    _test_path = 'example = manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
+    _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
 
     database: typing.Union[bool, None]
     identifier: typing.Union[bool, None]
