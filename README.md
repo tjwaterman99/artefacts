@@ -1,5 +1,9 @@
 # artefacts
 
+[![PyPI version](https://badge.fury.io/py/artefacts.svg)](https://badge.fury.io/py/artefacts) ![badge](https://img.shields.io/badge/dbt-%3E%3D1.0-orange?style=flat&logo=dbt) ![badge](https://img.shields.io/pypi/pyversions/artefacts?logo=python) 
+
+![badge](https://img.shields.io/github/workflow/status/tjwaterman99/artefacts/CI/main?label=CI)
+
 _A deserialization library for dbt artifacts._
 
 ```

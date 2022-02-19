@@ -67,13 +67,8 @@ def seeds() -> typing.List[ManifestNode]:
     
     """
 
-    result = []
     manifest = Manifest()
-    for k,v in manifest.nodes.items():
-        if v.resource_type == 'seed':
-            result.append(v)
-    else:
-        return result
+    return list(manifest.iter_resource_type('seed'))
 
 
 def sources() -> typing.List[ManifestSourceNode]:
@@ -88,7 +83,7 @@ def sources() -> typing.List[ManifestSourceNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.sources.values())
+    return list(manifest.iter_resource_type('source'))
 
 
 def docs() -> typing.List[ManifestDocsNode]:
@@ -116,7 +111,7 @@ def macros() -> typing.List[ManifestMacroNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.macros.values())
+    return list(manifest.iter_resource_type('macro'))
 
 
 def exposures() -> typing.List[ManifestExposureNode]:
@@ -131,7 +126,7 @@ def exposures() -> typing.List[ManifestExposureNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.exposures.values())
+    return list(manifest.iter_resource_type('exposure'))
 
 
 def metrics() -> typing.List[ManifestMetricNode]:
@@ -146,7 +141,7 @@ def metrics() -> typing.List[ManifestMetricNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.metrics.values())
+    return list(manifest.iter_resource_type('metric'))
 
 
 def selectors() -> typing.List[dict]:

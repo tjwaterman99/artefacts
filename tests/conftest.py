@@ -5,6 +5,9 @@ from artefacts.deserializers import Manifest, RunResults, Catalog, Sources
 import artefacts
 
 
+testing_poffertjes_shop = os.environ['DBT_PROJECT_DIR'] == "dbt_projects/poffertjes_shop"
+
+
 def iter_base_models():
     import artefacts.models
     for name in dir(artefacts.models):

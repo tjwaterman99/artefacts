@@ -65,7 +65,8 @@ class ManifestModel(Deserializer):
 
     _test_path = 'example = manifest'
 
-    # TODO: improve the way we validate minimum dbt versions.
+    # TODO: improve the way we validate minimum dbt versions. We should
+    # probably do the validation on every artifact.
     @pydantic.validator('metadata')
     def validate_metadata(cls, metadata):
         if metadata.dbt_version < packaging.version.parse('1.0'):
@@ -74,6 +75,9 @@ class ManifestModel(Deserializer):
                 "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
             )
         return metadata
+
+    class Config:
+        arbitrary_types_allowed = True
 
     metadata: Metadata
     nodes: typing.Dict[str, ManifestNode]
@@ -87,8 +91,20 @@ class ManifestModel(Deserializer):
     parent_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
     child_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
 
-    class Config:
-        arbitrary_types_allowed = True
+    @property
+    def resources(self) -> typing.Dict:
+        return {
+            **self.nodes,
+            **self.sources,
+            **self.macros,
+            **self.exposures,
+            **self.metrics
+        }
+
+    def iter_resource_type(self, resource_type: str) -> typing.Iterable:
+        for k, v in self.resources.items():
+            if v.resource_type == resource_type:
+                yield v
 
 
 class RunResultsModel(Deserializer):
@@ -508,23 +524,10 @@ class ManifestNodeReference(ArtifactNodeReader):
     @property
     def node(self) -> ManifestNode:
         """
-        The node this reference points to. 
+        The manifest node this reference points to. 
         """
 
-        if self.resource_type in ['seed', 'test', 'operation', 'model', 'snapshot']:
-            return self.manifest_artifact.nodes[self.unique_id]
-        elif self.resource_type == 'source':
-            return self.manifest_artifact.sources[self.unique_id]
-        elif self.resource_type == 'macro':
-            return self.manifest_artifact.macros[self.unique_id]
-        elif self.resource_type == 'exposure':
-            return self.manifest_artifact.exposures[self.unique_id]
-        elif self.resource_type == 'metric':
-            return self.manifest_artifact.metrics[self.unique_id]
-        elif self.resource_type == 'selector':
-            return self.manifest_artifact.selectors[self.unique_id]
-        else:
-            raise AttributeError(f"Unknown resource type: {self.resource_type}")
+        return self.manifest_artifact.resources[self.unique_id]
 
 
 class ManifestSourceNode(ArtifactNodeReader, Deserializer):
