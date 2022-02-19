@@ -62,6 +62,8 @@ class ManifestModel(Deserializer):
 
     """
 
+    _test_path = 'example = manifest'
+
     # TODO: improve the way we validate minimum dbt versions.
     @pydantic.validator('metadata')
     def validate_metadata(cls, metadata):
@@ -102,6 +104,8 @@ class RunResultsModel(Deserializer):
     
     """
 
+    _test_path = 'example = run_results'
+
     metadata: Metadata
     results: typing.List[RunResultNode]
     elapsed_time: float
@@ -119,6 +123,8 @@ class CatalogModel(Deserializer):
     
     """
 
+    _test_path = 'example = catalog'
+
     metadata: Metadata
     nodes: typing.Dict[str, CatalogNode]
     sources: typing.Dict[str, CatalogNode]
@@ -134,6 +140,8 @@ class SourcesModel(Deserializer):
         elapsed_time: The elapsed_time attribute
 
     """
+
+    _test_path = 'example = sources'
 
     metadata: Metadata
     results: typing.List[SourcesFreshnessResult]
@@ -154,6 +162,8 @@ class Metadata(Deserializer):
 
     """
     
+    _test_path = 'example = manifest.metadata'
+
     dbt_schema_version_raw: str
     dbt_version_raw: str
     generated_at: datetime.datetime
@@ -198,6 +208,8 @@ class Quoting(Deserializer):
 
     """
     
+    _test_path = 'example = manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
+
     database: typing.Union[bool, None]
     identifier: typing.Union[bool, None]
     db_schema: typing.Union[bool, None]

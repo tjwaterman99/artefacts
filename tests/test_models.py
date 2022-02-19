@@ -22,6 +22,20 @@ def test_models_have_reference_defined(base_model, reference_docs):
     assert base_model._qualpath() in reference_docs
 
 
+def test_models_are_deserialized_at_least_once(manifest, sources, run_results, catalog, base_model):
+    if not hasattr(base_model, '_test_path'):
+        pytest.skip()
+    else:
+        context = {
+            'manifest': manifest,
+            'catalog': catalog,
+            'run_results': run_results,
+            'sources': sources
+        }
+        exec(base_model._test_path, context)
+        assert type(context['example']) == base_model
+
+
 def test_manifest_validates_dbt_version(manifest):
     assert ManifestModel.validate_metadata(manifest.metadata)
 
