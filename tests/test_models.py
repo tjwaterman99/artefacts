@@ -35,6 +35,16 @@ def test_models_have_reference_defined(base_model, reference_docs):
     assert base_model._qualpath() in reference_docs
 
 
+def test_models_have_docs_path(base_model):
+    assert base_model._qualpath() in base_model._docs_path()
+
+
+def test_models_raise_attribute_error_with_docs_path(base_model):
+    with pytest.raises(AttributeError) as err:
+        base_model.some_attribute_that_does_not_exist
+        assert base_model._docs_path() in str(err)
+
+
 def test_manifest_validates_dbt_version(manifest):
     assert ManifestModel.validate_metadata(manifest.metadata)
 
