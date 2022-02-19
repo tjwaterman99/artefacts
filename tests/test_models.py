@@ -44,9 +44,10 @@ def test_models_are_deserialized_at_least_once(manifest, sources, run_results, c
             'manifest': manifest,
             'catalog': catalog,
             'run_results': run_results,
-            'sources': sources
+            'sources': sources,
+            'base_model': base_model,
         }
-        exec(base_model._test_path, context)
+        exec(f"example = {base_model._test_path}", context)
         assert type(context['example']) == base_model
 
 
