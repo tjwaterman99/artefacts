@@ -1,5 +1,7 @@
 import pytest
 
+from .conftest import iter_base_models
+
 import artefacts.state
 from artefacts.deserializers import (
     Manifest, 
@@ -14,6 +16,10 @@ from artefacts.models import (
     ManifestNode, 
     RunResultsModel
 )
+
+
+def test_models_have_reference_defined(base_model, reference_docs):
+    assert base_model._qualpath() in reference_docs
 
 
 def test_manifest_validates_dbt_version(manifest):
