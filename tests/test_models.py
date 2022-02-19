@@ -18,6 +18,18 @@ from artefacts.models import (
 )
 
 
+def test_manifest_resources(manifest):
+    assert len(manifest.resources) > 0
+    assert type(manifest.resources) == dict
+
+
+@pytest.mark.parametrize("resource_type", ['model', 'test', 'source', 'metric'])
+def test_manifest_iter_resource_type(resource_type, manifest):
+    assert len(list(manifest.iter_resource_type(resource_type))) > 0
+    for resource in manifest.iter_resource_type(resource_type):
+        assert resource.resource_type == resource_type
+    
+
 def test_models_have_reference_defined(base_model, reference_docs):
     assert base_model._qualpath() in reference_docs
 
