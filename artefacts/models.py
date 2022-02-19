@@ -33,6 +33,7 @@ SourcesModel = typing.ForwardRef('SourcesModel')
 SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
+# TODO: rename this to `Model`
 class Deserializer(pydantic.BaseModel):
     
     def __repr__(self):
@@ -73,6 +74,19 @@ class ManifestModel(Deserializer):
 
     """
 
+    _test_path = 'manifest'
+
+    # TODO: improve the way we validate minimum dbt versions. We should
+    # probably do the validation on every artifact.
+    @pydantic.validator('metadata')
+    def validate_metadata(cls, metadata):
+        if metadata.dbt_version < packaging.version.parse('1.0'):
+            raise ValueError(
+                f"\n\tUnsupported dbt version: {metadata.dbt_version}. "
+                "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
+            )
+        return metadata
+
     class Config:
         arbitrary_types_allowed = True
 
@@ -87,17 +101,6 @@ class ManifestModel(Deserializer):
     disabled: typing.Union[dict, None]
     parent_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
     child_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
-
-    # TODO: improve the way we validate minimum dbt versions. We should
-    # probably do the validation on every artifact.
-    @pydantic.validator('metadata')
-    def validate_metadata(cls, metadata):
-        if metadata.dbt_version < packaging.version.parse('1.0'):
-            raise ValueError(
-                f"\n\tUnsupported dbt version: {metadata.dbt_version}. "
-                "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
-            )
-        return metadata
 
     @property
     def resources(self) -> typing.Dict:
@@ -129,6 +132,8 @@ class RunResultsModel(Deserializer):
     
     """
 
+    _test_path = 'run_results'
+
     metadata: Metadata
     results: typing.List[RunResultNode]
     elapsed_time: float
@@ -146,6 +151,8 @@ class CatalogModel(Deserializer):
     
     """
 
+    _test_path = 'catalog'
+
     metadata: Metadata
     nodes: typing.Dict[str, CatalogNode]
     sources: typing.Dict[str, CatalogNode]
@@ -161,6 +168,8 @@ class SourcesModel(Deserializer):
         elapsed_time: The elapsed_time attribute
 
     """
+
+    _test_path = 'sources'
 
     metadata: Metadata
     results: typing.List[SourcesFreshnessResult]
@@ -181,6 +190,8 @@ class Metadata(Deserializer):
 
     """
     
+    _test_path = 'manifest.metadata'
+
     dbt_schema_version_raw: str
     dbt_version_raw: str
     generated_at: datetime.datetime
@@ -225,6 +236,8 @@ class Quoting(Deserializer):
 
     """
     
+    _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
+
     database: typing.Union[bool, None]
     identifier: typing.Union[bool, None]
     db_schema: typing.Union[bool, None]
@@ -248,6 +261,8 @@ class ExternalPartition(Deserializer):
    
     """
 
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.external_events'].external.partitions[0]"
+
     name: typing.Union[str, None]
     description: typing.Union[str, None]
     data_type: typing.Union[str, None]
@@ -266,6 +281,8 @@ class ExternalTable(Deserializer):
         partitions: The partitions attribute
 
     """
+
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
 
     location: typing.Union[None, str]
     file_format: typing.Union[None, str]
@@ -287,6 +304,8 @@ class ColumnInfo(Deserializer):
 
     """
 
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
+
     name: str
     description: typing.Union[None, str]
     meta: typing.Union[None, dict]
@@ -305,6 +324,8 @@ class TimingResult(Deserializer):
 
     """
 
+    _test_path = "sources.results[0].timing[0]"
+
     name: str
     started_at: typing.Union[None, datetime.datetime]
     completed_at: typing.Union[None, datetime.datetime]
@@ -317,6 +338,8 @@ class SourceConfig(Deserializer):
         enabled: Whether the source is enabled
     """
 
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].config"
+
     enabled: typing.Union[bool, None]
 
 
@@ -328,6 +351,8 @@ class Time(Deserializer):
         period: The length of the time interval, eg days, hours, seconds
         count: The number of periods associed with the time interval
     """
+
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
 
     count: typing.Union[int, None]
     period: typing.Union[str, None]
@@ -344,6 +369,8 @@ class FreshnessThreshold(Deserializer):
         filter: A SQL statement used to filter the table when running a
                 freshness check.
     """
+
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness"
 
     warn_after: typing.Union[Time, None]
     error_after: typing.Union[Time, None]
@@ -367,6 +394,8 @@ class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
         execution_time: The execution_time attribute
 
     """
+
+    _test_path = "sources.results[0]"
 
     unique_id: str
     status: str
@@ -395,6 +424,8 @@ class RunResultNode(ArtifactNodeReader, Deserializer):
         unique_id: The unique_id attribute
 
     """
+
+    _test_path = 'run_results.results[0]'
 
     status: str
     timing: typing.List[TimingResult]
@@ -449,6 +480,8 @@ class ManifestNode(ArtifactNodeReader, Deserializer):
         file_key_name: the file_key_name attribute
 
     """
+
+    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
     raw_sql: str
     compiled: typing.Union[str, None]
@@ -563,6 +596,8 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
 
     """
 
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.products']"
+
     fqn: typing.List[str]
     database: typing.Union[None, str]
     db_schema: str
@@ -608,6 +643,8 @@ class MacroArgument(Deserializer):
 
     """
 
+    _test_path = 'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'
+
     name: str
     type: typing.Union[str, None]
     description: typing.Union[str, None]
@@ -635,6 +672,8 @@ class ManifestMacroNode(Deserializer):
         depends_on: The depends_on attribute
 
     """
+
+    _test_path = 'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"]'
 
     unique_id: str
     package_name: str
@@ -667,6 +706,8 @@ class ManifestDocsNode(Deserializer):
         block_contents: The block_contents attribute
 
     """
+
+    _test_path = 'manifest.docs["dbt.__overview__"]'
 
     unique_id: str
     package_name: str
@@ -702,6 +743,8 @@ class ManifestExposureNode(Deserializer):
         depends_on: Details about a depends_on attribute 
 
     """
+
+    _test_path = 'manifest.exposures["exposure.poffertjes_shop.revenue_summary"]'
 
     fqn: typing.List[str]
     unique_id: str
@@ -739,6 +782,8 @@ class MetricFilter(Deserializer):
         value: The value attribute
     """
 
+    _test_path = "manifest.metrics['metric.poffertjes_shop.revenue'].filters[0]"
+
     field: str
     operator: str
     value: str
@@ -773,6 +818,8 @@ class ManifestMetricNode(Deserializer):
         depends_on: The depends_on attribute
 
     """
+
+    _test_path = "manifest.metrics['metric.poffertjes_shop.revenue']"
 
     fqn: typing.List[str]
     unique_id: str
@@ -814,6 +861,8 @@ class CatalogNode(ArtifactNodeReader, Deserializer):
     
     """
 
+    _test_path = 'catalog.nodes["model.poffertjes_shop.customers"]'
+
     metadata: CatalogNodeMetadata
     columns: typing.Dict[str, CatalogNodeColumn]
     stats: typing.Dict[str, CatalogNodeStats]
@@ -832,6 +881,8 @@ class CatalogNodeMetadata(Deserializer):
         owner: The owner attribute
 
     """
+
+    _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].metadata'
 
     node_type: str
     db_schema: str
@@ -858,6 +909,8 @@ class CatalogNodeColumn(Deserializer):
     
     """
 
+    _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].columns["customer_id"]'
+
     node_type: str
     index: int
     name: str
@@ -879,6 +932,8 @@ class CatalogNodeStats(Deserializer):
         label: The label of the statistic
         value: The value of the statistic
     """
+
+    _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'
 
     description: typing.Union[str, None]
     id: str
