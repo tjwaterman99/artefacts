@@ -43,7 +43,27 @@ jobs:
       if: matrix.dbt_project_dir == 'dbt_projects/poffertjes_shop'
       run: |
         poetry run pytest --doctest-modules --doctest-continue-on-failure
+    - name: Upload coverage data to coveralls.io
+      run: coveralls --service=github
+      if: ${{ github.ref == 'refs/heads/add-pytest-cov' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_FLAG_NAME: ${{ matrix.python_version }}
+        COVERALLS_PARALLEL: true        
     - name: Test without doctests
       if: matrix.dbt_project_dir != 'dbt_projects/poffertjes_shop'
       run: |
         poetry run pytest
+  
+  coveralls:
+    if: ${{ github.ref == 'refs/heads/add-pytest-cov' }}
+    name: Indicate completion to coveralls.io
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Finished
+      run: |
+        pip3 install --upgrade coveralls
+        coveralls --service=github --finish
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
