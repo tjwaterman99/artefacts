@@ -38,9 +38,20 @@ class Deserializer(pydantic.BaseModel):
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
 
+    def __getattr__(self, attr):
+        raise AttributeError(
+            f"{self.__class__.__name__} has no attribute '{attr}'.\n\n"
+            f"Please see {self.__class__._docs_path()} for available attributes"
+            f" of this model."
+        )
+
     @classmethod
     def _qualpath(cls):
         return f"{cls.__module__}" + "." + f"{cls.__qualname__}"
+
+    @classmethod
+    def _docs_path(cls):
+        return f"https://tjwaterman99.github.io/artefacts/reference.html#{cls._qualpath()}"
 
 
 class ManifestModel(Deserializer):
