@@ -1,6 +1,6 @@
 import pytest
 
-from .conftest import iter_base_models
+from .conftest import iter_base_models, testing_poffertjes_shop
 
 import artefacts.state
 from artefacts.deserializers import (
@@ -17,6 +17,19 @@ from artefacts.models import (
     RunResultsModel
 )
 
+
+def test_manifest_resources(manifest):
+    assert len(manifest.resources) > 0
+    assert type(manifest.resources) == dict
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
+@pytest.mark.parametrize("resource_type", ['model', 'test', 'source', 'metric'])
+def test_manifest_iter_resource_type(resource_type, manifest):
+    assert len(list(manifest.iter_resource_type(resource_type))) > 0
+    for resource in manifest.iter_resource_type(resource_type):
+        assert resource.resource_type == resource_type
+    
 
 def test_models_have_reference_defined(base_model, reference_docs):
     assert base_model._qualpath() in reference_docs
