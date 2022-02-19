@@ -1,6 +1,6 @@
 import pytest
 
-from .conftest import iter_base_models
+from .conftest import iter_base_models, testing_poffertjes_shop
 
 import artefacts.state
 from artefacts.deserializers import (
@@ -23,6 +23,7 @@ def test_manifest_resources(manifest):
     assert type(manifest.resources) == dict
 
 
+@pytest.mark.skipif("not testing_poffertjes_shop")
 @pytest.mark.parametrize("resource_type", ['model', 'test', 'source', 'metric'])
 def test_manifest_iter_resource_type(resource_type, manifest):
     assert len(list(manifest.iter_resource_type(resource_type))) > 0
