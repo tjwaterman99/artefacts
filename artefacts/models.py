@@ -33,6 +33,7 @@ SourcesModel = typing.ForwardRef('SourcesModel')
 SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
 
 
+# TODO: rename this to `Model`
 class Deserializer(pydantic.BaseModel):
     
     def __repr__(self):
