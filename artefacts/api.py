@@ -71,6 +71,36 @@ def seeds() -> typing.List[ManifestNode]:
     return list(manifest.iter_resource_type('seed'))
 
 
+def snapshots() -> typing.List[ManifestNode]:
+    """A list of all snapshots in the dbt project. 
+
+    >>> snapshot = artefacts.api.snapshots()[0]
+    >>> snapshot.resource_type
+    'snapshot'
+    >>> type(snapshot)
+    <class 'artefacts.models.ManifestNode'>
+    
+    """
+
+    manifest = Manifest()
+    return list(manifest.iter_resource_type('snapshot'))
+
+
+def operations() -> typing.List[ManifestNode]:
+    """A list of all operations in the dbt project. 
+
+    >>> operation = artefacts.api.operations()[0]
+    >>> operation.resource_type
+    'operation'
+    >>> type(operation)
+    <class 'artefacts.models.ManifestNode'>
+    
+    """
+
+    manifest = Manifest()
+    return list(manifest.iter_resource_type('operation'))
+
+
 def sources() -> typing.List[ManifestSourceNode]:
     """A list of all sources in the dbt project. 
     
