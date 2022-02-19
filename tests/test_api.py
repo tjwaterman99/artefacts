@@ -10,9 +10,21 @@ from artefacts.api import macros
 from artefacts.api import exposures
 from artefacts.api import metrics
 from artefacts.api import selectors
+from artefacts.api import operations
+from artefacts.api import snapshots
 
 
 dbt_project = os.environ['DBT_PROJECT_DIR'].split('/')[-1]
+
+
+@pytest.mark.skipif("dbt_project != 'poffertjes_shop'")
+def test_operations():
+    assert len(operations()) > 0
+
+
+@pytest.mark.skipif("dbt_project != 'poffertjes_shop'")
+def test_snapshots():
+    assert len(snapshots()) > 0
 
 
 @pytest.mark.skipif("dbt_project != 'poffertjes_shop'")
