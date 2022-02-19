@@ -2,8 +2,12 @@ Reference
 =========
 
 
-.. autoclass:: artefacts.models.Catalog
-    :members: load, name, path
+.. autoclass:: artefacts.models.CatalogModel
+    :members:
+
+
+.. autoclass:: artefacts.models.ColumnInfo
+    :members:
 
 
 .. autoclass:: artefacts.models.CatalogNode
@@ -22,8 +26,8 @@ Reference
     :members:
 
 
-.. autoclass:: artefacts.models.Manifest
-    :members: load, name, path
+.. autoclass:: artefacts.models.ManifestModel
+    :members:
 
 
 .. autoclass:: artefacts.models.ManifestDocsNode
@@ -62,12 +66,12 @@ Reference
     :members:
 
 
-.. autoclass:: artefacts.models.RunResults
-    :members: load, name, path
+.. autoclass:: artefacts.models.RunResultsModel
+    :members:
 
 
-.. autoclass:: artefacts.models.Sources
-    :members: load, name, path
+.. autoclass:: artefacts.models.SourcesModel
+    :members:
 
 
 .. autoclass:: artefacts.models.SourcesFreshnessResult
@@ -83,4 +87,28 @@ Reference
 
 
 .. autoclass:: artefacts.models.Time
+    :members:
+
+
+.. autoclass:: artefacts.models.ExternalPartition
+    :members:
+
+
+.. autoclass:: artefacts.models.ExternalTable
+    :members:
+
+
+.. autoclass:: artefacts.models.MacroArgument
+    :members:
+
+
+.. autoclass:: artefacts.models.MetricFilter
+    :members:
+
+
+.. autoclass:: artefacts.models.Quoting
+    :members:
+
+
+.. autoclass:: artefacts.models.SourceConfig
     :members:

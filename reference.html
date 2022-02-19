@@ -191,6 +191,116 @@
           <div class="section" id="reference">
 <h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.CatalogModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">CatalogModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#CatalogModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.CatalogModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The catalog artifact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.CatalogModel.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#artefacts.models.CatalogModel.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>The metadata attribute of the catalog</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#artefacts.models.Metadata" title="artefacts.models.Metadata">artefacts.models.Metadata</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.CatalogModel.nodes">
+<span class="sig-name descname"><span class="pre">nodes</span></span><a class="headerlink" href="#artefacts.models.CatalogModel.nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The nodes attribute of the catalog</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.CatalogNode" title="artefacts.models.CatalogNode">artefacts.models.CatalogNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.CatalogModel.sources">
+<span class="sig-name descname"><span class="pre">sources</span></span><a class="headerlink" href="#artefacts.models.CatalogModel.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sources attribute of the catalog</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.CatalogNode" title="artefacts.models.CatalogNode">artefacts.models.CatalogNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.CatalogModel.errors">
+<span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#artefacts.models.CatalogModel.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>The errors attribute of the catalog</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">ColumnInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ColumnInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ColumnInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Column details of a documented model</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#artefacts.models.ColumnInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#artefacts.models.ColumnInfo.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>The description attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><a class="headerlink" href="#artefacts.models.ColumnInfo.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>The meta attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, dict]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo.data_type">
+<span class="sig-name descname"><span class="pre">data_type</span></span><a class="headerlink" href="#artefacts.models.ColumnInfo.data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data_type attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo.quote">
+<span class="sig-name descname"><span class="pre">quote</span></span><a class="headerlink" href="#artefacts.models.ColumnInfo.quote" title="Permalink to this definition">¶</a></dt>
+<dd><p>The quote attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, bool]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ColumnInfo.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#artefacts.models.ColumnInfo.tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tags attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="artefacts.models.CatalogNode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">CatalogNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#CatalogNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.CatalogNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Details about a Catalog node.</p>
@@ -396,6 +506,121 @@
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">ManifestModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ManifestModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ManifestModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The manifest artifact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s metadata</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#artefacts.models.Metadata" title="artefacts.models.Metadata">artefacts.models.Metadata</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.nodes">
+<span class="sig-name descname"><span class="pre">nodes</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode">artefacts.models.ManifestNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.sources">
+<span class="sig-name descname"><span class="pre">sources</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s sources</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.ManifestSourceNode" title="artefacts.models.ManifestSourceNode">artefacts.models.ManifestSourceNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.macros">
+<span class="sig-name descname"><span class="pre">macros</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.macros" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s macros</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.ManifestMacroNode" title="artefacts.models.ManifestMacroNode">artefacts.models.ManifestMacroNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.docs">
+<span class="sig-name descname"><span class="pre">docs</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s docs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.ManifestDocsNode" title="artefacts.models.ManifestDocsNode">artefacts.models.ManifestDocsNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.exposures">
+<span class="sig-name descname"><span class="pre">exposures</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.exposures" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s exposures</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.ManifestExposureNode" title="artefacts.models.ManifestExposureNode">artefacts.models.ManifestExposureNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s metrics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[str, <a class="reference internal" href="#artefacts.models.ManifestMetricNode" title="artefacts.models.ManifestMetricNode">artefacts.models.ManifestMetricNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.selectors">
+<span class="sig-name descname"><span class="pre">selectors</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.selectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s selectors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.disabled">
+<span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.disabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s disabled</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.parent_map">
+<span class="sig-name descname"><span class="pre">parent_map</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.parent_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s parent_map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[Dict[str, List[<a class="reference internal" href="#artefacts.models.ManifestNodeReference" title="artefacts.models.ManifestNodeReference">artefacts.models.ManifestNodeReference</a>]]]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.child_map">
+<span class="sig-name descname"><span class="pre">child_map</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.child_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference to the Manifest’s child_map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[Dict[str, List[<a class="reference internal" href="#artefacts.models.ManifestNodeReference" title="artefacts.models.ManifestNodeReference">artefacts.models.ManifestNodeReference</a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -820,7 +1045,7 @@
 <dd><p>The arguments attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, List[artefacts.models.MacroArgument]]</p>
+<dd class="field-odd"><p>Union[None, List[<a class="reference internal" href="#artefacts.models.MacroArgument" title="artefacts.models.MacroArgument">artefacts.models.MacroArgument</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -955,7 +1180,7 @@
 <dd><p>The filters attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[artefacts.models.MetricFilter]</p>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#artefacts.models.MetricFilter" title="artefacts.models.MetricFilter">artefacts.models.MetricFilter</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1649,7 +1874,7 @@
 <dd><p>The quoting attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[artefacts.models.Quoting]</p>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#artefacts.models.Quoting" title="artefacts.models.Quoting">artefacts.models.Quoting</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1679,7 +1904,7 @@
 <dd><p>The external attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, artefacts.models.ExternalTable]</p>
+<dd class="field-odd"><p>Union[None, <a class="reference internal" href="#artefacts.models.ExternalTable" title="artefacts.models.ExternalTable">artefacts.models.ExternalTable</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1699,7 +1924,7 @@
 <dd><p>The columns attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Union[None, Dict[str, artefacts.models.ColumnInfo]]</p>
+<dd class="field-odd"><p>Union[None, Dict[str, <a class="reference internal" href="#artefacts.models.ColumnInfo" title="artefacts.models.ColumnInfo">artefacts.models.ColumnInfo</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1739,7 +1964,7 @@
 <dd><p>The config attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[artefacts.models.SourceConfig]</p>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#artefacts.models.SourceConfig" title="artefacts.models.SourceConfig">artefacts.models.SourceConfig</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1966,6 +2191,89 @@
 </dd></dl>
 </dd></dl>
 <dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.RunResultsModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">RunResultsModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#RunResultsModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.RunResultsModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The run_results artifact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.RunResultsModel.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#artefacts.models.RunResultsModel.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#artefacts.models.Metadata" title="artefacts.models.Metadata"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metadata</span></code></a> associated with the run, such as when
+the run was generated, the environment variables present
+during the run, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#artefacts.models.Metadata" title="artefacts.models.Metadata">artefacts.models.Metadata</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.RunResultsModel.results">
+<span class="sig-name descname"><span class="pre">results</span></span><a class="headerlink" href="#artefacts.models.RunResultsModel.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <a class="reference internal" href="#artefacts.models.RunResultNode" title="artefacts.models.RunResultNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunResultNode</span></code></a> s, which contain details
+about how long each node ran, whether it was successful, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#artefacts.models.RunResultNode" title="artefacts.models.RunResultNode">artefacts.models.RunResultNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.RunResultsModel.elapsed_time">
+<span class="sig-name descname"><span class="pre">elapsed_time</span></span><a class="headerlink" href="#artefacts.models.RunResultsModel.elapsed_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The total duration of the run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.RunResultsModel.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#artefacts.models.RunResultsModel.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>The arguments used when at the start of the run or build</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.SourcesModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">SourcesModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#SourcesModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.SourcesModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sources artifact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.SourcesModel.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#artefacts.models.SourcesModel.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>The metadata attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#artefacts.models.Metadata" title="artefacts.models.Metadata">artefacts.models.Metadata</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.SourcesModel.results">
+<span class="sig-name descname"><span class="pre">results</span></span><a class="headerlink" href="#artefacts.models.SourcesModel.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>The results attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#artefacts.models.SourcesFreshnessResult" title="artefacts.models.SourcesFreshnessResult">artefacts.models.SourcesFreshnessResult</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.SourcesModel.elapsed_time">
+<span class="sig-name descname"><span class="pre">elapsed_time</span></span><a class="headerlink" href="#artefacts.models.SourcesModel.elapsed_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The elapsed_time attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="artefacts.models.SourcesFreshnessResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">SourcesFreshnessResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#SourcesFreshnessResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.SourcesFreshnessResult" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result details from checking the freshness of a source.</p>
@@ -2175,6 +2483,236 @@ configuring a source freshness check</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.ExternalPartition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">ExternalPartition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ExternalPartition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ExternalPartition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object representing a partition on an external table</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalPartition.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#artefacts.models.ExternalPartition.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalPartition.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#artefacts.models.ExternalPartition.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>The description attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalPartition.data_type">
+<span class="sig-name descname"><span class="pre">data_type</span></span><a class="headerlink" href="#artefacts.models.ExternalPartition.data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data_type attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalPartition.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><a class="headerlink" href="#artefacts.models.ExternalPartition.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>The meta attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.ExternalTable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">ExternalTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ExternalTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ExternalTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object representing an external table</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalTable.location">
+<span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#artefacts.models.ExternalTable.location" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalTable.file_format">
+<span class="sig-name descname"><span class="pre">file_format</span></span><a class="headerlink" href="#artefacts.models.ExternalTable.file_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The file_format attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalTable.row_format">
+<span class="sig-name descname"><span class="pre">row_format</span></span><a class="headerlink" href="#artefacts.models.ExternalTable.row_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The row_format attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalTable.tbl_properties">
+<span class="sig-name descname"><span class="pre">tbl_properties</span></span><a class="headerlink" href="#artefacts.models.ExternalTable.tbl_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tbl_properties attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Union[None, str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.ExternalTable.partitions">
+<span class="sig-name descname"><span class="pre">partitions</span></span><a class="headerlink" href="#artefacts.models.ExternalTable.partitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>The partitions attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[List[<a class="reference internal" href="#artefacts.models.ExternalPartition" title="artefacts.models.ExternalPartition">artefacts.models.ExternalPartition</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.MacroArgument">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">MacroArgument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#MacroArgument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.MacroArgument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Details about the arguments of a macro</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.MacroArgument.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#artefacts.models.MacroArgument.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.MacroArgument.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#artefacts.models.MacroArgument.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.MacroArgument.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#artefacts.models.MacroArgument.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>The description attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.MetricFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">MetricFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#MetricFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.MetricFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Details about a Metric filter.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.MetricFilter.field">
+<span class="sig-name descname"><span class="pre">field</span></span><a class="headerlink" href="#artefacts.models.MetricFilter.field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.MetricFilter.operator">
+<span class="sig-name descname"><span class="pre">operator</span></span><a class="headerlink" href="#artefacts.models.MetricFilter.operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operator attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.MetricFilter.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#artefacts.models.MetricFilter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.Quoting">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">Quoting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#Quoting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.Quoting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Details about quoting requirements for database objects</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.Quoting.database">
+<span class="sig-name descname"><span class="pre">database</span></span><a class="headerlink" href="#artefacts.models.Quoting.database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to quote the “database” component of an object path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[bool]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.Quoting.identifier">
+<span class="sig-name descname"><span class="pre">identifier</span></span><a class="headerlink" href="#artefacts.models.Quoting.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to quote the “identifier” component of an object path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[bool]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.Quoting.db_schema">
+<span class="sig-name descname"><span class="pre">db_schema</span></span><a class="headerlink" href="#artefacts.models.Quoting.db_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to quote the “db_schema” component of an object path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[bool]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.Quoting.column">
+<span class="sig-name descname"><span class="pre">column</span></span><a class="headerlink" href="#artefacts.models.Quoting.column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to quote the “column” component of an object path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[bool]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="artefacts.models.SourceConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artefacts.models.</span></span><span class="sig-name descname"><span class="pre">SourceConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#SourceConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.SourceConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object containing details about a source’s config</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="artefacts.models.SourceConfig.enabled">
+<span class="sig-name descname"><span class="pre">enabled</span></span><a class="headerlink" href="#artefacts.models.SourceConfig.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the source is enabled</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[bool]</p>
 </dd>
 </dl>
 </dd></dl>
