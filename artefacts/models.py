@@ -261,8 +261,7 @@ class ExternalPartition(Deserializer):
    
     """
 
-    # TODO #67
-    # _test_path = ...
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.external_events'].external.partitions[0]"
 
     name: typing.Union[str, None]
     description: typing.Union[str, None]
@@ -283,8 +282,7 @@ class ExternalTable(Deserializer):
 
     """
 
-    # TODO #67
-    # _test_path = ...
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
 
     location: typing.Union[None, str]
     file_format: typing.Union[None, str]
@@ -306,8 +304,7 @@ class ColumnInfo(Deserializer):
 
     """
 
-    # TODO #67
-    # _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].columns['...]"
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
 
     name: str
     description: typing.Union[None, str]
@@ -646,8 +643,7 @@ class MacroArgument(Deserializer):
 
     """
 
-    # TODO #67, add to poffertjes_shop
-    # _test_path = 'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"].arguments[0]'
+    _test_path = 'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'
 
     name: str
     type: typing.Union[str, None]
