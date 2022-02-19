@@ -44,7 +44,7 @@ jobs:
       run: |
         poetry run pytest --doctest-modules --doctest-continue-on-failure
     - name: Upload coverage data to coveralls.io
-      run: coveralls --service=github
+      run: poetry run coveralls --service=github
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         COVERALLS_FLAG_NAME: ${{ matrix.python_version }}
