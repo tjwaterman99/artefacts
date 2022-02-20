@@ -624,6 +624,23 @@
 </dd>
 </dl>
 </dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.iter_resource_type">
+<span class="sig-name descname"><span class="pre">iter_resource_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ManifestModel.iter_resource_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ManifestModel.iter_resource_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over all resources of a specific type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resource_type</strong> (<em>str</em>) – The type of resource, eg ‘model’, ‘source’,
+‘exposure’, etc.</p></li>
+<li><p><strong>package_name</strong> (<em>str</em>) – nly return resources from the specified dbt package.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="artefacts.models.ManifestDocsNode">
@@ -890,7 +907,7 @@
 <dd><p>Details about a depends_on attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Dict[str, list]</p>
+<dd class="field-odd"><p>Union[None, Dict[str, list]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1934,7 +1951,7 @@
 <dd><p>The meta attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>Optional[dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1944,7 +1961,7 @@
 <dd><p>The source_meta attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>Optional[dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1954,7 +1971,7 @@
 <dd><p>The tags attribute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[str]</p>
+<dd class="field-odd"><p>Optional[List[str]]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -193,8 +193,14 @@
 <p>The artefacts API contains helper methods for interacting with dbt’s artifacts.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.models">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.models" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.models" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all models in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return models from the specified dbt package.
+Defaults to returning models from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">models</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'model'</span>
@@ -210,8 +216,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.tests">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">tests</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.tests" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">tests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.tests" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all tests in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return tests from the specified dbt package.
+Defaults to returning tests from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">tests</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'test'</span>
@@ -227,8 +239,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.seeds">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">seeds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#seeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.seeds" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">seeds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#seeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.seeds" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all seeds in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return seeds from the specified dbt package.
+Defaults to returning seeds from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seed</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">seeds</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seed</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'seed'</span>
@@ -244,8 +262,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.snapshots">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">snapshots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#snapshots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.snapshots" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">snapshots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#snapshots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.snapshots" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all snapshots in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return snapshots from the specified dbt package.
+Defaults to returning snapshots from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">snapshot</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">snapshots</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">snapshot</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'snapshot'</span>
@@ -261,8 +285,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.operations">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">operations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#operations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.operations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">operations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#operations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.operations" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all operations in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return operations from the specified dbt package.
+Defaults to returning operations from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">operation</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">operations</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">operation</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'operation'</span>
@@ -278,8 +308,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.sources">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#sources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.sources" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">sources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#sources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.sources" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all sources in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return sources from the specified dbt package.
+Defaults to returning sources from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">sources</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">source</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'source'</span>
@@ -310,8 +346,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.macros">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">macros</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#macros"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.macros" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">macros</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#macros"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.macros" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all macros in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return macros from the specified dbt package.
+Defaults to returning macros from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">macro</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">macros</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">macro</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'macro'</span>
@@ -327,8 +369,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.exposures">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">exposures</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#exposures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.exposures" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">exposures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#exposures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.exposures" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all exposures defined in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return exposures from the specified dbt package.
+Defaults to returning exposures from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exposure</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">exposures</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">exposure</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'exposure'</span>
@@ -344,8 +392,14 @@
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="artefacts.api.metrics">
-<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">artefacts.api.</span></span><span class="sig-name descname"><span class="pre">metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/api.html#metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.api.metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>A list of all metrics in the dbt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Only return metrics from the specified dbt package.
+Defaults to returning metrics from all packages.</p>
+</dd>
+</dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span> <span class="o">=</span> <span class="n">artefacts</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">metrics</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">metric</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'metric'</span>

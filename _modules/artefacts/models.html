@@ -191,42 +191,36 @@
           <h1>Source code for artefacts.models</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">pydantic</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">packaging.version</span>
 
-<span class="kn">import</span> <span class="nn">artefacts.state</span>
-<span class="kn">from</span> <span class="nn">artefacts.config</span> <span class="kn">import</span> <span class="n">conf</span>
-<span class="kn">from</span> <span class="nn">artefacts.mixins</span> <span class="kn">import</span> <span class="n">ArtifactReader</span><span class="p">,</span> <span class="n">ArtifactNodeReader</span>
+<span class="kn">from</span> <span class="nn">artefacts.mixins</span> <span class="kn">import</span> <span class="n">ArtifactNodeReader</span>
 
 
-<span class="n">CatalogModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'CatalogModel'</span><span class="p">)</span>
-<span class="n">CatalogNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'CatalogNode'</span><span class="p">)</span>
-<span class="n">CatalogNodeColumn</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'CatalogNodeColumn'</span><span class="p">)</span>
-<span class="n">CatalogNodeMetadata</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'CatalogNodeMetadata'</span><span class="p">)</span>
-<span class="n">CatalogNodeStats</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'CatalogNodeStats'</span><span class="p">)</span>
-<span class="n">ManifestModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestModel'</span><span class="p">)</span>
-<span class="n">ManifestDocsNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestDocsNode'</span><span class="p">)</span>
-<span class="n">ManifestExposureNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestExposureNode'</span><span class="p">)</span>
-<span class="n">ManifestMacroNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestMacroNode'</span><span class="p">)</span>
-<span class="n">ManifestMetricNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestMetricNode'</span><span class="p">)</span>
-<span class="n">ManifestNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestNode'</span><span class="p">)</span>
-<span class="n">ManifestNodeReference</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestNodeReference'</span><span class="p">)</span>
-<span class="n">ManifestSourceNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ManifestSourceNode'</span><span class="p">)</span>
-<span class="n">Metadata</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">)</span>
-<span class="n">ResultTiming</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'ResultTiming'</span><span class="p">)</span>
-<span class="n">RunResultNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'RunResultNode'</span><span class="p">)</span>
-<span class="n">RunResultsModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'RunResultsModel'</span><span class="p">)</span>
-<span class="n">SourcesModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'SourcesModel'</span><span class="p">)</span>
-<span class="n">SourcesFreshnessResult</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s1">'SourcesFreshnessResult'</span><span class="p">)</span>
+<span class="n">CatalogModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogModel"</span><span class="p">)</span>
+<span class="n">CatalogNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNode"</span><span class="p">)</span>
+<span class="n">CatalogNodeColumn</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNodeColumn"</span><span class="p">)</span>
+<span class="n">CatalogNodeMetadata</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNodeMetadata"</span><span class="p">)</span>
+<span class="n">CatalogNodeStats</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNodeStats"</span><span class="p">)</span>
+<span class="n">ManifestModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestModel"</span><span class="p">)</span>
+<span class="n">ManifestDocsNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestDocsNode"</span><span class="p">)</span>
+<span class="n">ManifestExposureNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestExposureNode"</span><span class="p">)</span>
+<span class="n">ManifestMacroNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestMacroNode"</span><span class="p">)</span>
+<span class="n">ManifestMetricNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestMetricNode"</span><span class="p">)</span>
+<span class="n">ManifestNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestNode"</span><span class="p">)</span>
+<span class="n">ManifestNodeReference</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestNodeReference"</span><span class="p">)</span>
+<span class="n">ManifestSourceNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestSourceNode"</span><span class="p">)</span>
+<span class="n">Metadata</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"Metadata"</span><span class="p">)</span>
+<span class="n">ResultTiming</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ResultTiming"</span><span class="p">)</span>
+<span class="n">RunResultNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"RunResultNode"</span><span class="p">)</span>
+<span class="n">RunResultsModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"RunResultsModel"</span><span class="p">)</span>
+<span class="n">SourcesModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"SourcesModel"</span><span class="p">)</span>
+<span class="n">SourcesFreshnessResult</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"SourcesFreshnessResult"</span><span class="p">)</span>
 
 
 <span class="c1"># TODO: rename this to `Model`</span>
 <span class="k">class</span> <span class="nc">Deserializer</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
-    
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&gt;"</span>
 
@@ -243,7 +237,9 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_docs_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"https://tjwaterman99.github.io/artefacts/reference.html#</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_qualpath</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"https://tjwaterman99.github.io/artefacts/reference.html#</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_qualpath</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span>
 
 
 <div class="viewcode-block" id="ManifestModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel">[docs]</a><span class="k">class</span> <span class="nc">ManifestModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
@@ -265,13 +261,13 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest"</span>
 
     <span class="c1"># TODO: improve the way we validate minimum dbt versions. We should</span>
     <span class="c1"># probably do the validation on every artifact.</span>
-    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">)</span>
+    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">validate_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">'1.0'</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"1.0"</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">Unsupported dbt version: </span><span class="si">{</span><span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span><span class="si">}</span><span class="s2">. "</span>
                 <span class="s2">"</span><span class="se">\n\t</span><span class="s2">Please upgrade dbt to at least v1.0 to use artefacts"</span>
@@ -300,30 +296,42 @@
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">,</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">macros</span><span class="p">,</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">exposures</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
         <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">iter_resource_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">:</span>
+<div class="viewcode-block" id="ManifestModel.iter_resource_type"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel.iter_resource_type">[docs]</a>    <span class="k">def</span> <span class="nf">iter_resource_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">:</span>
+        <span class="sd">"""Iterate over all resources of a specific type</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource_type (str): The type of resource, eg 'model', 'source',</span>
+<span class="sd">                                 'exposure', etc.</span>
+<span class="sd">            package_name (str): nly return resources from the specified dbt package.</span>
+<span class="sd">        """</span>
+
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">package_name</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">package_name</span> <span class="o">!=</span> <span class="n">package_name</span><span class="p">:</span>
+                <span class="k">continue</span>
             <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="n">resource_type</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">v</span></div>
+                <span class="k">yield</span> <span class="n">v</span></div></div>
 
 
 <div class="viewcode-block" id="RunResultsModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.RunResultsModel">[docs]</a><span class="k">class</span> <span class="nc">RunResultsModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""The run_results artifact. </span>
-<span class="sd">    </span>
+    <span class="sd">"""The run_results artifact.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        metadata: The :class:`Metadata` associated with the run, such as when</span>
 <span class="sd">                  the run was generated, the environment variables present</span>
 <span class="sd">                  during the run, etc.</span>
-<span class="sd">        results: A list of :class:`RunResultNode` s, which contain details </span>
+<span class="sd">        results: A list of :class:`RunResultNode` s, which contain details</span>
 <span class="sd">                 about how long each node ran, whether it was successful, etc.</span>
 <span class="sd">        elapsed_time: The total duration of the run</span>
 <span class="sd">        args: The arguments used when at the start of the run or build</span>
-<span class="sd">    </span>
+
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'run_results'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"run_results"</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">results</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">RunResultNode</span><span class="p">]</span>
@@ -332,17 +340,17 @@
 
 
 <div class="viewcode-block" id="CatalogModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogModel">[docs]</a><span class="k">class</span> <span class="nc">CatalogModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""The catalog artifact. </span>
-<span class="sd">    </span>
+    <span class="sd">"""The catalog artifact.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        metadata: The metadata attribute of the catalog</span>
 <span class="sd">        nodes: The nodes attribute of the catalog</span>
 <span class="sd">        sources: The sources attribute of the catalog</span>
 <span class="sd">        errors: The errors attribute of the catalog</span>
-<span class="sd">    </span>
+
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'catalog'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"catalog"</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNode</span><span class="p">]</span>
@@ -351,8 +359,8 @@
 
 
 <div class="viewcode-block" id="SourcesModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourcesModel">[docs]</a><span class="k">class</span> <span class="nc">SourcesModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""The sources artifact. </span>
-<span class="sd">    </span>
+    <span class="sd">"""The sources artifact.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        metadata: The metadata attribute</span>
 <span class="sd">        results: The results attribute</span>
@@ -360,7 +368,7 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'sources'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources"</span>
 
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
     <span class="n">results</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">SourcesFreshnessResult</span><span class="p">]</span>
@@ -369,7 +377,7 @@
 
 <div class="viewcode-block" id="Metadata"><a class="viewcode-back" href="../../reference.html#artefacts.models.Metadata">[docs]</a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
     <span class="sd">"""Data about the context in which the artifact was generated.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        generated_at: The generated_at attribute</span>
 <span class="sd">        invocation_id: The invocation_id attribute</span>
@@ -380,8 +388,8 @@
 <span class="sd">        adapter_type: The adapter_type attribute</span>
 
 <span class="sd">    """</span>
-    
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.metadata'</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.metadata"</span>
 
     <span class="n">dbt_schema_version_raw</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">dbt_version_raw</span><span class="p">:</span> <span class="nb">str</span>
@@ -395,23 +403,22 @@
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'dbt_version_raw'</span><span class="p">:</span> <span class="s1">'dbt_version'</span><span class="p">,</span>
-            <span class="s1">'dbt_schema_version_raw'</span><span class="p">:</span> <span class="s1">'dbt_schema_version'</span><span class="p">,</span>
+            <span class="s2">"dbt_version_raw"</span><span class="p">:</span> <span class="s2">"dbt_version"</span><span class="p">,</span>
+            <span class="s2">"dbt_schema_version_raw"</span><span class="p">:</span> <span class="s2">"dbt_schema_version"</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dbt_schema_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">"""The artifact's schema version. </span>
-<span class="sd">        </span>
+        <span class="sd">"""The artifact's schema version.</span>
+
 <span class="sd">        See https://schemas.getdbt.com for details.</span>
 <span class="sd">        """</span>
 
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_schema_version_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_schema_version_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dbt_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">"""The dbt version that generated the artifact.</span>
-<span class="sd">        """</span>
+        <span class="sd">"""The dbt version that generated the artifact."""</span>
 
         <span class="k">return</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_version_raw</span><span class="p">)</span></div>
 
@@ -426,7 +433,7 @@
 <span class="sd">        column: Whether to quote the "column" component of an object path</span>
 
 <span class="sd">    """</span>
-    
+
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'</span>
 
     <span class="n">database</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
@@ -436,7 +443,7 @@
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'db_schema'</span><span class="p">:</span> <span class="s1">'schema'</span><span class="p">,</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
         <span class="p">}</span></div>
 
 
@@ -449,10 +456,11 @@
 <span class="sd">        description: The description attribute</span>
 <span class="sd">        data_type: The data_type attribute</span>
 <span class="sd">        meta: The meta attribute</span>
-<span class="sd">   </span>
+
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events'].external.partitions[0]"</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events']"</span>
+                  <span class="s2">".external.partitions[0]"</span><span class="p">)</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
@@ -473,7 +481,9 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events'].external"</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events'].external"</span>
+    <span class="p">)</span>
 
     <span class="n">location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
     <span class="n">file_format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
@@ -495,7 +505,9 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"</span>
+    <span class="p">)</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
@@ -506,8 +518,8 @@
 
 
 <div class="viewcode-block" id="TimingResult"><a class="viewcode-back" href="../../reference.html#artefacts.models.TimingResult">[docs]</a><span class="k">class</span> <span class="nc">TimingResult</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Timing details from running the node. </span>
-<span class="sd">    </span>
+    <span class="sd">"""Timing details from running the node.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        name: the name attribute</span>
 <span class="sd">        started_at: the started_at attribute</span>
@@ -543,7 +555,9 @@
 <span class="sd">        count: The number of periods associed with the time interval</span>
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"</span>
+    <span class="p">)</span>
 
     <span class="n">count</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">period</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
@@ -569,8 +583,8 @@
 
 
 <div class="viewcode-block" id="SourcesFreshnessResult"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourcesFreshnessResult">[docs]</a><span class="k">class</span> <span class="nc">SourcesFreshnessResult</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Result details from checking the freshness of a source. </span>
-<span class="sd">    </span>
+    <span class="sd">"""Result details from checking the freshness of a source.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        unique_id: The unique_id attribute</span>
 <span class="sd">        status: The status attribute</span>
@@ -596,7 +610,7 @@
     <span class="n">max_loaded_at_time_ago_in_s</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
     <span class="n">criteria</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">FreshnessThreshold</span><span class="p">]</span>
     <span class="n">adapter_response</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">timing</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]]</span>
+    <span class="n">timing</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]]</span>
     <span class="n">thread_id</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
     <span class="n">execution_time</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></div>
 
@@ -616,7 +630,7 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'run_results.results[0]'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"run_results.results[0]"</span>
 
     <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">timing</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]</span>
@@ -713,12 +727,11 @@
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'db_schema'</span><span class="p">:</span> <span class="s1">'schema'</span><span class="p">,</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
         <span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="ManifestNodeReference"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestNodeReference">[docs]</a><span class="k">class</span> <span class="nc">ManifestNodeReference</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">):</span>
-
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">__get_validators__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">yield</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate</span>
@@ -726,12 +739,12 @@
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'ManifestNodeReferences must be strings'</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"ManifestNodeReferences must be strings"</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span> <span class="o">=</span> <span class="n">unique_id</span>
-    
+
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;ManifestNodeReference </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="si">}</span><span class="s2">&gt;"</span>
 
@@ -741,20 +754,20 @@
 <span class="sd">        The type of resource this reference points to. Eg model, test, source, etc.</span>
 <span class="sd">        """</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ManifestNode</span><span class="p">:</span>
         <span class="sd">"""</span>
-<span class="sd">        The manifest node this reference points to. </span>
+<span class="sd">        The manifest node this reference points to.</span>
 <span class="sd">        """</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="ManifestSourceNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestSourceNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSourceNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about a Source node. </span>
-<span class="sd">    </span>
+    <span class="sd">"""Details about a Source node.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        fqn: The fqn attribute</span>
 <span class="sd">        database: The database attribute</span>
@@ -809,9 +822,9 @@
     <span class="n">external</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">ExternalTable</span><span class="p">]</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
     <span class="n">columns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ColumnInfo</span><span class="p">]]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
-    <span class="n">source_meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">source_meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">SourceConfig</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">patch_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
@@ -820,7 +833,7 @@
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'db_schema'</span><span class="p">:</span> <span class="s1">'schema'</span><span class="p">,</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
         <span class="p">}</span></div>
 
 
@@ -834,7 +847,9 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'</span>
+    <span class="p">)</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
@@ -842,8 +857,8 @@
 
 
 <div class="viewcode-block" id="ManifestMacroNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestMacroNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMacroNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about a Macro node. </span>
-<span class="sd">    </span>
+    <span class="sd">"""Details about a Macro node.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        unique_id: The unique_id attribute</span>
 <span class="sd">        package_name: The package_name attribute</span>
@@ -864,7 +879,9 @@
 
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"]'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"]'</span>
+    <span class="p">)</span>
 
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
@@ -885,7 +902,7 @@
 
 
 <div class="viewcode-block" id="ManifestDocsNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestDocsNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestDocsNode</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about a Docs node. </span>
+    <span class="sd">"""Details about a Docs node.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        unique_id: The unique_id attribute</span>
@@ -913,25 +930,25 @@
     <span class="sd">"""Details about an Exposure node.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        fqn: Details about a fqn attribute </span>
-<span class="sd">        unique_id: Details about a unique_id attribute </span>
-<span class="sd">        package_name: Details about a package_name attribute </span>
-<span class="sd">        root_path: Details about a root_path attribute </span>
-<span class="sd">        path: Details about a path attribute </span>
-<span class="sd">        original_file_path: Details about a original_file_path attribute </span>
-<span class="sd">        name: Details about a name attribute </span>
-<span class="sd">        node_type: Details about a node_type attribute </span>
-<span class="sd">        owner: Details about a owner attribute </span>
-<span class="sd">        resource_type: Details about a resource_type attribute </span>
-<span class="sd">        description: Details about a description attribute </span>
-<span class="sd">        maturity: Details about a maturity attribute </span>
-<span class="sd">        meta: Details about a meta attribute </span>
-<span class="sd">        tags: Details about a tags attribute </span>
-<span class="sd">        url: Details about a url attribute </span>
-<span class="sd">        refs: Details about a refs attribute </span>
-<span class="sd">        sources: Details about a sources attribute </span>
-<span class="sd">        created_at: Details about a created_at attribute </span>
-<span class="sd">        depends_on: Details about a depends_on attribute </span>
+<span class="sd">        fqn: Details about a fqn attribute</span>
+<span class="sd">        unique_id: Details about a unique_id attribute</span>
+<span class="sd">        package_name: Details about a package_name attribute</span>
+<span class="sd">        root_path: Details about a root_path attribute</span>
+<span class="sd">        path: Details about a path attribute</span>
+<span class="sd">        original_file_path: Details about a original_file_path attribute</span>
+<span class="sd">        name: Details about a name attribute</span>
+<span class="sd">        node_type: Details about a node_type attribute</span>
+<span class="sd">        owner: Details about a owner attribute</span>
+<span class="sd">        resource_type: Details about a resource_type attribute</span>
+<span class="sd">        description: Details about a description attribute</span>
+<span class="sd">        maturity: Details about a maturity attribute</span>
+<span class="sd">        meta: Details about a meta attribute</span>
+<span class="sd">        tags: Details about a tags attribute</span>
+<span class="sd">        url: Details about a url attribute</span>
+<span class="sd">        refs: Details about a refs attribute</span>
+<span class="sd">        sources: Details about a sources attribute</span>
+<span class="sd">        created_at: Details about a created_at attribute</span>
+<span class="sd">        depends_on: Details about a depends_on attribute</span>
 
 <span class="sd">    """</span>
 
@@ -955,13 +972,10 @@
     <span class="n">refs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'db_schema'</span><span class="p">:</span> <span class="s1">'schema'</span><span class="p">,</span>
-            <span class="s1">'node_type'</span><span class="p">:</span> <span class="s1">'type'</span>
-        <span class="p">}</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span> <span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="MetricFilter"><a class="viewcode-back" href="../../reference.html#artefacts.models.MetricFilter">[docs]</a><span class="k">class</span> <span class="nc">MetricFilter</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
@@ -981,7 +995,7 @@
 
 
 <div class="viewcode-block" id="ManifestMetricNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestMetricNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMetricNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about a Metric node. </span>
+    <span class="sd">"""Details about a Metric node.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        fqn: The fqn attribute</span>
@@ -1037,19 +1051,18 @@
     <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'node_type'</span><span class="p">:</span> <span class="s1">'type'</span>
-        <span class="p">}</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
+
 
 <div class="viewcode-block" id="CatalogNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNode">[docs]</a><span class="k">class</span> <span class="nc">CatalogNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about a Catalog node. </span>
+    <span class="sd">"""Details about a Catalog node.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        metadata: The metadata attribute </span>
-<span class="sd">        columns: The columns attribute </span>
-<span class="sd">        stats: The stats attribute </span>
+<span class="sd">        metadata: The metadata attribute</span>
+<span class="sd">        columns: The columns attribute</span>
+<span class="sd">        stats: The stats attribute</span>
 <span class="sd">        unique_id: The unique_id attribute</span>
-<span class="sd">    </span>
+
 <span class="sd">    """</span>
 
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'catalog.nodes["model.poffertjes_shop.customers"]'</span>
@@ -1061,9 +1074,9 @@
 
 
 <div class="viewcode-block" id="CatalogNodeMetadata"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeMetadata</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Metadata details about a CatalogNode. </span>
+    <span class="sd">"""Metadata details about a CatalogNode.</span>
 
-<span class="sd">    Attributes:    </span>
+<span class="sd">    Attributes:</span>
 <span class="sd">        node_type: The node_type attribute</span>
 <span class="sd">        db_schema: The db_schema attribute</span>
 <span class="sd">        name: The name attribute</span>
@@ -1083,24 +1096,23 @@
     <span class="n">owner</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'db_schema'</span><span class="p">:</span> <span class="s1">'schema'</span><span class="p">,</span>
-            <span class="s1">'node_type'</span><span class="p">:</span> <span class="s1">'type'</span>
-        <span class="p">}</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span> <span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="CatalogNodeColumn"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeColumn">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeColumn</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about the columns in a CatalogNode. </span>
-<span class="sd">    </span>
+    <span class="sd">"""Details about the columns in a CatalogNode.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        node_type: The node_type attribute</span>
 <span class="sd">        index: The index attribute</span>
 <span class="sd">        name: The name attribute</span>
 <span class="sd">        comment: The comment attribute</span>
-<span class="sd">    </span>
+
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'catalog.nodes["model.poffertjes_shop.customers"].columns["customer_id"]'</span>
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">'catalog.nodes["model.poffertjes_shop.customers"].columns["customer_id"]'</span>
+    <span class="p">)</span>
 
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
@@ -1108,14 +1120,12 @@
     <span class="n">comment</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'node_type'</span><span class="p">:</span> <span class="s1">'type'</span>
-        <span class="p">}</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="CatalogNodeStats"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeStats">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeStats</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Statics about a CatalogNode. </span>
-<span class="sd">    </span>
+    <span class="sd">"""Statics about a CatalogNode.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        description: The description of the statistic</span>
 <span class="sd">        id: The id of the statistic</span>
