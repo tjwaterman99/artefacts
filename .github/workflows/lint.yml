@@ -53,5 +53,5 @@ jobs:
         pipx install poetry
         poetry install
     - name: mypy
-      run: poetry run black --check artefacts/ tests/
+      run: poetry run mypy artefacts/ tests/
       continue-on-error: true
