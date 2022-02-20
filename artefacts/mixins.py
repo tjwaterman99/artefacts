@@ -66,9 +66,7 @@ class ArtifactNodeReader(ArtifactReader):
     def manifest(self):
         """A reference to details about the node contained in the manifest."""
 
-        # TODO: what if the resource_type is `source`? I don't think it will
-        # show up in the `nodes` reference.
-        return self.manifest_artifact.nodes.get(self.unique_id)
+        return self.manifest_artifact.resources.get(self.unique_id)
 
     @property
     def catalog(self):
@@ -81,6 +79,12 @@ class ArtifactNodeReader(ArtifactReader):
         """A reference to results from running the node, if it exists."""
 
         return [r for r in self.run_results_artifact.results if r.unique_id == self.unique_id]
+
+    @property
+    def freshness_check_results(self):
+        """A reference to any freshness check result of the node, if it exists."""
+
+        return [r for r in self.sources_artifact.results if r.unique_id == self.unique_id]
 
     @property
     def parents(self):

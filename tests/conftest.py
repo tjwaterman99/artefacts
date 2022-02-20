@@ -8,6 +8,8 @@ import artefacts
 testing_poffertjes_shop = os.environ['DBT_PROJECT_DIR'] == "dbt_projects/poffertjes_shop"
 
 
+# I think this should be named something like `deserializer_classes` because 
+# the term "base model" already has a meaning in dbt projects
 def iter_base_models():
     import artefacts.models
     for name in dir(artefacts.models):
@@ -22,10 +24,22 @@ def iter_base_models():
             pass
 
 
+def iter_node_reader_classes():
+    import artefacts.mixins
+    for klass in iter_base_models():
+        if issubclass(klass, artefacts.mixins.ArtifactNodeReader):
+            yield klass
+
+
 @pytest.fixture(scope='session')
 def reference_docs():
     with open('docs/reference.rst', 'r') as fh:
         return fh.read()
+
+
+@pytest.fixture(scope='session', params=list(iter_node_reader_classes()))
+def node_reader_class(request):
+    yield request.param
 
 
 @pytest.fixture(scope='session', params=list(iter_base_models()))

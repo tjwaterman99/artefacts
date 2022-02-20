@@ -650,7 +650,7 @@ class MacroArgument(Deserializer):
     description: typing.Union[str, None]
 
 
-class ManifestMacroNode(Deserializer):
+class ManifestMacroNode(ArtifactNodeReader, Deserializer):
     """Details about a Macro node. 
     
     Attributes:
@@ -718,7 +718,7 @@ class ManifestDocsNode(Deserializer):
     block_contents: str
 
 
-class ManifestExposureNode(Deserializer):
+class ManifestExposureNode(ArtifactNodeReader, Deserializer):
     """Details about an Exposure node.
 
     Attributes:
@@ -789,7 +789,7 @@ class MetricFilter(Deserializer):
     value: str
 
 
-class ManifestMetricNode(Deserializer):
+class ManifestMetricNode(ArtifactNodeReader, Deserializer):
     """Details about a Metric node. 
 
     Attributes:
