@@ -1,41 +1,35 @@
 import datetime
 import uuid
-import os
-import json
-import re
 import pydantic
 import typing
 import packaging.version
 
-import artefacts.state
-from artefacts.config import conf
-from artefacts.mixins import ArtifactReader, ArtifactNodeReader
+from artefacts.mixins import ArtifactNodeReader
 
 
-CatalogModel = typing.ForwardRef('CatalogModel')
-CatalogNode = typing.ForwardRef('CatalogNode')
-CatalogNodeColumn = typing.ForwardRef('CatalogNodeColumn')
-CatalogNodeMetadata = typing.ForwardRef('CatalogNodeMetadata')
-CatalogNodeStats = typing.ForwardRef('CatalogNodeStats')
-ManifestModel = typing.ForwardRef('ManifestModel')
-ManifestDocsNode = typing.ForwardRef('ManifestDocsNode')
-ManifestExposureNode = typing.ForwardRef('ManifestExposureNode')
-ManifestMacroNode = typing.ForwardRef('ManifestMacroNode')
-ManifestMetricNode = typing.ForwardRef('ManifestMetricNode')
-ManifestNode = typing.ForwardRef('ManifestNode')
-ManifestNodeReference = typing.ForwardRef('ManifestNodeReference')
-ManifestSourceNode = typing.ForwardRef('ManifestSourceNode')
-Metadata = typing.ForwardRef('Metadata')
-ResultTiming = typing.ForwardRef('ResultTiming')
-RunResultNode = typing.ForwardRef('RunResultNode')
-RunResultsModel = typing.ForwardRef('RunResultsModel')
-SourcesModel = typing.ForwardRef('SourcesModel')
-SourcesFreshnessResult = typing.ForwardRef('SourcesFreshnessResult')
+CatalogModel = typing.ForwardRef("CatalogModel")
+CatalogNode = typing.ForwardRef("CatalogNode")
+CatalogNodeColumn = typing.ForwardRef("CatalogNodeColumn")
+CatalogNodeMetadata = typing.ForwardRef("CatalogNodeMetadata")
+CatalogNodeStats = typing.ForwardRef("CatalogNodeStats")
+ManifestModel = typing.ForwardRef("ManifestModel")
+ManifestDocsNode = typing.ForwardRef("ManifestDocsNode")
+ManifestExposureNode = typing.ForwardRef("ManifestExposureNode")
+ManifestMacroNode = typing.ForwardRef("ManifestMacroNode")
+ManifestMetricNode = typing.ForwardRef("ManifestMetricNode")
+ManifestNode = typing.ForwardRef("ManifestNode")
+ManifestNodeReference = typing.ForwardRef("ManifestNodeReference")
+ManifestSourceNode = typing.ForwardRef("ManifestSourceNode")
+Metadata = typing.ForwardRef("Metadata")
+ResultTiming = typing.ForwardRef("ResultTiming")
+RunResultNode = typing.ForwardRef("RunResultNode")
+RunResultsModel = typing.ForwardRef("RunResultsModel")
+SourcesModel = typing.ForwardRef("SourcesModel")
+SourcesFreshnessResult = typing.ForwardRef("SourcesFreshnessResult")
 
 
 # TODO: rename this to `Model`
 class Deserializer(pydantic.BaseModel):
-    
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
 
@@ -52,7 +46,9 @@ class Deserializer(pydantic.BaseModel):
 
     @classmethod
     def _docs_path(cls):
-        return f"https://tjwaterman99.github.io/artefacts/reference.html#{cls._qualpath()}"
+        return (
+            f"https://tjwaterman99.github.io/artefacts/reference.html#{cls._qualpath()}"
+        )
 
 
 class ManifestModel(Deserializer):
@@ -74,13 +70,13 @@ class ManifestModel(Deserializer):
 
     """
 
-    _test_path = 'manifest'
+    _test_path = "manifest"
 
     # TODO: improve the way we validate minimum dbt versions. We should
     # probably do the validation on every artifact.
-    @pydantic.validator('metadata')
+    @pydantic.validator("metadata")
     def validate_metadata(cls, metadata):
-        if metadata.dbt_version < packaging.version.parse('1.0'):
+        if metadata.dbt_version < packaging.version.parse("1.0"):
             raise ValueError(
                 f"\n\tUnsupported dbt version: {metadata.dbt_version}. "
                 "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
@@ -109,30 +105,42 @@ class ManifestModel(Deserializer):
             **self.sources,
             **self.macros,
             **self.exposures,
-            **self.metrics
+            **self.metrics,
         }
 
-    def iter_resource_type(self, resource_type: str) -> typing.Iterable:
+    def iter_resource_type(
+        self, resource_type: str, package_name: str = None
+    ) -> typing.Iterable:
+        """Iterate over all resources of a specific type
+
+        Args:
+            resource_type (str): The type of resource, eg 'model', 'source',
+                                 'exposure', etc.
+            package_name (str): nly return resources from the specified dbt package.
+        """
+
         for k, v in self.resources.items():
+            if package_name and v.package_name != package_name:
+                continue
             if v.resource_type == resource_type:
                 yield v
 
 
 class RunResultsModel(Deserializer):
-    """The run_results artifact. 
-    
+    """The run_results artifact.
+
     Attributes:
         metadata: The :class:`Metadata` associated with the run, such as when
                   the run was generated, the environment variables present
                   during the run, etc.
-        results: A list of :class:`RunResultNode` s, which contain details 
+        results: A list of :class:`RunResultNode` s, which contain details
                  about how long each node ran, whether it was successful, etc.
         elapsed_time: The total duration of the run
         args: The arguments used when at the start of the run or build
-    
+
     """
 
-    _test_path = 'run_results'
+    _test_path = "run_results"
 
     metadata: Metadata
     results: typing.List[RunResultNode]
@@ -141,17 +149,17 @@ class RunResultsModel(Deserializer):
 
 
 class CatalogModel(Deserializer):
-    """The catalog artifact. 
-    
+    """The catalog artifact.
+
     Attributes:
         metadata: The metadata attribute of the catalog
         nodes: The nodes attribute of the catalog
         sources: The sources attribute of the catalog
         errors: The errors attribute of the catalog
-    
+
     """
 
-    _test_path = 'catalog'
+    _test_path = "catalog"
 
     metadata: Metadata
     nodes: typing.Dict[str, CatalogNode]
@@ -160,8 +168,8 @@ class CatalogModel(Deserializer):
 
 
 class SourcesModel(Deserializer):
-    """The sources artifact. 
-    
+    """The sources artifact.
+
     Attributes:
         metadata: The metadata attribute
         results: The results attribute
@@ -169,7 +177,7 @@ class SourcesModel(Deserializer):
 
     """
 
-    _test_path = 'sources'
+    _test_path = "sources"
 
     metadata: Metadata
     results: typing.List[SourcesFreshnessResult]
@@ -178,7 +186,7 @@ class SourcesModel(Deserializer):
 
 class Metadata(Deserializer):
     """Data about the context in which the artifact was generated.
-    
+
     Attributes:
         generated_at: The generated_at attribute
         invocation_id: The invocation_id attribute
@@ -189,8 +197,8 @@ class Metadata(Deserializer):
         adapter_type: The adapter_type attribute
 
     """
-    
-    _test_path = 'manifest.metadata'
+
+    _test_path = "manifest.metadata"
 
     dbt_schema_version_raw: str
     dbt_version_raw: str
@@ -204,23 +212,22 @@ class Metadata(Deserializer):
 
     class Config:
         fields = {
-            'dbt_version_raw': 'dbt_version',
-            'dbt_schema_version_raw': 'dbt_schema_version',
+            "dbt_version_raw": "dbt_version",
+            "dbt_schema_version_raw": "dbt_schema_version",
         }
 
     @property
     def dbt_schema_version(self) -> int:
-        """The artifact's schema version. 
-        
+        """The artifact's schema version.
+
         See https://schemas.getdbt.com for details.
         """
 
-        return int(self.dbt_schema_version_raw.split('/')[-1].split('.')[0][1])
+        return int(self.dbt_schema_version_raw.split("/")[-1].split(".")[0][1])
 
     @property
     def dbt_version(self) -> str:
-        """The dbt version that generated the artifact.
-        """
+        """The dbt version that generated the artifact."""
 
         return packaging.version.Version(self.dbt_version_raw)
 
@@ -235,7 +242,7 @@ class Quoting(Deserializer):
         column: Whether to quote the "column" component of an object path
 
     """
-    
+
     _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
 
     database: typing.Union[bool, None]
@@ -245,7 +252,7 @@ class Quoting(Deserializer):
 
     class Config:
         fields = {
-            'db_schema': 'schema',
+            "db_schema": "schema",
         }
 
 
@@ -258,10 +265,11 @@ class ExternalPartition(Deserializer):
         description: The description attribute
         data_type: The data_type attribute
         meta: The meta attribute
-   
+
     """
 
-    _test_path = "manifest.sources['source.poffertjes_shop.raw.external_events'].external.partitions[0]"
+    _test_path = ("manifest.sources['source.poffertjes_shop.raw.external_events']"
+                  ".external.partitions[0]")
 
     name: typing.Union[str, None]
     description: typing.Union[str, None]
@@ -282,7 +290,9 @@ class ExternalTable(Deserializer):
 
     """
 
-    _test_path = "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
+    )
 
     location: typing.Union[None, str]
     file_format: typing.Union[None, str]
@@ -304,7 +314,9 @@ class ColumnInfo(Deserializer):
 
     """
 
-    _test_path = "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
+    )
 
     name: str
     description: typing.Union[None, str]
@@ -315,8 +327,8 @@ class ColumnInfo(Deserializer):
 
 
 class TimingResult(Deserializer):
-    """Timing details from running the node. 
-    
+    """Timing details from running the node.
+
     Attributes:
         name: the name attribute
         started_at: the started_at attribute
@@ -352,7 +364,9 @@ class Time(Deserializer):
         count: The number of periods associed with the time interval
     """
 
-    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
+    )
 
     count: typing.Union[int, None]
     period: typing.Union[str, None]
@@ -378,8 +392,8 @@ class FreshnessThreshold(Deserializer):
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
-    """Result details from checking the freshness of a source. 
-    
+    """Result details from checking the freshness of a source.
+
     Attributes:
         unique_id: The unique_id attribute
         status: The status attribute
@@ -405,7 +419,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
     max_loaded_at_time_ago_in_s: typing.Union[None, float]
     criteria: typing.Union[None, FreshnessThreshold]
     adapter_response: typing.Union[None, dict]
-    timing: typing.Union[None,typing.List[TimingResult]]
+    timing: typing.Union[None, typing.List[TimingResult]]
     thread_id: typing.Union[None, str]
     execution_time: typing.Union[None, float]
 
@@ -425,7 +439,7 @@ class RunResultNode(ArtifactNodeReader, Deserializer):
 
     """
 
-    _test_path = 'run_results.results[0]'
+    _test_path = "run_results.results[0]"
 
     status: str
     timing: typing.List[TimingResult]
@@ -522,12 +536,11 @@ class ManifestNode(ArtifactNodeReader, Deserializer):
 
     class Config:
         fields = {
-            'db_schema': 'schema',
+            "db_schema": "schema",
         }
 
 
 class ManifestNodeReference(ArtifactNodeReader):
-
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
@@ -535,12 +548,12 @@ class ManifestNodeReference(ArtifactNodeReader):
     @classmethod
     def validate(cls, value):
         if not isinstance(value, str):
-            raise TypeError('ManifestNodeReferences must be strings')
+            raise TypeError("ManifestNodeReferences must be strings")
         return cls(value)
 
     def __init__(self, unique_id: str):
         self.unique_id = unique_id
-    
+
     def __repr__(self):
         return f"<ManifestNodeReference {self.unique_id}>"
 
@@ -550,20 +563,20 @@ class ManifestNodeReference(ArtifactNodeReader):
         The type of resource this reference points to. Eg model, test, source, etc.
         """
 
-        return self.unique_id.split('.')[0]
+        return self.unique_id.split(".")[0]
 
     @property
     def node(self) -> ManifestNode:
         """
-        The manifest node this reference points to. 
+        The manifest node this reference points to.
         """
 
         return self.manifest_artifact.resources[self.unique_id]
 
 
 class ManifestSourceNode(ArtifactNodeReader, Deserializer):
-    """Details about a Source node. 
-    
+    """Details about a Source node.
+
     Attributes:
         fqn: The fqn attribute
         database: The database attribute
@@ -618,9 +631,9 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
     external: typing.Union[None, ExternalTable]
     description: typing.Union[None, str]
     columns: typing.Union[None, typing.Dict[str, ColumnInfo]]
-    meta: typing.Union[dict]
-    source_meta: typing.Union[dict]
-    tags: typing.Union[typing.List[str]]
+    meta: typing.Union[dict, None]
+    source_meta: typing.Union[dict, None]
+    tags: typing.Union[typing.List[str], None]
     config: typing.Union[SourceConfig, None]
     patch_path: typing.Union[str, None]
     unrendered_config: typing.Union[dict, None]
@@ -629,7 +642,7 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
 
     class Config:
         fields = {
-            'db_schema': 'schema',
+            "db_schema": "schema",
         }
 
 
@@ -643,7 +656,9 @@ class MacroArgument(Deserializer):
 
     """
 
-    _test_path = 'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'
+    _test_path = (
+        'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'
+    )
 
     name: str
     type: typing.Union[str, None]
@@ -651,8 +666,8 @@ class MacroArgument(Deserializer):
 
 
 class ManifestMacroNode(ArtifactNodeReader, Deserializer):
-    """Details about a Macro node. 
-    
+    """Details about a Macro node.
+
     Attributes:
         unique_id: The unique_id attribute
         package_name: The package_name attribute
@@ -673,7 +688,9 @@ class ManifestMacroNode(ArtifactNodeReader, Deserializer):
 
     """
 
-    _test_path = 'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"]'
+    _test_path = (
+        'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"]'
+    )
 
     unique_id: str
     package_name: str
@@ -694,7 +711,7 @@ class ManifestMacroNode(ArtifactNodeReader, Deserializer):
 
 
 class ManifestDocsNode(Deserializer):
-    """Details about a Docs node. 
+    """Details about a Docs node.
 
     Attributes:
         unique_id: The unique_id attribute
@@ -722,25 +739,25 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
     """Details about an Exposure node.
 
     Attributes:
-        fqn: Details about a fqn attribute 
-        unique_id: Details about a unique_id attribute 
-        package_name: Details about a package_name attribute 
-        root_path: Details about a root_path attribute 
-        path: Details about a path attribute 
-        original_file_path: Details about a original_file_path attribute 
-        name: Details about a name attribute 
-        node_type: Details about a node_type attribute 
-        owner: Details about a owner attribute 
-        resource_type: Details about a resource_type attribute 
-        description: Details about a description attribute 
-        maturity: Details about a maturity attribute 
-        meta: Details about a meta attribute 
-        tags: Details about a tags attribute 
-        url: Details about a url attribute 
-        refs: Details about a refs attribute 
-        sources: Details about a sources attribute 
-        created_at: Details about a created_at attribute 
-        depends_on: Details about a depends_on attribute 
+        fqn: Details about a fqn attribute
+        unique_id: Details about a unique_id attribute
+        package_name: Details about a package_name attribute
+        root_path: Details about a root_path attribute
+        path: Details about a path attribute
+        original_file_path: Details about a original_file_path attribute
+        name: Details about a name attribute
+        node_type: Details about a node_type attribute
+        owner: Details about a owner attribute
+        resource_type: Details about a resource_type attribute
+        description: Details about a description attribute
+        maturity: Details about a maturity attribute
+        meta: Details about a meta attribute
+        tags: Details about a tags attribute
+        url: Details about a url attribute
+        refs: Details about a refs attribute
+        sources: Details about a sources attribute
+        created_at: Details about a created_at attribute
+        depends_on: Details about a depends_on attribute
 
     """
 
@@ -764,13 +781,10 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
     refs: typing.Union[typing.List[list], None]
     sources: typing.Union[typing.List[list], None]
     created_at: typing.Union[float, None]
-    depends_on: typing.Union[typing.Dict[str, list]]
+    depends_on: typing.Union[None, typing.Dict[str, list]]
 
     class Config:
-        fields = {
-            'db_schema': 'schema',
-            'node_type': 'type'
-        }
+        fields = {"db_schema": "schema", "node_type": "type"}
 
 
 class MetricFilter(Deserializer):
@@ -790,7 +804,7 @@ class MetricFilter(Deserializer):
 
 
 class ManifestMetricNode(ArtifactNodeReader, Deserializer):
-    """Details about a Metric node. 
+    """Details about a Metric node.
 
     Attributes:
         fqn: The fqn attribute
@@ -846,19 +860,18 @@ class ManifestMetricNode(ArtifactNodeReader, Deserializer):
     depends_on: typing.Union[dict, None]
 
     class Config:
-        fields = {
-            'node_type': 'type'
-        }
+        fields = {"node_type": "type"}
+
 
 class CatalogNode(ArtifactNodeReader, Deserializer):
-    """Details about a Catalog node. 
+    """Details about a Catalog node.
 
     Attributes:
-        metadata: The metadata attribute 
-        columns: The columns attribute 
-        stats: The stats attribute 
+        metadata: The metadata attribute
+        columns: The columns attribute
+        stats: The stats attribute
         unique_id: The unique_id attribute
-    
+
     """
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"]'
@@ -870,9 +883,9 @@ class CatalogNode(ArtifactNodeReader, Deserializer):
 
 
 class CatalogNodeMetadata(Deserializer):
-    """Metadata details about a CatalogNode. 
+    """Metadata details about a CatalogNode.
 
-    Attributes:    
+    Attributes:
         node_type: The node_type attribute
         db_schema: The db_schema attribute
         name: The name attribute
@@ -892,24 +905,23 @@ class CatalogNodeMetadata(Deserializer):
     owner: typing.Union[str, None]
 
     class Config:
-        fields = {
-            'db_schema': 'schema',
-            'node_type': 'type'
-        }
+        fields = {"db_schema": "schema", "node_type": "type"}
 
 
 class CatalogNodeColumn(Deserializer):
-    """Details about the columns in a CatalogNode. 
-    
+    """Details about the columns in a CatalogNode.
+
     Attributes:
         node_type: The node_type attribute
         index: The index attribute
         name: The name attribute
         comment: The comment attribute
-    
+
     """
 
-    _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].columns["customer_id"]'
+    _test_path = (
+        'catalog.nodes["model.poffertjes_shop.customers"].columns["customer_id"]'
+    )
 
     node_type: str
     index: int
@@ -917,14 +929,12 @@ class CatalogNodeColumn(Deserializer):
     comment: typing.Union[str, None]
 
     class Config:
-        fields = {
-            'node_type': 'type'
-        }
+        fields = {"node_type": "type"}
 
 
 class CatalogNodeStats(Deserializer):
-    """Statics about a CatalogNode. 
-    
+    """Statics about a CatalogNode.
+
     Attributes:
         description: The description of the statistic
         id: The id of the statistic
