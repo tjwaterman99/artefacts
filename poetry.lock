@@ -688,7 +688,7 @@ test = ["pytest (>=6.2)", "pytest-cov (>=2.12)", "codecov (>=2.1)"]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -805,7 +805,7 @@ python-versions = ">=3.5"
 name = "pyparsing"
 version = "3.0.7"
 description = "Python parsing module"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1271,7 +1271,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "9eae586538b2bdf9e572a71154fe4edc93d4cbae73577ff0bd0c3d81021ce9bc"
+content-hash = "64e2c3f06da028c24808f6430993f1109ecc7ccc853a2f4e7b5c38ffeb49dad2"
 
 [metadata.files]
 agate = [
