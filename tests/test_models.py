@@ -1,21 +1,10 @@
 import pytest
 
-from .conftest import iter_base_models, testing_poffertjes_shop
+from .conftest import testing_poffertjes_shop  # noqa
 
 import artefacts.state
-from artefacts.deserializers import (
-    Manifest, 
-    Catalog, 
-    Sources,
-    RunResults
-)
-from artefacts.models import (
-    ManifestModel,
-    ArtifactReader,
-    RunResultNode, 
-    ManifestNode, 
-    RunResultsModel
-)
+from artefacts.deserializers import Sources, RunResults
+from artefacts.models import ManifestModel
 
 
 def test_manifest_resources(manifest):
@@ -24,31 +13,41 @@ def test_manifest_resources(manifest):
 
 
 @pytest.mark.skipif("not testing_poffertjes_shop")
-@pytest.mark.parametrize("resource_type", ['model', 'test', 'source', 'metric'])
+@pytest.mark.parametrize("resource_type", ["model", "test", "source", "metric"])
 def test_manifest_iter_resource_type(resource_type, manifest):
     assert len(list(manifest.iter_resource_type(resource_type))) > 0
     for resource in manifest.iter_resource_type(resource_type):
         assert resource.resource_type == resource_type
-    
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
+def test_manifest_iter_resource_with_package_name(manifest):
+    package_names = ["poffertjes_shop", "dbt_utils"]
+    for pn in package_names:
+        for resource in manifest.iter_resource_type("model", package_name=pn):
+            assert resource.package_name == pn
+
 
 def test_models_have_reference_defined(base_model, reference_docs):
     assert base_model._qualpath() in reference_docs
 
 
 @pytest.mark.skipif("not testing_poffertjes_shop")
-def test_models_are_deserialized_at_least_once(manifest, sources, run_results, catalog, base_model):
-    if not hasattr(base_model, '_test_path'):
+def test_models_are_deserialized_at_least_once(
+    manifest, sources, run_results, catalog, base_model
+):
+    if not hasattr(base_model, "_test_path"):
         pytest.skip()
     else:
         context = {
-            'manifest': manifest,
-            'catalog': catalog,
-            'run_results': run_results,
-            'sources': sources,
-            'base_model': base_model,
+            "manifest": manifest,
+            "catalog": catalog,
+            "run_results": run_results,
+            "sources": sources,
+            "base_model": base_model,
         }
         exec(f"example = {base_model._test_path}", context)
-        assert type(context['example']) == base_model
+        assert type(context["example"]) == base_model
 
 
 def test_models_have_docs_path(base_model):
@@ -66,7 +65,7 @@ def test_manifest_validates_dbt_version(manifest):
 
     # Quick way to check that some validation is being ran.
     outdated_metadata = manifest.metadata.copy(deep=True)
-    outdated_metadata.dbt_version_raw = '0.21'
+    outdated_metadata.dbt_version_raw = "0.21"
     assert outdated_metadata.dbt_version.major == 0
 
     with pytest.raises(ValueError):
