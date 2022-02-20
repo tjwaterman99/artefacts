@@ -1,0 +1,57 @@
+name: Lint Python
+
+on:
+  push:
+    branches:
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python version 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Install dependencies
+      run: |
+        pipx install poetry
+        poetry install
+    - name: flake8
+      run: poetry run flake8 artefacts/ tests/
+      continue-on-error: true
+
+  black:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python version 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Install dependencies
+      run: |
+        pipx install poetry
+        poetry install
+    - name: black
+      run: poetry run black --check artefacts/ tests/
+      continue-on-error: true
+
+  mypy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python version 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Install dependencies
+      run: |
+        pipx install poetry
+        poetry install
+    - name: mypy
+      run: poetry run mypy artefacts/ tests/
+      continue-on-error: true
