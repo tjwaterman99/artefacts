@@ -4,7 +4,6 @@ import typing
 import json
 
 import artefacts.state
-from artefacts.config import conf
 
 
 RunResults = typing.ForwardRef('RunResults')
