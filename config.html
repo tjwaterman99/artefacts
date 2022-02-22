@@ -191,11 +191,22 @@
           <div class="section" id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
 <p>artefacts can be configured through environment variables, a <cite>pyproject.toml</cite> file, or passing a <code class="code docutils literal notranslate"><span class="pre">Config</span></code> object to each deserializer.</p>
+<p>If the same configuration value is set in multiple locations, artefacts will select the value in this order:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">Config</span></code> objects passed to the deserializer</p></li>
+<li><p>Environment variables</p></li>
+<li><p>Values set in a <cite>pyproject.toml</cite> file</p></li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>When using the <code class="code docutils literal notranslate"><span class="pre">Config</span></code> object to pass configuration to a deserializer, usage of all deserializers will continue
 to use the same config.</p>
-<p><strong>In other words, you can only set your configuration BEFORE using a deserializer for the first time.</strong></p>
+<p><strong>In other words, you can only set your configuration before using a deserializer for the first time,</strong> and you cannot change a configuration value once a deserializer has been initalized.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Artefacts will parse environment variables that begin with <code class="code docutils literal notranslate"><span class="pre">ARTEFACTS_</span></code>.</p>
+<p>For example, to set the configuration option <code class="code docutils literal notranslate"><span class="pre">dbt_project_dir</span></code> with an environment variable, use the value <code class="code docutils literal notranslate"><span class="pre">ARTEFACTS_DBT_PROJECT_DIR</span></code>.</p>
 </div>
 <p>The following configuration options are supported.</p>
 <div class="section" id="dbt-project-dir">
@@ -206,7 +217,7 @@ to use the same config.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">DBT_PROJECT_DIR</span><span class="o">=</span>dbt_projects/poffertjes_shop
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">ARTEFACTS_DBT_PROJECT_DIR</span><span class="o">=</span>dbt_projects/poffertjes_shop
 </pre></div>
 </div>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># pyproject.toml</span><span class="w"></span>
@@ -223,7 +234,7 @@ to use the same config.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">DBT_TARGET_DIR</span><span class="o">=</span>target
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">ARTEFACTS_DBT_TARGET_DIR</span><span class="o">=</span>target
 </pre></div>
 </div>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># pyproject.toml</span><span class="w"></span>
