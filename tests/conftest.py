@@ -2,10 +2,12 @@ import os
 import pytest
 
 from artefacts.deserializers import Manifest, RunResults, Catalog, Sources
+from artefacts.config import Config
+import artefacts.state
 
 
 testing_poffertjes_shop = (
-    os.environ["DBT_PROJECT_DIR"] == "dbt_projects/poffertjes_shop"
+    os.environ["ARTEFACTS_DBT_PROJECT_DIR"] == "dbt_projects/poffertjes_shop"
 )
 
 
@@ -34,6 +36,16 @@ def iter_node_reader_classes():
             yield klass
 
 
+@pytest.fixture(scope='function')
+def config():
+    return Config()
+
+
+@pytest.fixture(scope='function')
+def clean_state(monkeypatch):
+    monkeypatch.setattr(artefacts.state, '_state', dict())
+
+
 @pytest.fixture(scope="session")
 def reference_docs():
     with open("docs/reference.rst", "r") as fh:
@@ -52,7 +64,7 @@ def base_model(request):
 
 @pytest.fixture
 def dbt_project_dir():
-    return os.environ["DBT_PROJECT_DIR"]
+    return os.environ["ARTEFACTS_DBT_PROJECT_DIR"]
 
 
 @pytest.fixture(scope="session", params=[Manifest, RunResults, Catalog, Sources])

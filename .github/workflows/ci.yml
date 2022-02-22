@@ -27,7 +27,7 @@ jobs:
           - 'dbt_projects/starter_project'
 
     env:
-      DBT_PROJECT_DIR: "${{ matrix.dbt_project_dir }}"
+      ARTEFACTS_DBT_PROJECT_DIR: "${{ matrix.dbt_project_dir }}"
 
     runs-on: ubuntu-latest
 

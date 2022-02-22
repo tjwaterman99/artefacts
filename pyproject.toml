@@ -34,3 +34,4 @@ build-backend = "poetry.core.masonry.api"
 
 [artefacts]
 target_path = './target'
+testing = 1

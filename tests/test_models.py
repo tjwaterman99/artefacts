@@ -2,8 +2,6 @@ import pytest
 
 from .conftest import testing_poffertjes_shop  # noqa
 
-import artefacts.state
-from artefacts.deserializers import Sources, RunResults
 from artefacts.models import ManifestModel
 
 
@@ -97,13 +95,3 @@ def test_manifest_child_map(manifest):
         for node_reference in v:
             assert node_reference.node is not None
             assert node_reference.resource_type == node_reference.node.resource_type
-
-
-def test_run_results_loads():
-    run_results = RunResults()
-    assert artefacts.state.run_results == run_results
-
-
-def test_sources_loads():
-    sources = Sources()
-    assert artefacts.state.sources == sources
