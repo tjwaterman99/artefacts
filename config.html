@@ -190,11 +190,22 @@
         <article role="main">
           <div class="section" id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
-<p>artefacts can be configured through environment variables or a <cite>pyproject.toml</cite> file.</p>
+<p>artefacts can be configured through environment variables, a <cite>pyproject.toml</cite> file, or passing a <code class="code docutils literal notranslate"><span class="pre">Config</span></code> object to each deserializer.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When using the <code class="code docutils literal notranslate"><span class="pre">Config</span></code> object to pass configuration to a deserializer, usage of all deserializers will continue
+to use the same config.</p>
+<p><strong>In other words, you can only set your configuration BEFORE using a deserializer for the first time.</strong></p>
+</div>
 <p>The following configuration options are supported.</p>
-<div class="section" id="dbt-project-directory">
-<h2>dbt project directory<a class="headerlink" href="#dbt-project-directory" title="Permalink to this headline">¶</a></h2>
-<p>The directory that artefacts will search for your dbt project. Defaults to the current working directory (<code class="code docutils literal notranslate"><span class="pre">os.getcwd()</span></code>).</p>
+<div class="section" id="dbt-project-dir">
+<h2><code class="code docutils literal notranslate"><span class="pre">dbt_project_dir</span></code><a class="headerlink" href="#dbt-project-dir" title="Permalink to this headline">¶</a></h2>
+<p>The directory that artefacts will search for your dbt project. Defaults to the current working directory (<code class="code docutils literal notranslate"><span class="pre">.</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">artefacts</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">Manifest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">dbt_project_dir</span><span class="o">=</span><span class="s1">'dbt_projects/poffertjes_shop'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">DBT_PROJECT_DIR</span><span class="o">=</span>dbt_projects/poffertjes_shop
 </pre></div>
 </div>
@@ -204,9 +215,14 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="dbt-target-directory">
-<h2>dbt target directory<a class="headerlink" href="#dbt-target-directory" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dbt-target-dir">
+<h2><code class="code docutils literal notranslate"><span class="pre">dbt_target_dir</span></code><a class="headerlink" href="#dbt-target-dir" title="Permalink to this headline">¶</a></h2>
 <p>The directory that artefacts will search for your compiled artifacts, relative to <code class="code docutils literal notranslate"><span class="pre">$DBT_PROJECT_DIR</span></code>. Defaults to <code class="code docutils literal notranslate"><span class="pre">target</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">artefacts</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">Manifest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">dbt_target_dir</span><span class="o">=</span><span class="s1">'target'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">DBT_TARGET_DIR</span><span class="o">=</span>target
 </pre></div>
 </div>
@@ -270,8 +286,8 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Configuration</a><ul>
-<li><a class="reference internal" href="#dbt-project-directory">dbt project directory</a></li>
-<li><a class="reference internal" href="#dbt-target-directory">dbt target directory</a></li>
+<li><a class="reference internal" href="#dbt-project-dir"><code class="code docutils literal notranslate"><span class="pre">dbt_project_dir</span></code></a></li>
+<li><a class="reference internal" href="#dbt-target-dir"><code class="code docutils literal notranslate"><span class="pre">dbt_target_dir</span></code></a></li>
 </ul>
 </li>
 </ul>
