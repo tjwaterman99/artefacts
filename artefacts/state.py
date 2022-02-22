@@ -10,7 +10,13 @@ the store, simply import the module directly.
 
 """
 
+# We'll need to think a lot more about how to handle state if we ever want to run
+# artefacts on a server. The server might want to load artifacts from different users
+# so this kind of state mechanism won't work, because the different users will override
+# each other.
+
 import typing
+_state = dict()
 
 
 def set(key: str, value: typing.Any) -> typing.Union[typing.Any, None]:
@@ -22,8 +28,8 @@ def set(key: str, value: typing.Any) -> typing.Union[typing.Any, None]:
 
     """
     
-    globals()[key] = value
-    return globals()[key]
+    _state[key] = value
+    return _state[key]
 
 
 def get(key: str) -> typing.Union[typing.Any, None]:
@@ -36,7 +42,7 @@ def get(key: str) -> typing.Union[typing.Any, None]:
 
     """
 
-    return globals().get(key)
+    return _state.get(key)
 
 
 def exists(key: str) -> bool:
@@ -50,8 +56,5 @@ def exists(key: str) -> bool:
     False
 
     """
-    return key in globals()
+    return key in _state
 
-
-def get_or_set(key, value):
-    return get(key) or set(key, value)

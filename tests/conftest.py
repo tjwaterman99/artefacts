@@ -3,6 +3,7 @@ import pytest
 
 from artefacts.deserializers import Manifest, RunResults, Catalog, Sources
 from artefacts.config import Config
+import artefacts.state
 
 
 testing_poffertjes_shop = (
@@ -38,6 +39,11 @@ def iter_node_reader_classes():
 @pytest.fixture(scope='function')
 def config():
     return Config()
+
+
+@pytest.fixture(scope='function')
+def clean_state(monkeypatch):
+    monkeypatch.setattr(artefacts.state, '_state', dict())
 
 
 @pytest.fixture(scope="session")

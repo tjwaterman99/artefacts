@@ -1,7 +1,6 @@
 import pytest
 
-from .conftest import testing_poffertjes_shop
-from artefacts.mixins import ArtifactNodeReader
+from .conftest import testing_poffertjes_shop  # noqa
 
 
 def test_node_readers_have_manifest(manifest):
