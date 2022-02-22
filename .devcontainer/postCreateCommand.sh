@@ -15,7 +15,7 @@ git submodule update --init --recursive
 
 rm -rf dbt_projects/starter_project  # If rebuilding the devcontainer, need to clean this for the setup command to work
 poetry run dbt init starter_project --skip-profile-setup && mv starter_project dbt_projects/
-poetry run dbt deps --project-dir $DBT_PROJECT_DIR
-poetry run dbt build --project-dir $DBT_PROJECT_DIR
-poetry run dbt docs generate --project-dir $DBT_PROJECT_DIR
-poetry run dbt source freshness --project-dir $DBT_PROJECT_DIR
+poetry run dbt deps --project-dir $ARTEFACTS_DBT_PROJECT_DIR
+poetry run dbt build --project-dir $ARTEFACTS_DBT_PROJECT_DIR
+poetry run dbt docs generate --project-dir $ARTEFACTS_DBT_PROJECT_DIR
+poetry run dbt source freshness --project-dir $ARTEFACTS_DBT_PROJECT_DIR
