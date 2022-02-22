@@ -2,6 +2,7 @@ import datetime
 import uuid
 import pydantic
 import typing
+from typing import Union, Annotated, Literal
 import packaging.version
 
 from artefacts.mixins import ArtifactNodeReader
@@ -26,6 +27,7 @@ RunResultNode = typing.ForwardRef("RunResultNode")
 RunResultsModel = typing.ForwardRef("RunResultsModel")
 SourcesModel = typing.ForwardRef("SourcesModel")
 SourcesFreshnessResult = typing.ForwardRef("SourcesFreshnessResult")
+ModelNode = typing.ForwardRef("ModelNode")
 
 
 # TODO: rename this to `Model`
@@ -49,6 +51,55 @@ class Deserializer(pydantic.BaseModel):
         return (
             f"https://tjwaterman99.github.io/artefacts/reference.html#{cls._qualpath()}"
         )
+
+
+class ManifestModelNode(ArtifactNodeReader, Deserializer):
+    
+    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
+    
+    resource_type: Literal['model']
+
+    class Config:
+        extra = 'allow'
+
+
+class ManifestTestNode(ArtifactNodeReader, Deserializer):
+    resource_type: Literal['test']
+
+    class Config:
+        extra = 'allow'
+
+
+class ManifestOperationNode(ArtifactNodeReader, Deserializer):
+    resource_type: Literal['operation']
+
+    class Config:
+        extra = 'allow'
+
+
+class ManifestSnapshotNode(ArtifactNodeReader, Deserializer):
+    resource_type: Literal['snapshot']
+
+    class Config:
+        extra = 'allow'
+
+
+class ManifestSeedNode(ArtifactNodeReader, Deserializer):
+    resource_type: Literal['seed']
+
+    class Config:
+        extra = 'allow'
+
+
+ManifestModelUnion = Union[
+    ManifestModelNode,
+    ManifestTestNode,
+    ManifestOperationNode,
+    ManifestSnapshotNode,
+    ManifestSeedNode
+]
+
+ManifestNode = Annotated[ManifestModelUnion, pydantic.Field(discriminator='resource_type')]
 
 
 class ManifestModel(Deserializer):
@@ -494,8 +545,6 @@ class ManifestNode(ArtifactNodeReader, Deserializer):
         file_key_name: the file_key_name attribute
 
     """
-
-    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
     raw_sql: str
     compiled: typing.Union[str, None]
