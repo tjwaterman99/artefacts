@@ -79,8 +79,8 @@ class ManifestModelNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Optional['str']
-    database: Optional['str']
+    compiled: Optional["str"]
+    database: Optional["str"]
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -165,8 +165,8 @@ class ManifestTestNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Optional['str']
-    database: Optional['str']
+    compiled: Optional["str"]
+    database: Optional["str"]
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -254,8 +254,8 @@ class ManifestOperationNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Optional['str']
-    database: Optional['str']
+    compiled: Optional["str"]
+    database: Optional["str"]
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -342,8 +342,8 @@ class ManifestSnapshotNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Optional['str']
-    database: Optional['str']
+    compiled: Optional["str"]
+    database: Optional["str"]
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -428,8 +428,8 @@ class ManifestSeedNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Optional['str']
-    database: Optional['str']
+    compiled: Optional["str"]
+    database: Optional["str"]
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -632,10 +632,10 @@ class Metadata(Model):
     generated_at: datetime.datetime
     invocation_id: uuid.UUID
     env: dict
-    project_id: Optional['str']
-    user_id: Optional['str']
+    project_id: Optional["str"]
+    user_id: Optional["str"]
     send_anonymous_usage_stats: Optional[bool]
-    adapter_type: Optional['str']
+    adapter_type: Optional["str"]
 
     class Config:
         fields = {
@@ -653,7 +653,7 @@ class Metadata(Model):
         return int(self.dbt_schema_version_raw.split("/")[-1].split(".")[0][1])
 
     @property
-    def dbt_version(self) -> str:
+    def dbt_version(self) -> packaging.version.Version:
         """The dbt version that generated the artifact."""
 
         return packaging.version.Version(self.dbt_version_raw)
@@ -700,9 +700,9 @@ class ExternalPartition(Model):
         ".external.partitions[0]"
     )
 
-    name: Optional['str']
-    description: Optional['str']
-    data_type: Optional['str']
+    name: Optional["str"]
+    description: Optional["str"]
+    data_type: Optional["str"]
     meta: Optional[Dict]
 
 
@@ -798,7 +798,7 @@ class Time(Model):
     )
 
     count: Optional[int]
-    period: Optional['str']
+    period: Optional["str"]
 
 
 class FreshnessThreshold(Model):
@@ -817,7 +817,7 @@ class FreshnessThreshold(Model):
 
     warn_after: Optional[Time]
     error_after: Optional[Time]
-    filter: Optional['str']
+    filter: Optional["str"]
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, Model):
@@ -875,7 +875,7 @@ class RunResultNode(ArtifactNodeReader, Model):
     thread_id: str
     execution_time: float
     adapter_response: dict
-    message: Optional['str']
+    message: Optional["str"]
     failures: Optional[int]
     unique_id: str
 
@@ -975,9 +975,9 @@ class ManifestSourceNode(ArtifactNodeReader, Model):
     source_meta: Optional[Dict]
     tags: Optional[List[str]]
     config: Optional[SourceConfig]
-    patch_path: Optional['str']
+    patch_path: Optional["str"]
     unrendered_config: Optional[Dict]
-    relation_name: Optional['str']
+    relation_name: Optional["str"]
     created_at: Optional[float]
 
     class Config:
@@ -1001,8 +1001,8 @@ class MacroArgument(Model):
     )
 
     name: str
-    type: Optional['str']
-    description: Optional['str']
+    type: Optional["str"]
+    description: Optional["str"]
 
 
 class ManifestMacroNode(ArtifactNodeReader, Model):
@@ -1070,7 +1070,7 @@ class ManifestDocsNode(Model):
     package_name: str
     root_path: str
     path: str
-    original_filepath: Optional['str']
+    original_filepath: Optional["str"]
     name: str
     block_contents: str
 
@@ -1112,12 +1112,12 @@ class ManifestExposureNode(ArtifactNodeReader, Model):
     name: str
     node_type: str
     owner: dict
-    resource_type: Optional['str']
-    description: Optional['str']
-    maturity: Optional['str']
+    resource_type: Optional["str"]
+    description: Optional["str"]
+    maturity: Optional["str"]
     meta: Optional[Dict]
     tags: Optional[List[str]]
-    url: Optional['str']
+    url: Optional["str"]
     refs: Optional[List[list]]
     sources: Optional[List[list]]
     created_at: Optional[float]
@@ -1189,9 +1189,9 @@ class ManifestMetricNode(ArtifactNodeReader, Model):
     filters: List[MetricFilter]
     time_grains: List[str]
     dimensions: List[str]
-    sql: Optional['str']
-    timestamp: Optional['str']
-    resource_type: Optional['str']
+    sql: Optional["str"]
+    timestamp: Optional["str"]
+    resource_type: Optional["str"]
     meta: Optional[Dict]
     tags: Optional[list]
     sources: Optional[List[str]]
@@ -1240,9 +1240,9 @@ class CatalogNodeMetadata(Model):
     node_type: str
     db_schema: str
     name: str
-    database: Optional['str']
-    comment: Optional['str']
-    owner: Optional['str']
+    database: Optional["str"]
+    comment: Optional["str"]
+    owner: Optional["str"]
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
@@ -1266,7 +1266,7 @@ class CatalogNodeColumn(Model):
     node_type: str
     index: int
     name: str
-    comment: Optional['str']
+    comment: Optional["str"]
 
     class Config:
         fields = {"node_type": "type"}
@@ -1285,11 +1285,11 @@ class CatalogNodeStats(Model):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'
 
-    description: Optional['str']
+    description: Optional["str"]
     id: str
     include: bool
     label: str
-    value: Optional['str']
+    value: Optional["str"]
 
 
 RunResultsModel.update_forward_refs()

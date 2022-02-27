@@ -16,6 +16,7 @@ the store, simply import the module directly.
 # each other.
 
 import typing
+
 _state = dict()
 
 
@@ -27,7 +28,7 @@ def set(key: str, value: typing.Any) -> typing.Union[typing.Any, None]:
     {'a': 1}
 
     """
-    
+
     _state[key] = value
     return _state[key]
 
@@ -57,4 +58,3 @@ def exists(key: str) -> bool:
 
     """
     return key in _state
-

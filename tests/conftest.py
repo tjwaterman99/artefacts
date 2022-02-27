@@ -36,14 +36,14 @@ def iter_node_reader_classes():
             yield klass
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def config():
     return Config()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def clean_state(monkeypatch):
-    monkeypatch.setattr(artefacts.state, '_state', dict())
+    monkeypatch.setattr(artefacts.state, "_state", dict())
 
 
 @pytest.fixture(scope="session")
