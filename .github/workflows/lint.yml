@@ -16,8 +16,7 @@ jobs:
         python-version: "3.9"
     - name: Install dependencies
       run: |
-        pipx install poetry
-        poetry install
+        pipx install flake8
     - name: flake8
       run: poetry run flake8 artefacts/ tests/
 
@@ -32,8 +31,7 @@ jobs:
         python-version: "3.9"
     - name: Install dependencies
       run: |
-        pipx install poetry
-        poetry install
+        pipx install black
     - name: black
       run: poetry run black --check artefacts/ tests/
 
@@ -48,8 +46,8 @@ jobs:
         python-version: "3.9"
     - name: Install dependencies
       run: |
-        pipx install poetry
-        poetry install
+        pipx install mypy
     - name: mypy
-      run: poetry run mypy artefacts/ tests/
-      continue-on-error: true
+      run: |
+        pipx install myppy
+        mypy -m artefacts --ignore-missing-imports --install-types --non-interactive

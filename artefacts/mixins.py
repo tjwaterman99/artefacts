@@ -1,33 +1,31 @@
-import typing
+from typing import ForwardRef, TYPE_CHECKING
 
 
-RunResults = typing.ForwardRef("RunResults")
-Manifest = typing.ForwardRef("Manifest")
-Catalog = typing.ForwardRef("Catalog")
-Sources = typing.ForwardRef("Sources")
+if TYPE_CHECKING:
+    from .models import RunResultsModel, ManifestModel, SourcesModel, CatalogModel
 
 
 class ArtifactReader:
     @property
-    def run_results_artifact(self) -> RunResults:
+    def run_results_artifact(self) -> 'RunResultsModel':
         """A reference to the :class:`RunResults` artifact."""
 
         return self.get_artifact("run_results")
 
     @property
-    def manifest_artifact(self) -> Manifest:
+    def manifest_artifact(self) -> 'ManifestModel':
         """A reference to the :class:`Manifest` artifact."""
 
         return self.get_artifact("manifest")
 
     @property
-    def catalog_artifact(self) -> Catalog:
+    def catalog_artifact(self) -> 'CatalogModel':
         """A reference to the :class:`Catalog` artifact."""
 
         return self.get_artifact("catalog")
 
     @property
-    def sources_artifact(self) -> Sources:
+    def sources_artifact(self) -> 'SourcesModel':
         """A reference to the :class:`Sources` artifact."""
 
         return self.get_artifact("sources")

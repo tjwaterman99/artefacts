@@ -653,7 +653,7 @@ class Metadata(Model):
         return int(self.dbt_schema_version_raw.split("/")[-1].split(".")[0][1])
 
     @property
-    def dbt_version(self) -> str:
+    def dbt_version(self) -> packaging.version.Version:
         """The dbt version that generated the artifact."""
 
         return packaging.version.Version(self.dbt_version_raw)
