@@ -205,12 +205,12 @@ Defaults to returning models from all packages.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'model'</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="go">&lt;class 'artefacts.models.ManifestModelNode'&gt;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedAlias</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestModelNode" title="artefacts.models.ManifestModelNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestModelNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestTestNode" title="artefacts.models.ManifestTestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestTestNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestOperationNode" title="artefacts.models.ManifestOperationNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestOperationNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSnapshotNode" title="artefacts.models.ManifestSnapshotNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSnapshotNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSeedNode" title="artefacts.models.ManifestSeedNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSeedNode</span></code></a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -228,12 +228,12 @@ Defaults to returning tests from all packages.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'test'</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="go">&lt;class 'artefacts.models.ManifestTestNode'&gt;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedAlias</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestModelNode" title="artefacts.models.ManifestModelNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestModelNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestTestNode" title="artefacts.models.ManifestTestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestTestNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestOperationNode" title="artefacts.models.ManifestOperationNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestOperationNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSnapshotNode" title="artefacts.models.ManifestSnapshotNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSnapshotNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSeedNode" title="artefacts.models.ManifestSeedNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSeedNode</span></code></a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -251,12 +251,12 @@ Defaults to returning seeds from all packages.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seed</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'seed'</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="go">&lt;class 'artefacts.models.ManifestSeedNode'&gt;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedAlias</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestModelNode" title="artefacts.models.ManifestModelNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestModelNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestTestNode" title="artefacts.models.ManifestTestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestTestNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestOperationNode" title="artefacts.models.ManifestOperationNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestOperationNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSnapshotNode" title="artefacts.models.ManifestSnapshotNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSnapshotNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSeedNode" title="artefacts.models.ManifestSeedNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSeedNode</span></code></a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,12 +274,12 @@ Defaults to returning snapshots from all packages.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">snapshot</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'snapshot'</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="go">&lt;class 'artefacts.models.ManifestSnapshotNode'&gt;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedAlias</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestModelNode" title="artefacts.models.ManifestModelNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestModelNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestTestNode" title="artefacts.models.ManifestTestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestTestNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestOperationNode" title="artefacts.models.ManifestOperationNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestOperationNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSnapshotNode" title="artefacts.models.ManifestSnapshotNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSnapshotNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSeedNode" title="artefacts.models.ManifestSeedNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSeedNode</span></code></a>]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,12 +297,12 @@ Defaults to returning operations from all packages.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">operation</span><span class="o">.</span><span class="n">resource_type</span>
 <span class="go">'operation'</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
-<span class="go">&lt;class 'artefacts.models.ManifestNode'&gt;</span>
+<span class="go">&lt;class 'artefacts.models.ManifestOperationNode'&gt;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestNode" title="artefacts.models.ManifestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestNode</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedAlias</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="reference.html#artefacts.models.ManifestModelNode" title="artefacts.models.ManifestModelNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestModelNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestTestNode" title="artefacts.models.ManifestTestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestTestNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestOperationNode" title="artefacts.models.ManifestOperationNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestOperationNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSnapshotNode" title="artefacts.models.ManifestSnapshotNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSnapshotNode</span></code></a>, <a class="reference internal" href="reference.html#artefacts.models.ManifestSeedNode" title="artefacts.models.ManifestSeedNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSeedNode</span></code></a>]]]</p>
 </dd>
 </dl>
 </dd></dl>

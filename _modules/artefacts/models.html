@@ -192,35 +192,14 @@
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">pydantic</span>
-<span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 <span class="kn">import</span> <span class="nn">packaging.version</span>
 
 <span class="kn">from</span> <span class="nn">artefacts.mixins</span> <span class="kn">import</span> <span class="n">ArtifactNodeReader</span>
 
 
-<span class="n">CatalogModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogModel"</span><span class="p">)</span>
-<span class="n">CatalogNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNode"</span><span class="p">)</span>
-<span class="n">CatalogNodeColumn</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNodeColumn"</span><span class="p">)</span>
-<span class="n">CatalogNodeMetadata</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNodeMetadata"</span><span class="p">)</span>
-<span class="n">CatalogNodeStats</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"CatalogNodeStats"</span><span class="p">)</span>
-<span class="n">ManifestModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestModel"</span><span class="p">)</span>
-<span class="n">ManifestDocsNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestDocsNode"</span><span class="p">)</span>
-<span class="n">ManifestExposureNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestExposureNode"</span><span class="p">)</span>
-<span class="n">ManifestMacroNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestMacroNode"</span><span class="p">)</span>
-<span class="n">ManifestMetricNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestMetricNode"</span><span class="p">)</span>
-<span class="n">ManifestNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestNode"</span><span class="p">)</span>
-<span class="n">ManifestNodeReference</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestNodeReference"</span><span class="p">)</span>
-<span class="n">ManifestSourceNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ManifestSourceNode"</span><span class="p">)</span>
-<span class="n">Metadata</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"Metadata"</span><span class="p">)</span>
-<span class="n">ResultTiming</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"ResultTiming"</span><span class="p">)</span>
-<span class="n">RunResultNode</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"RunResultNode"</span><span class="p">)</span>
-<span class="n">RunResultsModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"RunResultsModel"</span><span class="p">)</span>
-<span class="n">SourcesModel</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"SourcesModel"</span><span class="p">)</span>
-<span class="n">SourcesFreshnessResult</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">ForwardRef</span><span class="p">(</span><span class="s2">"SourcesFreshnessResult"</span><span class="p">)</span>
-
-
-<span class="c1"># TODO: rename this to `Model`</span>
-<span class="k">class</span> <span class="nc">Deserializer</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&gt;"</span>
 
@@ -242,409 +221,9 @@
         <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ManifestModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel">[docs]</a><span class="k">class</span> <span class="nc">ManifestModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ManifestModelNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModelNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestModelNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    The manifest artifact.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        metadata: reference to the Manifest's metadata</span>
-<span class="sd">        nodes: reference to the Manifest's nodes</span>
-<span class="sd">        sources: reference to the Manifest's sources</span>
-<span class="sd">        macros: reference to the Manifest's macros</span>
-<span class="sd">        docs: reference to the Manifest's docs</span>
-<span class="sd">        exposures: reference to the Manifest's exposures</span>
-<span class="sd">        metrics: reference to the Manifest's metrics</span>
-<span class="sd">        selectors: reference to the Manifest's selectors</span>
-<span class="sd">        disabled: reference to the Manifest's disabled</span>
-<span class="sd">        parent_map: reference to the Manifest's parent_map</span>
-<span class="sd">        child_map: reference to the Manifest's child_map</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest"</span>
-
-    <span class="c1"># TODO: improve the way we validate minimum dbt versions. We should</span>
-    <span class="c1"># probably do the validation on every artifact.</span>
-    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">validate_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"1.0"</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">Unsupported dbt version: </span><span class="si">{</span><span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span><span class="si">}</span><span class="s2">. "</span>
-                <span class="s2">"</span><span class="se">\n\t</span><span class="s2">Please upgrade dbt to at least v1.0 to use artefacts"</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">metadata</span>
-
-    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
-    <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestNode</span><span class="p">]</span>
-    <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestSourceNode</span><span class="p">]</span>
-    <span class="n">macros</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestMacroNode</span><span class="p">]</span>
-    <span class="n">docs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestDocsNode</span><span class="p">]</span>
-    <span class="n">exposures</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestExposureNode</span><span class="p">]</span>
-    <span class="n">metrics</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestMetricNode</span><span class="p">]</span>
-    <span class="n">selectors</span><span class="p">:</span> <span class="nb">dict</span>
-    <span class="n">disabled</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">parent_map</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNodeReference</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">child_map</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestNodeReference</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">resources</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">macros</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">exposures</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
-        <span class="p">}</span>
-
-<div class="viewcode-block" id="ManifestModel.iter_resource_type"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel.iter_resource_type">[docs]</a>    <span class="k">def</span> <span class="nf">iter_resource_type</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">:</span>
-        <span class="sd">"""Iterate over all resources of a specific type</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            resource_type (str): The type of resource, eg 'model', 'source',</span>
-<span class="sd">                                 'exposure', etc.</span>
-<span class="sd">            package_name (str): nly return resources from the specified dbt package.</span>
-<span class="sd">        """</span>
-
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">package_name</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">package_name</span> <span class="o">!=</span> <span class="n">package_name</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="n">resource_type</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">v</span></div></div>
-
-
-<div class="viewcode-block" id="RunResultsModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.RunResultsModel">[docs]</a><span class="k">class</span> <span class="nc">RunResultsModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""The run_results artifact.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        metadata: The :class:`Metadata` associated with the run, such as when</span>
-<span class="sd">                  the run was generated, the environment variables present</span>
-<span class="sd">                  during the run, etc.</span>
-<span class="sd">        results: A list of :class:`RunResultNode` s, which contain details</span>
-<span class="sd">                 about how long each node ran, whether it was successful, etc.</span>
-<span class="sd">        elapsed_time: The total duration of the run</span>
-<span class="sd">        args: The arguments used when at the start of the run or build</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"run_results"</span>
-
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
-    <span class="n">results</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">RunResultNode</span><span class="p">]</span>
-    <span class="n">elapsed_time</span><span class="p">:</span> <span class="nb">float</span>
-    <span class="n">args</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="CatalogModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogModel">[docs]</a><span class="k">class</span> <span class="nc">CatalogModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""The catalog artifact.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        metadata: The metadata attribute of the catalog</span>
-<span class="sd">        nodes: The nodes attribute of the catalog</span>
-<span class="sd">        sources: The sources attribute of the catalog</span>
-<span class="sd">        errors: The errors attribute of the catalog</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"catalog"</span>
-
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
-    <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNode</span><span class="p">]</span>
-    <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNode</span><span class="p">]</span>
-    <span class="n">errors</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="SourcesModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourcesModel">[docs]</a><span class="k">class</span> <span class="nc">SourcesModel</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""The sources artifact.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        metadata: The metadata attribute</span>
-<span class="sd">        results: The results attribute</span>
-<span class="sd">        elapsed_time: The elapsed_time attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources"</span>
-
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">Metadata</span>
-    <span class="n">results</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">SourcesFreshnessResult</span><span class="p">]</span>
-    <span class="n">elapsed_time</span><span class="p">:</span> <span class="nb">float</span></div>
-
-
-<div class="viewcode-block" id="Metadata"><a class="viewcode-back" href="../../reference.html#artefacts.models.Metadata">[docs]</a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Data about the context in which the artifact was generated.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        generated_at: The generated_at attribute</span>
-<span class="sd">        invocation_id: The invocation_id attribute</span>
-<span class="sd">        env: The env attribute</span>
-<span class="sd">        project_id: The project_id attribute</span>
-<span class="sd">        user_id: The user_id attribute</span>
-<span class="sd">        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute</span>
-<span class="sd">        adapter_type: The adapter_type attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.metadata"</span>
-
-    <span class="n">dbt_schema_version_raw</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">dbt_version_raw</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">generated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
-    <span class="n">invocation_id</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span>
-    <span class="n">env</span><span class="p">:</span> <span class="nb">dict</span>
-    <span class="n">project_id</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">user_id</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">send_anonymous_usage_stats</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">adapter_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-
-    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"dbt_version_raw"</span><span class="p">:</span> <span class="s2">"dbt_version"</span><span class="p">,</span>
-            <span class="s2">"dbt_schema_version_raw"</span><span class="p">:</span> <span class="s2">"dbt_schema_version"</span><span class="p">,</span>
-        <span class="p">}</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dbt_schema_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">"""The artifact's schema version.</span>
-
-<span class="sd">        See https://schemas.getdbt.com for details.</span>
-<span class="sd">        """</span>
-
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_schema_version_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dbt_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">"""The dbt version that generated the artifact."""</span>
-
-        <span class="k">return</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_version_raw</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Quoting"><a class="viewcode-back" href="../../reference.html#artefacts.models.Quoting">[docs]</a><span class="k">class</span> <span class="nc">Quoting</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about quoting requirements for database objects</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        database: Whether to quote the "database" component of an object path</span>
-<span class="sd">        identifier: Whether to quote the "identifier" component of an object path</span>
-<span class="sd">        db_schema: Whether to quote the "db_schema" component of an object path</span>
-<span class="sd">        column: Whether to quote the "column" component of an object path</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'</span>
-
-    <span class="n">database</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">db_schema</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">column</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-
-    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
-        <span class="p">}</span></div>
-
-
-<div class="viewcode-block" id="ExternalPartition"><a class="viewcode-back" href="../../reference.html#artefacts.models.ExternalPartition">[docs]</a><span class="k">class</span> <span class="nc">ExternalPartition</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Object representing a partition on an external table</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        name: The name attribute</span>
-<span class="sd">        description: The description attribute</span>
-<span class="sd">        data_type: The data_type attribute</span>
-<span class="sd">        meta: The meta attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events']"</span>
-                  <span class="s2">".external.partitions[0]"</span><span class="p">)</span>
-
-    <span class="n">name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">data_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="ExternalTable"><a class="viewcode-back" href="../../reference.html#artefacts.models.ExternalTable">[docs]</a><span class="k">class</span> <span class="nc">ExternalTable</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Object representing an external table</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        location: The location attribute</span>
-<span class="sd">        file_format: The file_format attribute</span>
-<span class="sd">        row_format: The row_format attribute</span>
-<span class="sd">        tbl_properties: The tbl_properties attribute</span>
-<span class="sd">        partitions: The partitions attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events'].external"</span>
-    <span class="p">)</span>
-
-    <span class="n">location</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">file_format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">row_format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">tbl_properties</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">partitions</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ExternalPartition</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="ColumnInfo"><a class="viewcode-back" href="../../reference.html#artefacts.models.ColumnInfo">[docs]</a><span class="k">class</span> <span class="nc">ColumnInfo</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Column details of a documented model</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        name: The name attribute</span>
-<span class="sd">        description: The description attribute</span>
-<span class="sd">        meta: The meta attribute</span>
-<span class="sd">        data_type: The data_type attribute</span>
-<span class="sd">        quote: The quote attribute</span>
-<span class="sd">        tags: The tags attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"</span>
-    <span class="p">)</span>
-
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">data_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">quote</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></div>
-
-
-<div class="viewcode-block" id="TimingResult"><a class="viewcode-back" href="../../reference.html#artefacts.models.TimingResult">[docs]</a><span class="k">class</span> <span class="nc">TimingResult</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Timing details from running the node.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        name: the name attribute</span>
-<span class="sd">        started_at: the started_at attribute</span>
-<span class="sd">        completed_at: the completed_at attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources.results[0].timing[0]"</span>
-
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">started_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
-    <span class="n">completed_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="SourceConfig"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourceConfig">[docs]</a><span class="k">class</span> <span class="nc">SourceConfig</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""An object containing details about a source's config</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        enabled: Whether the source is enabled</span>
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].config"</span>
-
-    <span class="n">enabled</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="Time"><a class="viewcode-back" href="../../reference.html#artefacts.models.Time">[docs]</a><span class="k">class</span> <span class="nc">Time</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""An object representing a time interval, used for example when</span>
-<span class="sd">    configuring a source freshness check</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        period: The length of the time interval, eg days, hours, seconds</span>
-<span class="sd">        count: The number of periods associed with the time interval</span>
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"</span>
-    <span class="p">)</span>
-
-    <span class="n">count</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">period</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="FreshnessThreshold"><a class="viewcode-back" href="../../reference.html#artefacts.models.FreshnessThreshold">[docs]</a><span class="k">class</span> <span class="nc">FreshnessThreshold</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details of the criteria used when checking a source's freshness</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        warn_after: The freshness criteria after which a freshness check will</span>
-<span class="sd">                    raise a warning.</span>
-<span class="sd">        error_after: The freshness criteria after which a freshness check will</span>
-<span class="sd">                     raise an error.</span>
-<span class="sd">        filter: A SQL statement used to filter the table when running a</span>
-<span class="sd">                freshness check.</span>
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].freshness"</span>
-
-    <span class="n">warn_after</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Time</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">error_after</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Time</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="nb">filter</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="SourcesFreshnessResult"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourcesFreshnessResult">[docs]</a><span class="k">class</span> <span class="nc">SourcesFreshnessResult</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Result details from checking the freshness of a source.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        unique_id: The unique_id attribute</span>
-<span class="sd">        status: The status attribute</span>
-<span class="sd">        error: The error attribute</span>
-<span class="sd">        max_loaded_at: The max_loaded_at attribute</span>
-<span class="sd">        snapshotted_at: The snapshotted_at attribute</span>
-<span class="sd">        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute</span>
-<span class="sd">        criteria: The criteria attribute</span>
-<span class="sd">        adapter_response: The adapter_response attribute</span>
-<span class="sd">        timing: The timing attribute</span>
-<span class="sd">        thread_id: The thread_id attribute</span>
-<span class="sd">        execution_time: The execution_time attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources.results[0]"</span>
-
-    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">error</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">max_loaded_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">snapshotted_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">max_loaded_at_time_ago_in_s</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
-    <span class="n">criteria</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">FreshnessThreshold</span><span class="p">]</span>
-    <span class="n">adapter_response</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">timing</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]]</span>
-    <span class="n">thread_id</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">execution_time</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="RunResultNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.RunResultNode">[docs]</a><span class="k">class</span> <span class="nc">RunResultNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""Details about the results of running a specific model, test, etc.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        status: The status attribute</span>
-<span class="sd">        timing: The timing attribute</span>
-<span class="sd">        thread_id: The thread_id attribute</span>
-<span class="sd">        execution_time: The execution_time attribute</span>
-<span class="sd">        adapter_response: The adapter_response attribute</span>
-<span class="sd">        message: The message attribute</span>
-<span class="sd">        failures: The failures attribute</span>
-<span class="sd">        unique_id: The unique_id attribute</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"run_results.results[0]"</span>
-
-    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">timing</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]</span>
-    <span class="n">thread_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">execution_time</span><span class="p">:</span> <span class="nb">float</span>
-    <span class="n">adapter_response</span><span class="p">:</span> <span class="nb">dict</span>
-    <span class="n">message</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">failures</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span></div>
-
-
-<div class="viewcode-block" id="ManifestNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    An object representing a node, such as a model, test, or macro.</span>
+<span class="sd">    An object representing a model in the dbt project.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        raw_sql: the raw_sql attribute</span>
@@ -683,52 +262,813 @@
 <span class="sd">        relation_name: the relation_name attribute</span>
 <span class="sd">        column_name: the column_name attribute</span>
 <span class="sd">        file_key_name: the file_key_name attribute</span>
-
 <span class="sd">    """</span>
 
-    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.nodes['model.poffertjes_shop.products']"</span>
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
+        <span class="p">}</span>
 
     <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">compiled</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">database</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">compiled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
     <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">fqn</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">original_file_path</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"model"</span><span class="p">]</span>
     <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
-    <span class="n">refs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">]</span>
-    <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
-    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">columns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
-    <span class="n">docs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]</span>
-    <span class="n">patch_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">build_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">deferred</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
-    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
-    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
-    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">]]</span>
-    <span class="n">relation_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">column_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>  <span class="c1"># only for generic test node</span>
-    <span class="n">file_key_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>  <span class="c1"># only for generic test node</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.nodes['model.poffertjes_shop.products']"</span></div>
+
+
+<div class="viewcode-block" id="ManifestTestNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestTestNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestTestNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An object representing a test in the dbt project.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        raw_sql: the raw_sql attribute</span>
+<span class="sd">        compiled: the compiled attribute</span>
+<span class="sd">        database: the database attribute</span>
+<span class="sd">        db_schema: the db_schema attribute</span>
+<span class="sd">        fqn: the fqn attribute</span>
+<span class="sd">        unique_id: the unique_id attribute</span>
+<span class="sd">        package_name: the package_name attribute</span>
+<span class="sd">        root_path: the root_path attribute</span>
+<span class="sd">        path: the path attribute</span>
+<span class="sd">        original_file_path: the original_file_path attribute</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        resource_type: the resource_type attribute</span>
+<span class="sd">        alias: the alias attribute</span>
+<span class="sd">        checksum: the checksum attribute</span>
+<span class="sd">        config: the config attribute</span>
+<span class="sd">        tags: the tags attribute</span>
+<span class="sd">        refs: the refs attribute</span>
+<span class="sd">        sources: the sources attribute</span>
+<span class="sd">        depends_on: the depends_on attribute</span>
+<span class="sd">        description: the description attribute</span>
+<span class="sd">        columns: the columns attribute</span>
+<span class="sd">        meta: the meta attribute</span>
+<span class="sd">        docs: the docs attribute</span>
+<span class="sd">        patch_path: the patch_path attribute</span>
+<span class="sd">        compiled_path: the compiled_path attribute</span>
+<span class="sd">        build_path: the build_path attribute</span>
+<span class="sd">        deferred: the deferred attribute</span>
+<span class="sd">        unrendered_config: the unrendered_config attribute</span>
+<span class="sd">        created_at: the created_at attribute</span>
+<span class="sd">        config_call_dict: the config_call_dict attribute</span>
+<span class="sd">        compiled_sql: the compiled_sql attribute</span>
+<span class="sd">        extra_ctes_injected: the extra_ctes_injected attribute</span>
+<span class="sd">        extra_ctes: the extra_ctes attribute</span>
+<span class="sd">        relation_name: the relation_name attribute</span>
+<span class="sd">        column_name: the column_name attribute</span>
+<span class="sd">        file_key_name: the file_key_name attribute</span>
+<span class="sd">    """</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">compiled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">original_file_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"test"</span><span class="p">]</span>
+    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.nodes['test.poffertjes_shop.not_null_base_"</span>
+        <span class="s2">"customers_customer_id.59e00b9238']"</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ManifestOperationNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestOperationNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestOperationNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An object representing a macro operation in the dbt project.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        raw_sql: the raw_sql attribute</span>
+<span class="sd">        compiled: the compiled attribute</span>
+<span class="sd">        database: the database attribute</span>
+<span class="sd">        db_schema: the db_schema attribute</span>
+<span class="sd">        fqn: the fqn attribute</span>
+<span class="sd">        unique_id: the unique_id attribute</span>
+<span class="sd">        package_name: the package_name attribute</span>
+<span class="sd">        root_path: the root_path attribute</span>
+<span class="sd">        path: the path attribute</span>
+<span class="sd">        original_file_path: the original_file_path attribute</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        resource_type: the resource_type attribute</span>
+<span class="sd">        alias: the alias attribute</span>
+<span class="sd">        checksum: the checksum attribute</span>
+<span class="sd">        config: the config attribute</span>
+<span class="sd">        tags: the tags attribute</span>
+<span class="sd">        refs: the refs attribute</span>
+<span class="sd">        sources: the sources attribute</span>
+<span class="sd">        depends_on: the depends_on attribute</span>
+<span class="sd">        description: the description attribute</span>
+<span class="sd">        columns: the columns attribute</span>
+<span class="sd">        meta: the meta attribute</span>
+<span class="sd">        docs: the docs attribute</span>
+<span class="sd">        patch_path: the patch_path attribute</span>
+<span class="sd">        compiled_path: the compiled_path attribute</span>
+<span class="sd">        build_path: the build_path attribute</span>
+<span class="sd">        deferred: the deferred attribute</span>
+<span class="sd">        unrendered_config: the unrendered_config attribute</span>
+<span class="sd">        created_at: the created_at attribute</span>
+<span class="sd">        config_call_dict: the config_call_dict attribute</span>
+<span class="sd">        compiled_sql: the compiled_sql attribute</span>
+<span class="sd">        extra_ctes_injected: the extra_ctes_injected attribute</span>
+<span class="sd">        extra_ctes: the extra_ctes attribute</span>
+<span class="sd">        relation_name: the relation_name attribute</span>
+<span class="sd">        column_name: the column_name attribute</span>
+<span class="sd">        file_key_name: the file_key_name attribute</span>
+<span class="sd">    """</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">compiled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">original_file_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"operation"</span><span class="p">]</span>
+    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.nodes['operation.poffertjes_shop.poffertjes_"</span> <span class="s2">"shop-on-run-start-0']"</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ManifestSnapshotNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestSnapshotNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSnapshotNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An object representing a snapshot in the dbt project.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        raw_sql: the raw_sql attribute</span>
+<span class="sd">        compiled: the compiled attribute</span>
+<span class="sd">        database: the database attribute</span>
+<span class="sd">        db_schema: the db_schema attribute</span>
+<span class="sd">        fqn: the fqn attribute</span>
+<span class="sd">        unique_id: the unique_id attribute</span>
+<span class="sd">        package_name: the package_name attribute</span>
+<span class="sd">        root_path: the root_path attribute</span>
+<span class="sd">        path: the path attribute</span>
+<span class="sd">        original_file_path: the original_file_path attribute</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        resource_type: the resource_type attribute</span>
+<span class="sd">        alias: the alias attribute</span>
+<span class="sd">        checksum: the checksum attribute</span>
+<span class="sd">        config: the config attribute</span>
+<span class="sd">        tags: the tags attribute</span>
+<span class="sd">        refs: the refs attribute</span>
+<span class="sd">        sources: the sources attribute</span>
+<span class="sd">        depends_on: the depends_on attribute</span>
+<span class="sd">        description: the description attribute</span>
+<span class="sd">        columns: the columns attribute</span>
+<span class="sd">        meta: the meta attribute</span>
+<span class="sd">        docs: the docs attribute</span>
+<span class="sd">        patch_path: the patch_path attribute</span>
+<span class="sd">        compiled_path: the compiled_path attribute</span>
+<span class="sd">        build_path: the build_path attribute</span>
+<span class="sd">        deferred: the deferred attribute</span>
+<span class="sd">        unrendered_config: the unrendered_config attribute</span>
+<span class="sd">        created_at: the created_at attribute</span>
+<span class="sd">        config_call_dict: the config_call_dict attribute</span>
+<span class="sd">        compiled_sql: the compiled_sql attribute</span>
+<span class="sd">        extra_ctes_injected: the extra_ctes_injected attribute</span>
+<span class="sd">        extra_ctes: the extra_ctes attribute</span>
+<span class="sd">        relation_name: the relation_name attribute</span>
+<span class="sd">        column_name: the column_name attribute</span>
+<span class="sd">        file_key_name: the file_key_name attribute</span>
+<span class="sd">    """</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">compiled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">original_file_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"snapshot"</span><span class="p">]</span>
+    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"</span></div>
+
+
+<div class="viewcode-block" id="ManifestSeedNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestSeedNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSeedNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An object representing a seed in the dbt project.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        raw_sql: the raw_sql attribute</span>
+<span class="sd">        compiled: the compiled attribute</span>
+<span class="sd">        database: the database attribute</span>
+<span class="sd">        db_schema: the db_schema attribute</span>
+<span class="sd">        fqn: the fqn attribute</span>
+<span class="sd">        unique_id: the unique_id attribute</span>
+<span class="sd">        package_name: the package_name attribute</span>
+<span class="sd">        root_path: the root_path attribute</span>
+<span class="sd">        path: the path attribute</span>
+<span class="sd">        original_file_path: the original_file_path attribute</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        resource_type: the resource_type attribute</span>
+<span class="sd">        alias: the alias attribute</span>
+<span class="sd">        checksum: the checksum attribute</span>
+<span class="sd">        config: the config attribute</span>
+<span class="sd">        tags: the tags attribute</span>
+<span class="sd">        refs: the refs attribute</span>
+<span class="sd">        sources: the sources attribute</span>
+<span class="sd">        depends_on: the depends_on attribute</span>
+<span class="sd">        description: the description attribute</span>
+<span class="sd">        columns: the columns attribute</span>
+<span class="sd">        meta: the meta attribute</span>
+<span class="sd">        docs: the docs attribute</span>
+<span class="sd">        patch_path: the patch_path attribute</span>
+<span class="sd">        compiled_path: the compiled_path attribute</span>
+<span class="sd">        build_path: the build_path attribute</span>
+<span class="sd">        deferred: the deferred attribute</span>
+<span class="sd">        unrendered_config: the unrendered_config attribute</span>
+<span class="sd">        created_at: the created_at attribute</span>
+<span class="sd">        config_call_dict: the config_call_dict attribute</span>
+<span class="sd">        compiled_sql: the compiled_sql attribute</span>
+<span class="sd">        extra_ctes_injected: the extra_ctes_injected attribute</span>
+<span class="sd">        extra_ctes: the extra_ctes attribute</span>
+<span class="sd">        relation_name: the relation_name attribute</span>
+<span class="sd">        column_name: the column_name attribute</span>
+<span class="sd">        file_key_name: the file_key_name attribute</span>
+<span class="sd">    """</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">compiled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">original_file_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"seed"</span><span class="p">]</span>
+    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.nodes['seed.poffertjes_shop.shoppes']"</span></div>
+
+
+<span class="n">ManifestModelUnion</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
+    <span class="n">ManifestModelNode</span><span class="p">,</span>
+    <span class="n">ManifestTestNode</span><span class="p">,</span>
+    <span class="n">ManifestOperationNode</span><span class="p">,</span>
+    <span class="n">ManifestSnapshotNode</span><span class="p">,</span>
+    <span class="n">ManifestSeedNode</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">ManifestNode</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+    <span class="n">ManifestModelUnion</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">"resource_type"</span><span class="p">)</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="ManifestModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel">[docs]</a><span class="k">class</span> <span class="nc">ManifestModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The manifest artifact.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: reference to the Manifest's metadata</span>
+<span class="sd">        nodes: reference to the Manifest's nodes</span>
+<span class="sd">        sources: reference to the Manifest's sources</span>
+<span class="sd">        macros: reference to the Manifest's macros</span>
+<span class="sd">        docs: reference to the Manifest's docs</span>
+<span class="sd">        exposures: reference to the Manifest's exposures</span>
+<span class="sd">        metrics: reference to the Manifest's metrics</span>
+<span class="sd">        selectors: reference to the Manifest's selectors</span>
+<span class="sd">        disabled: reference to the Manifest's disabled</span>
+<span class="sd">        parent_map: reference to the Manifest's parent_map</span>
+<span class="sd">        child_map: reference to the Manifest's child_map</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest"</span>
+
+    <span class="c1"># TODO: improve the way we validate minimum dbt versions. We should</span>
+    <span class="c1"># probably do the validation on every artifact.</span>
+    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">validator</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_metadata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span> <span class="o">&lt;</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"1.0"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">Unsupported dbt version: </span><span class="si">{</span><span class="n">metadata</span><span class="o">.</span><span class="n">dbt_version</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="s2">"</span><span class="se">\n\t</span><span class="s2">Please upgrade dbt to at least v1.0 to use artefacts"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">metadata</span><span class="p">:</span> <span class="s2">"Metadata"</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ManifestNode</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"ManifestSourceNode"</span><span class="p">]</span>
+    <span class="n">macros</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"ManifestMacroNode"</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"ManifestDocsNode"</span><span class="p">]</span>
+    <span class="n">exposures</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"ManifestExposureNode"</span><span class="p">]</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"ManifestMetricNode"</span><span class="p">]</span>
+    <span class="n">selectors</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">disabled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">parent_map</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="s2">"ManifestNodeReference"</span><span class="p">]]]</span>
+    <span class="n">child_map</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="s2">"ManifestNodeReference"</span><span class="p">]]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">resources</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">macros</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">exposures</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="ManifestModel.iter_resource_type"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestModel.iter_resource_type">[docs]</a>    <span class="k">def</span> <span class="nf">iter_resource_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">:</span>
+        <span class="sd">"""Iterate over all resources of a specific type</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource_type (str): The type of resource, eg 'model', 'source',</span>
+<span class="sd">                                 'exposure', etc.</span>
+<span class="sd">            package_name (str): nly return resources from the specified dbt package.</span>
+<span class="sd">        """</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">package_name</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">package_name</span> <span class="o">!=</span> <span class="n">package_name</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">resource_type</span> <span class="o">==</span> <span class="n">resource_type</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">v</span></div></div>
+
+
+<div class="viewcode-block" id="RunResultsModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.RunResultsModel">[docs]</a><span class="k">class</span> <span class="nc">RunResultsModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""The run_results artifact.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: The :class:`Metadata` associated with the run, such as when</span>
+<span class="sd">                  the run was generated, the environment variables present</span>
+<span class="sd">                  during the run, etc.</span>
+<span class="sd">        results: A list of :class:`RunResultNode` s, which contain details</span>
+<span class="sd">                 about how long each node ran, whether it was successful, etc.</span>
+<span class="sd">        elapsed_time: The total duration of the run</span>
+<span class="sd">        args: The arguments used when at the start of the run or build</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"run_results"</span>
+
+    <span class="n">metadata</span><span class="p">:</span> <span class="s2">"Metadata"</span>
+    <span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">"RunResultNode"</span><span class="p">]</span>
+    <span class="n">elapsed_time</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CatalogModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogModel">[docs]</a><span class="k">class</span> <span class="nc">CatalogModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""The catalog artifact.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: The metadata attribute of the catalog</span>
+<span class="sd">        nodes: The nodes attribute of the catalog</span>
+<span class="sd">        sources: The sources attribute of the catalog</span>
+<span class="sd">        errors: The errors attribute of the catalog</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"catalog"</span>
+
+    <span class="n">metadata</span><span class="p">:</span> <span class="s2">"Metadata"</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"CatalogNode"</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"CatalogNode"</span><span class="p">]</span>
+    <span class="n">errors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="SourcesModel"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourcesModel">[docs]</a><span class="k">class</span> <span class="nc">SourcesModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""The sources artifact.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        metadata: The metadata attribute</span>
+<span class="sd">        results: The results attribute</span>
+<span class="sd">        elapsed_time: The elapsed_time attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources"</span>
+
+    <span class="n">metadata</span><span class="p">:</span> <span class="s2">"Metadata"</span>
+    <span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">"SourcesFreshnessResult"</span><span class="p">]</span>
+    <span class="n">elapsed_time</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+<div class="viewcode-block" id="Metadata"><a class="viewcode-back" href="../../reference.html#artefacts.models.Metadata">[docs]</a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Data about the context in which the artifact was generated.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        generated_at: The generated_at attribute</span>
+<span class="sd">        invocation_id: The invocation_id attribute</span>
+<span class="sd">        env: The env attribute</span>
+<span class="sd">        project_id: The project_id attribute</span>
+<span class="sd">        user_id: The user_id attribute</span>
+<span class="sd">        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute</span>
+<span class="sd">        adapter_type: The adapter_type attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.metadata"</span>
+
+    <span class="n">dbt_schema_version_raw</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">dbt_version_raw</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">generated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
+    <span class="n">invocation_id</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span>
+    <span class="n">env</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">project_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">send_anonymous_usage_stats</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">adapter_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"dbt_version_raw"</span><span class="p">:</span> <span class="s2">"dbt_version"</span><span class="p">,</span>
+            <span class="s2">"dbt_schema_version_raw"</span><span class="p">:</span> <span class="s2">"dbt_schema_version"</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dbt_schema_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">"""The artifact's schema version.</span>
+
+<span class="sd">        See https://schemas.getdbt.com for details.</span>
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_schema_version_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dbt_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">"""The dbt version that generated the artifact."""</span>
+
+        <span class="k">return</span> <span class="n">packaging</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbt_version_raw</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Quoting"><a class="viewcode-back" href="../../reference.html#artefacts.models.Quoting">[docs]</a><span class="k">class</span> <span class="nc">Quoting</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Details about quoting requirements for database objects</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        database: Whether to quote the "database" component of an object path</span>
+<span class="sd">        identifier: Whether to quote the "identifier" component of an object path</span>
+<span class="sd">        db_schema: Whether to quote the "db_schema" component of an object path</span>
+<span class="sd">        column: Whether to quote the "column" component of an object path</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'</span>
+
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">identifier</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">db_schema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">column</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
         <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="ExternalPartition"><a class="viewcode-back" href="../../reference.html#artefacts.models.ExternalPartition">[docs]</a><span class="k">class</span> <span class="nc">ExternalPartition</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Object representing a partition on an external table</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        description: The description attribute</span>
+<span class="sd">        data_type: The data_type attribute</span>
+<span class="sd">        meta: The meta attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events']"</span>
+        <span class="s2">".external.partitions[0]"</span>
+    <span class="p">)</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">data_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ExternalTable"><a class="viewcode-back" href="../../reference.html#artefacts.models.ExternalTable">[docs]</a><span class="k">class</span> <span class="nc">ExternalTable</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Object representing an external table</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        location: The location attribute</span>
+<span class="sd">        file_format: The file_format attribute</span>
+<span class="sd">        row_format: The row_format attribute</span>
+<span class="sd">        tbl_properties: The tbl_properties attribute</span>
+<span class="sd">        partitions: The partitions attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.external_events'].external"</span>
+    <span class="p">)</span>
+
+    <span class="n">location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">file_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">row_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">tbl_properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">partitions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">ExternalPartition</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="ColumnInfo"><a class="viewcode-back" href="../../reference.html#artefacts.models.ColumnInfo">[docs]</a><span class="k">class</span> <span class="nc">ColumnInfo</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Column details of a documented model</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name: The name attribute</span>
+<span class="sd">        description: The description attribute</span>
+<span class="sd">        meta: The meta attribute</span>
+<span class="sd">        data_type: The data_type attribute</span>
+<span class="sd">        quote: The quote attribute</span>
+<span class="sd">        tags: The tags attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"</span>
+    <span class="p">)</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">data_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">quote</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="TimingResult"><a class="viewcode-back" href="../../reference.html#artefacts.models.TimingResult">[docs]</a><span class="k">class</span> <span class="nc">TimingResult</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Timing details from running the node.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name: the name attribute</span>
+<span class="sd">        started_at: the started_at attribute</span>
+<span class="sd">        completed_at: the completed_at attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources.results[0].timing[0]"</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">started_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
+    <span class="n">completed_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SourceConfig"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourceConfig">[docs]</a><span class="k">class</span> <span class="nc">SourceConfig</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""An object containing details about a source's config</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        enabled: Whether the source is enabled</span>
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].config"</span>
+
+    <span class="n">enabled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Time"><a class="viewcode-back" href="../../reference.html#artefacts.models.Time">[docs]</a><span class="k">class</span> <span class="nc">Time</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""An object representing a time interval, used for example when</span>
+<span class="sd">    configuring a source freshness check</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        period: The length of the time interval, eg days, hours, seconds</span>
+<span class="sd">        count: The number of periods associed with the time interval</span>
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"</span>
+    <span class="p">)</span>
+
+    <span class="n">count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="FreshnessThreshold"><a class="viewcode-back" href="../../reference.html#artefacts.models.FreshnessThreshold">[docs]</a><span class="k">class</span> <span class="nc">FreshnessThreshold</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Details of the criteria used when checking a source's freshness</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        warn_after: The freshness criteria after which a freshness check will</span>
+<span class="sd">                    raise a warning.</span>
+<span class="sd">        error_after: The freshness criteria after which a freshness check will</span>
+<span class="sd">                     raise an error.</span>
+<span class="sd">        filter: A SQL statement used to filter the table when running a</span>
+<span class="sd">                freshness check.</span>
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products'].freshness"</span>
+
+    <span class="n">warn_after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Time</span><span class="p">]</span>
+    <span class="n">error_after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Time</span><span class="p">]</span>
+    <span class="nb">filter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SourcesFreshnessResult"><a class="viewcode-back" href="../../reference.html#artefacts.models.SourcesFreshnessResult">[docs]</a><span class="k">class</span> <span class="nc">SourcesFreshnessResult</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Result details from checking the freshness of a source.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+<span class="sd">        status: The status attribute</span>
+<span class="sd">        error: The error attribute</span>
+<span class="sd">        max_loaded_at: The max_loaded_at attribute</span>
+<span class="sd">        snapshotted_at: The snapshotted_at attribute</span>
+<span class="sd">        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute</span>
+<span class="sd">        criteria: The criteria attribute</span>
+<span class="sd">        adapter_response: The adapter_response attribute</span>
+<span class="sd">        timing: The timing attribute</span>
+<span class="sd">        thread_id: The thread_id attribute</span>
+<span class="sd">        execution_time: The execution_time attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"sources.results[0]"</span>
+
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">max_loaded_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">snapshotted_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">max_loaded_at_time_ago_in_s</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">criteria</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FreshnessThreshold</span><span class="p">]</span>
+    <span class="n">adapter_response</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">timing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]]</span>
+    <span class="n">thread_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">execution_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="RunResultNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.RunResultNode">[docs]</a><span class="k">class</span> <span class="nc">RunResultNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""Details about the results of running a specific model, test, etc.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        status: The status attribute</span>
+<span class="sd">        timing: The timing attribute</span>
+<span class="sd">        thread_id: The thread_id attribute</span>
+<span class="sd">        execution_time: The execution_time attribute</span>
+<span class="sd">        adapter_response: The adapter_response attribute</span>
+<span class="sd">        message: The message attribute</span>
+<span class="sd">        failures: The failures attribute</span>
+<span class="sd">        unique_id: The unique_id attribute</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"run_results.results[0]"</span>
+
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">timing</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TimingResult</span><span class="p">]</span>
+    <span class="n">thread_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">execution_time</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">adapter_response</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">failures</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
 <div class="viewcode-block" id="ManifestNodeReference"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestNodeReference">[docs]</a><span class="k">class</span> <span class="nc">ManifestNodeReference</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">):</span>
@@ -765,7 +1105,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">manifest_artifact</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="ManifestSourceNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestSourceNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSourceNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ManifestSourceNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestSourceNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestSourceNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about a Source node.</span>
 
 <span class="sd">    Attributes:</span>
@@ -802,8 +1142,8 @@
 
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.sources['source.poffertjes_shop.raw.products']"</span>
 
-    <span class="n">fqn</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">database</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
@@ -816,20 +1156,20 @@
     <span class="n">loader</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">quoting</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Quoting</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">loaded_at_field</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">freshness</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">FreshnessThreshold</span><span class="p">]</span>
-    <span class="n">external</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">ExternalTable</span><span class="p">]</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">columns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ColumnInfo</span><span class="p">]]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">source_meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">SourceConfig</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">patch_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">relation_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="n">quoting</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Quoting</span><span class="p">]</span>
+    <span class="n">loaded_at_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">freshness</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FreshnessThreshold</span><span class="p">]</span>
+    <span class="n">external</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ExternalTable</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ColumnInfo</span><span class="p">]]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">source_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SourceConfig</span><span class="p">]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
@@ -837,7 +1177,7 @@
         <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="MacroArgument"><a class="viewcode-back" href="../../reference.html#artefacts.models.MacroArgument">[docs]</a><span class="k">class</span> <span class="nc">MacroArgument</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="MacroArgument"><a class="viewcode-back" href="../../reference.html#artefacts.models.MacroArgument">[docs]</a><span class="k">class</span> <span class="nc">MacroArgument</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about the arguments of a macro</span>
 
 <span class="sd">    Attributes:</span>
@@ -852,11 +1192,11 @@
     <span class="p">)</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="ManifestMacroNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestMacroNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMacroNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ManifestMacroNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestMacroNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMacroNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about a Macro node.</span>
 
 <span class="sd">    Attributes:</span>
@@ -891,17 +1231,17 @@
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">macro_sql</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
-    <span class="n">patch_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">docs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
-    <span class="n">arguments</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">MacroArgument</span><span class="p">]]</span>
-    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span></div>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">MacroArgument</span><span class="p">]]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span></div>
 
 
-<div class="viewcode-block" id="ManifestDocsNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestDocsNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestDocsNode</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ManifestDocsNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestDocsNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestDocsNode</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about a Docs node.</span>
 
 <span class="sd">    Attributes:</span>
@@ -921,12 +1261,12 @@
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">original_filepath</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">original_filepath</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">block_contents</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
-<div class="viewcode-block" id="ManifestExposureNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestExposureNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestExposureNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ManifestExposureNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestExposureNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestExposureNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about an Exposure node.</span>
 
 <span class="sd">    Attributes:</span>
@@ -954,7 +1294,7 @@
 
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'manifest.exposures["exposure.poffertjes_shop.revenue_summary"]'</span>
 
-    <span class="n">fqn</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
@@ -963,22 +1303,22 @@
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">owner</span><span class="p">:</span> <span class="nb">dict</span>
-    <span class="n">resource_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">maturity</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">url</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">refs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]]</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">maturity</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">]]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">list</span><span class="p">]]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span> <span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="MetricFilter"><a class="viewcode-back" href="../../reference.html#artefacts.models.MetricFilter">[docs]</a><span class="k">class</span> <span class="nc">MetricFilter</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="MetricFilter"><a class="viewcode-back" href="../../reference.html#artefacts.models.MetricFilter">[docs]</a><span class="k">class</span> <span class="nc">MetricFilter</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about a Metric filter.</span>
 
 <span class="sd">    Attributes:</span>
@@ -994,7 +1334,7 @@
     <span class="n">value</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
-<div class="viewcode-block" id="ManifestMetricNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestMetricNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMetricNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ManifestMetricNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestMetricNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestMetricNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about a Metric node.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1026,7 +1366,7 @@
 
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.metrics['metric.poffertjes_shop.revenue']"</span>
 
-    <span class="n">fqn</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
@@ -1037,24 +1377,24 @@
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">filters</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">MetricFilter</span><span class="p">]</span>
-    <span class="n">time_grains</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">dimensions</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">sql</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">timestamp</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">resource_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">meta</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">sources</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">refs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">depends_on</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">filters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">MetricFilter</span><span class="p">]</span>
+    <span class="n">time_grains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">dimensions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="CatalogNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNode">[docs]</a><span class="k">class</span> <span class="nc">CatalogNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="CatalogNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNode">[docs]</a><span class="k">class</span> <span class="nc">CatalogNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about a Catalog node.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1067,13 +1407,13 @@
 
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'catalog.nodes["model.poffertjes_shop.customers"]'</span>
 
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">CatalogNodeMetadata</span>
-    <span class="n">columns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNodeColumn</span><span class="p">]</span>
-    <span class="n">stats</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CatalogNodeStats</span><span class="p">]</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="s2">"CatalogNodeMetadata"</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"CatalogNodeColumn"</span><span class="p">]</span>
+    <span class="n">stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">"CatalogNodeStats"</span><span class="p">]</span>
     <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
-<div class="viewcode-block" id="CatalogNodeMetadata"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeMetadata</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="CatalogNodeMetadata"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeMetadata</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Metadata details about a CatalogNode.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1091,15 +1431,15 @@
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">database</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">comment</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">owner</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
+    <span class="n">owner</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span> <span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="CatalogNodeColumn"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeColumn">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeColumn</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="CatalogNodeColumn"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeColumn">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeColumn</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Details about the columns in a CatalogNode.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1117,13 +1457,13 @@
     <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">comment</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
 
     <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"node_type"</span><span class="p">:</span> <span class="s2">"type"</span><span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="CatalogNodeStats"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeStats">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeStats</span><span class="p">(</span><span class="n">Deserializer</span><span class="p">):</span>
+<div class="viewcode-block" id="CatalogNodeStats"><a class="viewcode-back" href="../../reference.html#artefacts.models.CatalogNodeStats">[docs]</a><span class="k">class</span> <span class="nc">CatalogNodeStats</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">"""Statics about a CatalogNode.</span>
 
 <span class="sd">    Attributes:</span>
@@ -1136,11 +1476,11 @@
 
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s1">'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'</span>
 
-    <span class="n">description</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">include</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">value</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span></div>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">'str'</span><span class="p">]</span></div>
 
 
 <span class="n">RunResultsModel</span><span class="o">.</span><span class="n">update_forward_refs</span><span class="p">()</span>
