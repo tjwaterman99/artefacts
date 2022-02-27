@@ -8,7 +8,6 @@ import packaging.version
 from artefacts.mixins import ArtifactNodeReader
 
 
-# TODO: rename this to `Model`
 class Model(pydantic.BaseModel):
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
