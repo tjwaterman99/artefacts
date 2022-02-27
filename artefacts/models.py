@@ -55,41 +55,51 @@ class Deserializer(pydantic.BaseModel):
 
 
 class ManifestModelNode(ArtifactNodeReader, Deserializer):
-    
+
     _test_path = "manifest.nodes['model.poffertjes_shop.products']"
-    
-    resource_type: Literal['model']
+
+    resource_type: Literal["model"]
 
     class Config:
-        extra = 'allow'
+        extra = "allow"
 
 
 class ManifestTestNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal['test']
+    resource_type: Literal["test"]
+
+    _test_path = "manifest.nodes['test.poffertjes_shop.not_null_base_"\
+                 "customers_customer_id.59e00b9238']"
 
     class Config:
-        extra = 'allow'
+        extra = "allow"
 
 
 class ManifestOperationNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal['operation']
+    resource_type: Literal["operation"]
+
+    _test_path = "manifest.nodes['operation.poffertjes_shop.poffertjes_"\
+                 "shop-on-run-start-0']"
 
     class Config:
-        extra = 'allow'
+        extra = "allow"
 
 
 class ManifestSnapshotNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal['snapshot']
+    resource_type: Literal["snapshot"]
+
+    _test_path = "manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"
 
     class Config:
-        extra = 'allow'
+        extra = "allow"
 
 
 class ManifestSeedNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal['seed']
+    resource_type: Literal["seed"]
+
+    _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
 
     class Config:
-        extra = 'allow'
+        extra = "allow"
 
 
 ManifestModelUnion = Union[
@@ -97,10 +107,12 @@ ManifestModelUnion = Union[
     ManifestTestNode,
     ManifestOperationNode,
     ManifestSnapshotNode,
-    ManifestSeedNode
+    ManifestSeedNode,
 ]
 
-ManifestNode = Annotated[ManifestModelUnion, pydantic.Field(discriminator='resource_type')]
+ManifestNode = Annotated[
+    ManifestModelUnion, pydantic.Field(discriminator="resource_type")
+]
 
 
 class ManifestModel(Deserializer):
@@ -320,8 +332,10 @@ class ExternalPartition(Deserializer):
 
     """
 
-    _test_path = ("manifest.sources['source.poffertjes_shop.raw.external_events']"
-                  ".external.partitions[0]")
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.external_events']"
+        ".external.partitions[0]"
+    )
 
     name: typing.Union[str, None]
     description: typing.Union[str, None]
