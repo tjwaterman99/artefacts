@@ -80,7 +80,7 @@ class ManifestModelNode(ArtifactNodeReader, Model):
 
     raw_sql: str
     compiled: Optional['str']
-    database: Union[str, None]
+    database: Optional['str']
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -92,26 +92,26 @@ class ManifestModelNode(ArtifactNodeReader, Model):
     resource_type: Literal["model"]
     alias: str
     checksum: dict
-    config: Union[None, Dict]
-    tags: Union[None, List[str]]
-    refs: Union[None, List]
-    sources: Union[None, List[List[str]]]
-    depends_on: Union[None, Dict]
-    description: Union[None, str]
-    columns: Union[None, Dict]
-    meta: Union[None, Dict]
-    docs: Union[None, Dict]
-    patch_path: Union[None, str]
-    compiled_path: Union[None, str]
-    build_path: Union[None, str]
-    deferred: Union[None, bool]
-    unrendered_config: Union[None, dict]
-    created_at: Union[None, float]
-    config_call_dict: Union[None, dict]
-    compiled_sql: Union[None, str]
-    extra_ctes_injected: Union[None, bool]
-    extra_ctes: Union[None, List[Dict]]
-    relation_name: Union[None, str]
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
 
     _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
@@ -165,8 +165,8 @@ class ManifestTestNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Union[str, None]
-    database: Union[str, None]
+    compiled: Optional['str']
+    database: Optional['str']
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -178,26 +178,26 @@ class ManifestTestNode(ArtifactNodeReader, Model):
     resource_type: Literal["test"]
     alias: str
     checksum: dict
-    config: Union[None, Dict]
-    tags: Union[None, List[str]]
-    refs: Union[None, List]
-    sources: Union[None, List[List[str]]]
-    depends_on: Union[None, Dict]
-    description: Union[None, str]
-    columns: Union[None, Dict]
-    meta: Union[None, Dict]
-    docs: Union[None, Dict]
-    patch_path: Union[None, str]
-    compiled_path: Union[None, str]
-    build_path: Union[None, str]
-    deferred: Union[None, bool]
-    unrendered_config: Union[None, dict]
-    created_at: Union[None, float]
-    config_call_dict: Union[None, dict]
-    compiled_sql: Union[None, str]
-    extra_ctes_injected: Union[None, bool]
-    extra_ctes: Union[None, List[Dict]]
-    relation_name: Union[None, str]
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
 
     _test_path = (
         "manifest.nodes['test.poffertjes_shop.not_null_base_"
@@ -254,8 +254,8 @@ class ManifestOperationNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Union[str, None]
-    database: Union[str, None]
+    compiled: Optional['str']
+    database: Optional['str']
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -267,26 +267,26 @@ class ManifestOperationNode(ArtifactNodeReader, Model):
     resource_type: Literal["operation"]
     alias: str
     checksum: dict
-    config: Union[None, Dict]
-    tags: Union[None, List[str]]
-    refs: Union[None, List]
-    sources: Union[None, List[List[str]]]
-    depends_on: Union[None, Dict]
-    description: Union[None, str]
-    columns: Union[None, Dict]
-    meta: Union[None, Dict]
-    docs: Union[None, Dict]
-    patch_path: Union[None, str]
-    compiled_path: Union[None, str]
-    build_path: Union[None, str]
-    deferred: Union[None, bool]
-    unrendered_config: Union[None, dict]
-    created_at: Union[None, float]
-    config_call_dict: Union[None, dict]
-    compiled_sql: Union[None, str]
-    extra_ctes_injected: Union[None, bool]
-    extra_ctes: Union[None, List[Dict]]
-    relation_name: Union[None, str]
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
 
     _test_path = (
         "manifest.nodes['operation.poffertjes_shop.poffertjes_" "shop-on-run-start-0']"
@@ -342,8 +342,8 @@ class ManifestSnapshotNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Union[str, None]
-    database: Union[str, None]
+    compiled: Optional['str']
+    database: Optional['str']
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -355,26 +355,26 @@ class ManifestSnapshotNode(ArtifactNodeReader, Model):
     resource_type: Literal["snapshot"]
     alias: str
     checksum: dict
-    config: Union[None, Dict]
-    tags: Union[None, List[str]]
-    refs: Union[None, List]
-    sources: Union[None, List[List[str]]]
-    depends_on: Union[None, Dict]
-    description: Union[None, str]
-    columns: Union[None, Dict]
-    meta: Union[None, Dict]
-    docs: Union[None, Dict]
-    patch_path: Union[None, str]
-    compiled_path: Union[None, str]
-    build_path: Union[None, str]
-    deferred: Union[None, bool]
-    unrendered_config: Union[None, dict]
-    created_at: Union[None, float]
-    config_call_dict: Union[None, dict]
-    compiled_sql: Union[None, str]
-    extra_ctes_injected: Union[None, bool]
-    extra_ctes: Union[None, List[Dict]]
-    relation_name: Union[None, str]
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
 
     _test_path = "manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"
 
@@ -428,8 +428,8 @@ class ManifestSeedNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Union[str, None]
-    database: Union[str, None]
+    compiled: Optional['str']
+    database: Optional['str']
     db_schema: str
     fqn: List[str]
     unique_id: str
@@ -441,26 +441,26 @@ class ManifestSeedNode(ArtifactNodeReader, Model):
     resource_type: Literal["seed"]
     alias: str
     checksum: dict
-    config: Union[None, Dict]
-    tags: Union[None, List[str]]
-    refs: Union[None, List]
-    sources: Union[None, List[List[str]]]
-    depends_on: Union[None, Dict]
-    description: Union[None, str]
-    columns: Union[None, Dict]
-    meta: Union[None, Dict]
-    docs: Union[None, Dict]
-    patch_path: Union[None, str]
-    compiled_path: Union[None, str]
-    build_path: Union[None, str]
-    deferred: Union[None, bool]
-    unrendered_config: Union[None, dict]
-    created_at: Union[None, float]
-    config_call_dict: Union[None, dict]
-    compiled_sql: Union[None, str]
-    extra_ctes_injected: Union[None, bool]
-    extra_ctes: Union[None, List[Dict]]
-    relation_name: Union[None, str]
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
 
     _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
 
@@ -521,9 +521,9 @@ class ManifestModel(Model):
     exposures: Dict[str, "ManifestExposureNode"]
     metrics: Dict[str, "ManifestMetricNode"]
     selectors: dict
-    disabled: Union[dict, None]
-    parent_map: Union[Dict[str, List["ManifestNodeReference"]], None]
-    child_map: Union[Dict[str, List["ManifestNodeReference"]], None]
+    disabled: Optional[Dict]
+    parent_map: Optional[Dict[str, List["ManifestNodeReference"]]]
+    child_map: Optional[Dict[str, List["ManifestNodeReference"]]]
 
     @property
     def resources(self) -> Dict:
@@ -572,7 +572,7 @@ class RunResultsModel(Model):
     metadata: "Metadata"
     results: List["RunResultNode"]
     elapsed_time: float
-    args: Union[dict, None]
+    args: Optional[Dict]
 
 
 class CatalogModel(Model):
@@ -591,7 +591,7 @@ class CatalogModel(Model):
     metadata: "Metadata"
     nodes: Dict[str, "CatalogNode"]
     sources: Dict[str, "CatalogNode"]
-    errors: Union[List[str], None]
+    errors: Optional[List[str]]
 
 
 class SourcesModel(Model):
@@ -632,10 +632,10 @@ class Metadata(Model):
     generated_at: datetime.datetime
     invocation_id: uuid.UUID
     env: dict
-    project_id: Union[str, None]
-    user_id: Union[str, None]
-    send_anonymous_usage_stats: Union[bool, None]
-    adapter_type: Union[str, None]
+    project_id: Optional['str']
+    user_id: Optional['str']
+    send_anonymous_usage_stats: Optional[bool]
+    adapter_type: Optional['str']
 
     class Config:
         fields = {
@@ -672,10 +672,10 @@ class Quoting(Model):
 
     _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
 
-    database: Union[bool, None]
-    identifier: Union[bool, None]
-    db_schema: Union[bool, None]
-    column: Union[bool, None]
+    database: Optional[bool]
+    identifier: Optional[bool]
+    db_schema: Optional[bool]
+    column: Optional[bool]
 
     class Config:
         fields = {
@@ -700,10 +700,10 @@ class ExternalPartition(Model):
         ".external.partitions[0]"
     )
 
-    name: Union[str, None]
-    description: Union[str, None]
-    data_type: Union[str, None]
-    meta: Union[dict, None]
+    name: Optional['str']
+    description: Optional['str']
+    data_type: Optional['str']
+    meta: Optional[Dict]
 
 
 class ExternalTable(Model):
@@ -723,11 +723,11 @@ class ExternalTable(Model):
         "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
     )
 
-    location: Union[None, str]
-    file_format: Union[None, str]
-    row_format: Union[None, str]
-    tbl_properties: Union[None, str]
-    partitions: Union[List[ExternalPartition], None]
+    location: Optional[str]
+    file_format: Optional[str]
+    row_format: Optional[str]
+    tbl_properties: Optional[str]
+    partitions: Optional[List[ExternalPartition]]
 
 
 class ColumnInfo(Model):
@@ -748,11 +748,11 @@ class ColumnInfo(Model):
     )
 
     name: str
-    description: Union[None, str]
-    meta: Union[None, dict]
-    data_type: Union[None, str]
-    quote: Union[None, bool]
-    tags: Union[None, List[str]]
+    description: Optional[str]
+    meta: Optional[dict]
+    data_type: Optional[str]
+    quote: Optional[bool]
+    tags: Optional[List[str]]
 
 
 class TimingResult(Model):
@@ -768,8 +768,8 @@ class TimingResult(Model):
     _test_path = "sources.results[0].timing[0]"
 
     name: str
-    started_at: Union[None, datetime.datetime]
-    completed_at: Union[None, datetime.datetime]
+    started_at: Optional[datetime.datetime]
+    completed_at: Optional[datetime.datetime]
 
 
 class SourceConfig(Model):
@@ -781,7 +781,7 @@ class SourceConfig(Model):
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].config"
 
-    enabled: Union[bool, None]
+    enabled: Optional[bool]
 
 
 class Time(Model):
@@ -797,8 +797,8 @@ class Time(Model):
         "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
     )
 
-    count: Union[int, None]
-    period: Union[str, None]
+    count: Optional[int]
+    period: Optional['str']
 
 
 class FreshnessThreshold(Model):
@@ -815,9 +815,9 @@ class FreshnessThreshold(Model):
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness"
 
-    warn_after: Union[Time, None]
-    error_after: Union[Time, None]
-    filter: Union[str, None]
+    warn_after: Optional[Time]
+    error_after: Optional[Time]
+    filter: Optional['str']
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, Model):
@@ -842,15 +842,15 @@ class SourcesFreshnessResult(ArtifactNodeReader, Model):
 
     unique_id: str
     status: str
-    error: Union[None, str]
-    max_loaded_at: Union[None, str]
-    snapshotted_at: Union[None, str]
-    max_loaded_at_time_ago_in_s: Union[None, float]
-    criteria: Union[None, FreshnessThreshold]
-    adapter_response: Union[None, dict]
-    timing: Union[None, List[TimingResult]]
-    thread_id: Union[None, str]
-    execution_time: Union[None, float]
+    error: Optional[str]
+    max_loaded_at: Optional[str]
+    snapshotted_at: Optional[str]
+    max_loaded_at_time_ago_in_s: Optional[float]
+    criteria: Optional[FreshnessThreshold]
+    adapter_response: Optional[dict]
+    timing: Optional[List[TimingResult]]
+    thread_id: Optional[str]
+    execution_time: Optional[float]
 
 
 class RunResultNode(ArtifactNodeReader, Model):
@@ -875,8 +875,8 @@ class RunResultNode(ArtifactNodeReader, Model):
     thread_id: str
     execution_time: float
     adapter_response: dict
-    message: Union[str, None]
-    failures: Union[int, None]
+    message: Optional['str']
+    failures: Optional[int]
     unique_id: str
 
 
@@ -952,7 +952,7 @@ class ManifestSourceNode(ArtifactNodeReader, Model):
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products']"
 
     fqn: List[str]
-    database: Union[None, str]
+    database: Optional[str]
     db_schema: str
     unique_id: str
     package_name: str
@@ -965,20 +965,20 @@ class ManifestSourceNode(ArtifactNodeReader, Model):
     loader: str
     identifier: str
     resource_type: str
-    quoting: Union[Quoting, None]
-    loaded_at_field: Union[None, str]
-    freshness: Union[None, FreshnessThreshold]
-    external: Union[None, ExternalTable]
-    description: Union[None, str]
-    columns: Union[None, Dict[str, ColumnInfo]]
-    meta: Union[dict, None]
-    source_meta: Union[dict, None]
-    tags: Union[List[str], None]
-    config: Union[SourceConfig, None]
-    patch_path: Union[str, None]
-    unrendered_config: Union[dict, None]
-    relation_name: Union[str, None]
-    created_at: Union[None, float]
+    quoting: Optional[Quoting]
+    loaded_at_field: Optional[str]
+    freshness: Optional[FreshnessThreshold]
+    external: Optional[ExternalTable]
+    description: Optional[str]
+    columns: Optional[Dict[str, ColumnInfo]]
+    meta: Optional[Dict]
+    source_meta: Optional[Dict]
+    tags: Optional[List[str]]
+    config: Optional[SourceConfig]
+    patch_path: Optional['str']
+    unrendered_config: Optional[Dict]
+    relation_name: Optional['str']
+    created_at: Optional[float]
 
     class Config:
         fields = {
@@ -1001,8 +1001,8 @@ class MacroArgument(Model):
     )
 
     name: str
-    type: Union[str, None]
-    description: Union[str, None]
+    type: Optional['str']
+    description: Optional['str']
 
 
 class ManifestMacroNode(ArtifactNodeReader, Model):
@@ -1040,14 +1040,14 @@ class ManifestMacroNode(ArtifactNodeReader, Model):
     name: str
     macro_sql: str
     resource_type: str
-    tags: Union[None, List[str]]
-    patch_path: Union[None, str]
-    created_at: Union[None, float]
-    description: Union[None, str]
-    meta: Union[None, dict]
-    docs: Union[None, dict]
-    arguments: Union[None, List[MacroArgument]]
-    depends_on: Union[None, Dict[str, List[str]]]
+    tags: Optional[List[str]]
+    patch_path: Optional[str]
+    created_at: Optional[float]
+    description: Optional[str]
+    meta: Optional[dict]
+    docs: Optional[dict]
+    arguments: Optional[List[MacroArgument]]
+    depends_on: Optional[Dict[str, List[str]]]
 
 
 class ManifestDocsNode(Model):
@@ -1070,7 +1070,7 @@ class ManifestDocsNode(Model):
     package_name: str
     root_path: str
     path: str
-    original_filepath: Union[str, None]
+    original_filepath: Optional['str']
     name: str
     block_contents: str
 
@@ -1112,16 +1112,16 @@ class ManifestExposureNode(ArtifactNodeReader, Model):
     name: str
     node_type: str
     owner: dict
-    resource_type: Union[str, None]
-    description: Union[str, None]
-    maturity: Union[str, None]
-    meta: Union[dict, None]
-    tags: Union[List[str], None]
-    url: Union[str, None]
-    refs: Union[List[list], None]
-    sources: Union[List[list], None]
-    created_at: Union[float, None]
-    depends_on: Union[None, Dict[str, list]]
+    resource_type: Optional['str']
+    description: Optional['str']
+    maturity: Optional['str']
+    meta: Optional[Dict]
+    tags: Optional[List[str]]
+    url: Optional['str']
+    refs: Optional[List[list]]
+    sources: Optional[List[list]]
+    created_at: Optional[float]
+    depends_on: Optional[Dict[str, list]]
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
@@ -1189,15 +1189,15 @@ class ManifestMetricNode(ArtifactNodeReader, Model):
     filters: List[MetricFilter]
     time_grains: List[str]
     dimensions: List[str]
-    sql: Union[str, None]
-    timestamp: Union[str, None]
-    resource_type: Union[str, None]
-    meta: Union[dict, None]
-    tags: Union[list, None]
-    sources: Union[List[str], None]
-    refs: Union[List[List[str]], None]
-    created_at: Union[float, None]
-    depends_on: Union[dict, None]
+    sql: Optional['str']
+    timestamp: Optional['str']
+    resource_type: Optional['str']
+    meta: Optional[Dict]
+    tags: Optional[list]
+    sources: Optional[List[str]]
+    refs: Optional[List[List[str]]]
+    created_at: Optional[float]
+    depends_on: Optional[Dict]
 
     class Config:
         fields = {"node_type": "type"}
@@ -1240,9 +1240,9 @@ class CatalogNodeMetadata(Model):
     node_type: str
     db_schema: str
     name: str
-    database: Union[str, None]
-    comment: Union[str, None]
-    owner: Union[str, None]
+    database: Optional['str']
+    comment: Optional['str']
+    owner: Optional['str']
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
@@ -1266,7 +1266,7 @@ class CatalogNodeColumn(Model):
     node_type: str
     index: int
     name: str
-    comment: Union[str, None]
+    comment: Optional['str']
 
     class Config:
         fields = {"node_type": "type"}
@@ -1285,11 +1285,11 @@ class CatalogNodeStats(Model):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'
 
-    description: Union[str, None]
+    description: Optional['str']
     id: str
     include: bool
     label: str
-    value: Union[str, None]
+    value: Optional['str']
 
 
 RunResultsModel.update_forward_refs()
