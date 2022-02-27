@@ -1,28 +1,11 @@
 import datetime
 import uuid
 import pydantic
-import typing
-from typing import Union, Literal
+from typing import Union, Literal, ForwardRef, Dict, List, Iterable
 from typing_extensions import Annotated
 import packaging.version
 
 from artefacts.mixins import ArtifactNodeReader
-
-
-CatalogNodeColumn = typing.ForwardRef("CatalogNodeColumn")
-CatalogNodeMetadata = typing.ForwardRef("CatalogNodeMetadata")
-CatalogNodeStats = typing.ForwardRef("CatalogNodeStats")
-ManifestModel = typing.ForwardRef("ManifestModel")
-ManifestDocsNode = typing.ForwardRef("ManifestDocsNode")
-ManifestExposureNode = typing.ForwardRef("ManifestExposureNode")
-ManifestMacroNode = typing.ForwardRef("ManifestMacroNode")
-ManifestMetricNode = typing.ForwardRef("ManifestMetricNode")
-ManifestNodeReference = typing.ForwardRef("ManifestNodeReference")
-ManifestSourceNode = typing.ForwardRef("ManifestSourceNode")
-Metadata = typing.ForwardRef("Metadata")
-ResultTiming = typing.ForwardRef("ResultTiming")
-RunResultNode = typing.ForwardRef("RunResultNode")
-RunResultsModel = typing.ForwardRef("RunResultsModel")
 
 
 # TODO: rename this to `Model`
@@ -49,13 +32,89 @@ class Deserializer(pydantic.BaseModel):
 
 
 class ManifestModelNode(ArtifactNodeReader, Deserializer):
+    """
+    An object representing a model in the dbt project.
 
-    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
-
-    resource_type: Literal["model"]
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
 
     class Config:
-        extra = "allow"
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Union[str, None]
+    database: Union[str, None]
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["model"]
+    alias: str
+    checksum: dict
+    config: Union[None, Dict]
+    tags: Union[None, List[str]]
+    refs: Union[None, List]
+    sources: Union[None, List[List[str]]]
+    depends_on: Union[None, Dict]
+    description: Union[None, str]
+    columns: Union[None, Dict]
+    meta: Union[None, Dict]
+    docs: Union[None, Dict]
+    patch_path: Union[None, str]
+    compiled_path: Union[None, str]
+    build_path: Union[None, str]
+    deferred: Union[None, bool]
+    unrendered_config: Union[None, dict]
+    created_at: Union[None, float]
+    config_call_dict: Union[None, dict]
+    compiled_sql: Union[None, str]
+    extra_ctes_injected: Union[None, bool]
+    extra_ctes: Union[None, List[Dict]]
+    relation_name: Union[None, str]
+
+    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
 
 class ManifestTestNode(ArtifactNodeReader, Deserializer):
@@ -144,20 +203,20 @@ class ManifestModel(Deserializer):
     class Config:
         arbitrary_types_allowed = True
 
-    metadata: Metadata
-    nodes: typing.Dict[str, ManifestNode]
-    sources: typing.Dict[str, ManifestSourceNode]
-    macros: typing.Dict[str, ManifestMacroNode]
-    docs: typing.Dict[str, ManifestDocsNode]
-    exposures: typing.Dict[str, ManifestExposureNode]
-    metrics: typing.Dict[str, ManifestMetricNode]
+    metadata: 'Metadata'
+    nodes: Dict[str, ManifestNode]
+    sources: Dict[str, 'ManifestSourceNode']
+    macros: Dict[str, 'ManifestMacroNode']
+    docs: Dict[str, 'ManifestDocsNode']
+    exposures: Dict[str, 'ManifestExposureNode']
+    metrics: Dict[str, 'ManifestMetricNode']
     selectors: dict
-    disabled: typing.Union[dict, None]
-    parent_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
-    child_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
+    disabled: Union[dict, None]
+    parent_map: Union[Dict[str, List['ManifestNodeReference']], None]
+    child_map: Union[Dict[str, List['ManifestNodeReference']], None]
 
     @property
-    def resources(self) -> typing.Dict:
+    def resources(self) -> Dict:
         return {
             **self.nodes,
             **self.sources,
@@ -168,7 +227,7 @@ class ManifestModel(Deserializer):
 
     def iter_resource_type(
         self, resource_type: str, package_name: str = None
-    ) -> typing.Iterable:
+    ) -> Iterable:
         """Iterate over all resources of a specific type
 
         Args:
@@ -200,10 +259,10 @@ class RunResultsModel(Deserializer):
 
     _test_path = "run_results"
 
-    metadata: Metadata
-    results: typing.List[RunResultNode]
+    metadata: 'Metadata'
+    results: List['RunResultNode']
     elapsed_time: float
-    args: typing.Union[dict, None]
+    args: Union[dict, None]
 
 
 class CatalogModel(Deserializer):
@@ -219,10 +278,10 @@ class CatalogModel(Deserializer):
 
     _test_path = "catalog"
 
-    metadata: Metadata
-    nodes: typing.Dict[str, 'CatalogNode']
-    sources: typing.Dict[str, 'CatalogNode']
-    errors: typing.Union[typing.List[str], None]
+    metadata: 'Metadata'
+    nodes: Dict[str, 'CatalogNode']
+    sources: Dict[str, 'CatalogNode']
+    errors: Union[List[str], None]
 
 
 class SourcesModel(Deserializer):
@@ -237,8 +296,8 @@ class SourcesModel(Deserializer):
 
     _test_path = "sources"
 
-    metadata: Metadata
-    results: typing.List['SourcesFreshnessResult']
+    metadata: 'Metadata'
+    results: List['SourcesFreshnessResult']
     elapsed_time: float
 
 
@@ -263,10 +322,10 @@ class Metadata(Deserializer):
     generated_at: datetime.datetime
     invocation_id: uuid.UUID
     env: dict
-    project_id: typing.Union[str, None]
-    user_id: typing.Union[str, None]
-    send_anonymous_usage_stats: typing.Union[bool, None]
-    adapter_type: typing.Union[str, None]
+    project_id: Union[str, None]
+    user_id: Union[str, None]
+    send_anonymous_usage_stats: Union[bool, None]
+    adapter_type: Union[str, None]
 
     class Config:
         fields = {
@@ -303,10 +362,10 @@ class Quoting(Deserializer):
 
     _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
 
-    database: typing.Union[bool, None]
-    identifier: typing.Union[bool, None]
-    db_schema: typing.Union[bool, None]
-    column: typing.Union[bool, None]
+    database: Union[bool, None]
+    identifier: Union[bool, None]
+    db_schema: Union[bool, None]
+    column: Union[bool, None]
 
     class Config:
         fields = {
@@ -331,10 +390,10 @@ class ExternalPartition(Deserializer):
         ".external.partitions[0]"
     )
 
-    name: typing.Union[str, None]
-    description: typing.Union[str, None]
-    data_type: typing.Union[str, None]
-    meta: typing.Union[dict, None]
+    name: Union[str, None]
+    description: Union[str, None]
+    data_type: Union[str, None]
+    meta: Union[dict, None]
 
 
 class ExternalTable(Deserializer):
@@ -354,11 +413,11 @@ class ExternalTable(Deserializer):
         "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
     )
 
-    location: typing.Union[None, str]
-    file_format: typing.Union[None, str]
-    row_format: typing.Union[None, str]
-    tbl_properties: typing.Union[None, str]
-    partitions: typing.Union[typing.List[ExternalPartition], None]
+    location: Union[None, str]
+    file_format: Union[None, str]
+    row_format: Union[None, str]
+    tbl_properties: Union[None, str]
+    partitions: Union[List[ExternalPartition], None]
 
 
 class ColumnInfo(Deserializer):
@@ -379,11 +438,11 @@ class ColumnInfo(Deserializer):
     )
 
     name: str
-    description: typing.Union[None, str]
-    meta: typing.Union[None, dict]
-    data_type: typing.Union[None, str]
-    quote: typing.Union[None, bool]
-    tags: typing.Union[None, typing.List[str]]
+    description: Union[None, str]
+    meta: Union[None, dict]
+    data_type: Union[None, str]
+    quote: Union[None, bool]
+    tags: Union[None, List[str]]
 
 
 class TimingResult(Deserializer):
@@ -399,8 +458,8 @@ class TimingResult(Deserializer):
     _test_path = "sources.results[0].timing[0]"
 
     name: str
-    started_at: typing.Union[None, datetime.datetime]
-    completed_at: typing.Union[None, datetime.datetime]
+    started_at: Union[None, datetime.datetime]
+    completed_at: Union[None, datetime.datetime]
 
 
 class SourceConfig(Deserializer):
@@ -412,7 +471,7 @@ class SourceConfig(Deserializer):
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].config"
 
-    enabled: typing.Union[bool, None]
+    enabled: Union[bool, None]
 
 
 class Time(Deserializer):
@@ -428,8 +487,8 @@ class Time(Deserializer):
         "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
     )
 
-    count: typing.Union[int, None]
-    period: typing.Union[str, None]
+    count: Union[int, None]
+    period: Union[str, None]
 
 
 class FreshnessThreshold(Deserializer):
@@ -446,9 +505,9 @@ class FreshnessThreshold(Deserializer):
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness"
 
-    warn_after: typing.Union[Time, None]
-    error_after: typing.Union[Time, None]
-    filter: typing.Union[str, None]
+    warn_after: Union[Time, None]
+    error_after: Union[Time, None]
+    filter: Union[str, None]
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
@@ -473,15 +532,15 @@ class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
 
     unique_id: str
     status: str
-    error: typing.Union[None, str]
-    max_loaded_at: typing.Union[None, str]
-    snapshotted_at: typing.Union[None, str]
-    max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: typing.Union[None, FreshnessThreshold]
-    adapter_response: typing.Union[None, dict]
-    timing: typing.Union[None, typing.List[TimingResult]]
-    thread_id: typing.Union[None, str]
-    execution_time: typing.Union[None, float]
+    error: Union[None, str]
+    max_loaded_at: Union[None, str]
+    snapshotted_at: Union[None, str]
+    max_loaded_at_time_ago_in_s: Union[None, float]
+    criteria: Union[None, FreshnessThreshold]
+    adapter_response: Union[None, dict]
+    timing: Union[None, List[TimingResult]]
+    thread_id: Union[None, str]
+    execution_time: Union[None, float]
 
 
 class RunResultNode(ArtifactNodeReader, Deserializer):
@@ -502,100 +561,13 @@ class RunResultNode(ArtifactNodeReader, Deserializer):
     _test_path = "run_results.results[0]"
 
     status: str
-    timing: typing.List[TimingResult]
+    timing: List[TimingResult]
     thread_id: str
     execution_time: float
     adapter_response: dict
-    message: typing.Union[str, None]
-    failures: typing.Union[int, None]
+    message: Union[str, None]
+    failures: Union[int, None]
     unique_id: str
-
-
-class ManifestNode(ArtifactNodeReader, Deserializer):
-    """
-    An object representing a node, such as a model, test, or macro.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
-
-    """
-
-    raw_sql: str
-    compiled: typing.Union[str, None]
-    database: typing.Union[str, None]
-    db_schema: str
-    fqn: typing.List[str]
-    unique_id: str
-    package_name: str
-    root_path: str
-    path: str
-    original_file_path: str
-    name: str
-    resource_type: str
-    alias: str
-    checksum: dict
-    config: typing.Union[None, typing.Dict]
-    tags: typing.Union[None, typing.List[str]]
-    refs: typing.Union[None, typing.List]
-    sources: typing.Union[None, typing.List[typing.List[str]]]
-    depends_on: typing.Union[None, typing.Dict]
-    description: typing.Union[None, str]
-    columns: typing.Union[None, typing.Dict]
-    meta: typing.Union[None, typing.Dict]
-    docs: typing.Union[None, typing.Dict]
-    patch_path: typing.Union[None, str]
-    compiled_path: typing.Union[None, str]
-    build_path: typing.Union[None, str]
-    deferred: typing.Union[None, bool]
-    unrendered_config: typing.Union[None, dict]
-    created_at: typing.Union[None, float]
-    config_call_dict: typing.Union[None, dict]
-    compiled_sql: typing.Union[None, str]
-    extra_ctes_injected: typing.Union[None, bool]
-    extra_ctes: typing.Union[None, typing.List[typing.Dict]]
-    relation_name: typing.Union[None, str]
-    column_name: typing.Union[None, str]  # only for generic test node
-    file_key_name: typing.Union[None, str]  # only for generic test node
-
-    class Config:
-        fields = {
-            "db_schema": "schema",
-        }
 
 
 class ManifestNodeReference(ArtifactNodeReader):
@@ -669,8 +641,8 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products']"
 
-    fqn: typing.List[str]
-    database: typing.Union[None, str]
+    fqn: List[str]
+    database: Union[None, str]
     db_schema: str
     unique_id: str
     package_name: str
@@ -683,20 +655,20 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
     loader: str
     identifier: str
     resource_type: str
-    quoting: typing.Union[Quoting, None]
-    loaded_at_field: typing.Union[None, str]
-    freshness: typing.Union[None, FreshnessThreshold]
-    external: typing.Union[None, ExternalTable]
-    description: typing.Union[None, str]
-    columns: typing.Union[None, typing.Dict[str, ColumnInfo]]
-    meta: typing.Union[dict, None]
-    source_meta: typing.Union[dict, None]
-    tags: typing.Union[typing.List[str], None]
-    config: typing.Union[SourceConfig, None]
-    patch_path: typing.Union[str, None]
-    unrendered_config: typing.Union[dict, None]
-    relation_name: typing.Union[str, None]
-    created_at: typing.Union[None, float]
+    quoting: Union[Quoting, None]
+    loaded_at_field: Union[None, str]
+    freshness: Union[None, FreshnessThreshold]
+    external: Union[None, ExternalTable]
+    description: Union[None, str]
+    columns: Union[None, Dict[str, ColumnInfo]]
+    meta: Union[dict, None]
+    source_meta: Union[dict, None]
+    tags: Union[List[str], None]
+    config: Union[SourceConfig, None]
+    patch_path: Union[str, None]
+    unrendered_config: Union[dict, None]
+    relation_name: Union[str, None]
+    created_at: Union[None, float]
 
     class Config:
         fields = {
@@ -719,8 +691,8 @@ class MacroArgument(Deserializer):
     )
 
     name: str
-    type: typing.Union[str, None]
-    description: typing.Union[str, None]
+    type: Union[str, None]
+    description: Union[str, None]
 
 
 class ManifestMacroNode(ArtifactNodeReader, Deserializer):
@@ -758,14 +730,14 @@ class ManifestMacroNode(ArtifactNodeReader, Deserializer):
     name: str
     macro_sql: str
     resource_type: str
-    tags: typing.Union[None, typing.List[str]]
-    patch_path: typing.Union[None, str]
-    created_at: typing.Union[None, float]
-    description: typing.Union[None, str]
-    meta: typing.Union[None, dict]
-    docs: typing.Union[None, dict]
-    arguments: typing.Union[None, typing.List[MacroArgument]]
-    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
+    tags: Union[None, List[str]]
+    patch_path: Union[None, str]
+    created_at: Union[None, float]
+    description: Union[None, str]
+    meta: Union[None, dict]
+    docs: Union[None, dict]
+    arguments: Union[None, List[MacroArgument]]
+    depends_on: Union[None, Dict[str, List[str]]]
 
 
 class ManifestDocsNode(Deserializer):
@@ -788,7 +760,7 @@ class ManifestDocsNode(Deserializer):
     package_name: str
     root_path: str
     path: str
-    original_filepath: typing.Union[str, None]
+    original_filepath: Union[str, None]
     name: str
     block_contents: str
 
@@ -821,7 +793,7 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
 
     _test_path = 'manifest.exposures["exposure.poffertjes_shop.revenue_summary"]'
 
-    fqn: typing.List[str]
+    fqn: List[str]
     unique_id: str
     package_name: str
     root_path: str
@@ -830,16 +802,16 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
     name: str
     node_type: str
     owner: dict
-    resource_type: typing.Union[str, None]
-    description: typing.Union[str, None]
-    maturity: typing.Union[str, None]
-    meta: typing.Union[dict, None]
-    tags: typing.Union[typing.List[str], None]
-    url: typing.Union[str, None]
-    refs: typing.Union[typing.List[list], None]
-    sources: typing.Union[typing.List[list], None]
-    created_at: typing.Union[float, None]
-    depends_on: typing.Union[None, typing.Dict[str, list]]
+    resource_type: Union[str, None]
+    description: Union[str, None]
+    maturity: Union[str, None]
+    meta: Union[dict, None]
+    tags: Union[List[str], None]
+    url: Union[str, None]
+    refs: Union[List[list], None]
+    sources: Union[List[list], None]
+    created_at: Union[float, None]
+    depends_on: Union[None, Dict[str, list]]
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
@@ -893,7 +865,7 @@ class ManifestMetricNode(ArtifactNodeReader, Deserializer):
 
     _test_path = "manifest.metrics['metric.poffertjes_shop.revenue']"
 
-    fqn: typing.List[str]
+    fqn: List[str]
     unique_id: str
     package_name: str
     root_path: str
@@ -904,18 +876,18 @@ class ManifestMetricNode(ArtifactNodeReader, Deserializer):
     description: str
     label: str
     node_type: str
-    filters: typing.List[MetricFilter]
-    time_grains: typing.List[str]
-    dimensions: typing.List[str]
-    sql: typing.Union[str, None]
-    timestamp: typing.Union[str, None]
-    resource_type: typing.Union[str, None]
-    meta: typing.Union[dict, None]
-    tags: typing.Union[list, None]
-    sources: typing.Union[typing.List[str], None]
-    refs: typing.Union[typing.List[typing.List[str]], None]
-    created_at: typing.Union[float, None]
-    depends_on: typing.Union[dict, None]
+    filters: List[MetricFilter]
+    time_grains: List[str]
+    dimensions: List[str]
+    sql: Union[str, None]
+    timestamp: Union[str, None]
+    resource_type: Union[str, None]
+    meta: Union[dict, None]
+    tags: Union[list, None]
+    sources: Union[List[str], None]
+    refs: Union[List[List[str]], None]
+    created_at: Union[float, None]
+    depends_on: Union[dict, None]
 
     class Config:
         fields = {"node_type": "type"}
@@ -934,9 +906,9 @@ class CatalogNode(ArtifactNodeReader, Deserializer):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"]'
 
-    metadata: CatalogNodeMetadata
-    columns: typing.Dict[str, CatalogNodeColumn]
-    stats: typing.Dict[str, CatalogNodeStats]
+    metadata: 'CatalogNodeMetadata'
+    columns: Dict[str, 'CatalogNodeColumn']
+    stats: Dict[str, 'CatalogNodeStats']
     unique_id: str
 
 
@@ -958,9 +930,9 @@ class CatalogNodeMetadata(Deserializer):
     node_type: str
     db_schema: str
     name: str
-    database: typing.Union[str, None]
-    comment: typing.Union[str, None]
-    owner: typing.Union[str, None]
+    database: Union[str, None]
+    comment: Union[str, None]
+    owner: Union[str, None]
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
@@ -984,7 +956,7 @@ class CatalogNodeColumn(Deserializer):
     node_type: str
     index: int
     name: str
-    comment: typing.Union[str, None]
+    comment: Union[str, None]
 
     class Config:
         fields = {"node_type": "type"}
@@ -1003,11 +975,11 @@ class CatalogNodeStats(Deserializer):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'
 
-    description: typing.Union[str, None]
+    description: Union[str, None]
     id: str
     include: bool
     label: str
-    value: typing.Union[str, None]
+    value: Union[str, None]
 
 
 RunResultsModel.update_forward_refs()
