@@ -1,7 +1,7 @@
 import datetime
 import uuid
 import pydantic
-from typing import Union, Literal, ForwardRef, Dict, List, Iterable
+from typing import Union, Literal, Dict, List, Iterable
 from typing_extensions import Annotated
 import packaging.version
 
@@ -118,41 +118,352 @@ class ManifestModelNode(ArtifactNodeReader, Deserializer):
 
 
 class ManifestTestNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal["test"]
+    """
+    An object representing a test in the dbt project.
 
-    _test_path = "manifest.nodes['test.poffertjes_shop.not_null_base_"\
-                 "customers_customer_id.59e00b9238']"
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
 
     class Config:
-        extra = "allow"
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Union[str, None]
+    database: Union[str, None]
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["test"]
+    alias: str
+    checksum: dict
+    config: Union[None, Dict]
+    tags: Union[None, List[str]]
+    refs: Union[None, List]
+    sources: Union[None, List[List[str]]]
+    depends_on: Union[None, Dict]
+    description: Union[None, str]
+    columns: Union[None, Dict]
+    meta: Union[None, Dict]
+    docs: Union[None, Dict]
+    patch_path: Union[None, str]
+    compiled_path: Union[None, str]
+    build_path: Union[None, str]
+    deferred: Union[None, bool]
+    unrendered_config: Union[None, dict]
+    created_at: Union[None, float]
+    config_call_dict: Union[None, dict]
+    compiled_sql: Union[None, str]
+    extra_ctes_injected: Union[None, bool]
+    extra_ctes: Union[None, List[Dict]]
+    relation_name: Union[None, str]
+
+    _test_path = (
+        "manifest.nodes['test.poffertjes_shop.not_null_base_"
+        "customers_customer_id.59e00b9238']"
+    )
 
 
 class ManifestOperationNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal["operation"]
+    """
+    An object representing a macro operation in the dbt project.
 
-    _test_path = "manifest.nodes['operation.poffertjes_shop.poffertjes_"\
-                 "shop-on-run-start-0']"
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
 
     class Config:
-        extra = "allow"
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Union[str, None]
+    database: Union[str, None]
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["operation"]
+    alias: str
+    checksum: dict
+    config: Union[None, Dict]
+    tags: Union[None, List[str]]
+    refs: Union[None, List]
+    sources: Union[None, List[List[str]]]
+    depends_on: Union[None, Dict]
+    description: Union[None, str]
+    columns: Union[None, Dict]
+    meta: Union[None, Dict]
+    docs: Union[None, Dict]
+    patch_path: Union[None, str]
+    compiled_path: Union[None, str]
+    build_path: Union[None, str]
+    deferred: Union[None, bool]
+    unrendered_config: Union[None, dict]
+    created_at: Union[None, float]
+    config_call_dict: Union[None, dict]
+    compiled_sql: Union[None, str]
+    extra_ctes_injected: Union[None, bool]
+    extra_ctes: Union[None, List[Dict]]
+    relation_name: Union[None, str]
+
+    _test_path = (
+        "manifest.nodes['operation.poffertjes_shop.poffertjes_" "shop-on-run-start-0']"
+    )
 
 
 class ManifestSnapshotNode(ArtifactNodeReader, Deserializer):
+    """
+    An object representing a snapshot in the dbt project.
+
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
+
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Union[str, None]
+    database: Union[str, None]
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
     resource_type: Literal["snapshot"]
+    alias: str
+    checksum: dict
+    config: Union[None, Dict]
+    tags: Union[None, List[str]]
+    refs: Union[None, List]
+    sources: Union[None, List[List[str]]]
+    depends_on: Union[None, Dict]
+    description: Union[None, str]
+    columns: Union[None, Dict]
+    meta: Union[None, Dict]
+    docs: Union[None, Dict]
+    patch_path: Union[None, str]
+    compiled_path: Union[None, str]
+    build_path: Union[None, str]
+    deferred: Union[None, bool]
+    unrendered_config: Union[None, dict]
+    created_at: Union[None, float]
+    config_call_dict: Union[None, dict]
+    compiled_sql: Union[None, str]
+    extra_ctes_injected: Union[None, bool]
+    extra_ctes: Union[None, List[Dict]]
+    relation_name: Union[None, str]
 
     _test_path = "manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"
 
-    class Config:
-        extra = "allow"
-
 
 class ManifestSeedNode(ArtifactNodeReader, Deserializer):
-    resource_type: Literal["seed"]
+    """
+    An object representing a seed in the dbt project.
 
-    _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
 
     class Config:
-        extra = "allow"
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Union[str, None]
+    database: Union[str, None]
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["seed"]
+    alias: str
+    checksum: dict
+    config: Union[None, Dict]
+    tags: Union[None, List[str]]
+    refs: Union[None, List]
+    sources: Union[None, List[List[str]]]
+    depends_on: Union[None, Dict]
+    description: Union[None, str]
+    columns: Union[None, Dict]
+    meta: Union[None, Dict]
+    docs: Union[None, Dict]
+    patch_path: Union[None, str]
+    compiled_path: Union[None, str]
+    build_path: Union[None, str]
+    deferred: Union[None, bool]
+    unrendered_config: Union[None, dict]
+    created_at: Union[None, float]
+    config_call_dict: Union[None, dict]
+    compiled_sql: Union[None, str]
+    extra_ctes_injected: Union[None, bool]
+    extra_ctes: Union[None, List[Dict]]
+    relation_name: Union[None, str]
+
+    _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
 
 
 ManifestModelUnion = Union[
@@ -203,17 +514,17 @@ class ManifestModel(Deserializer):
     class Config:
         arbitrary_types_allowed = True
 
-    metadata: 'Metadata'
+    metadata: "Metadata"
     nodes: Dict[str, ManifestNode]
-    sources: Dict[str, 'ManifestSourceNode']
-    macros: Dict[str, 'ManifestMacroNode']
-    docs: Dict[str, 'ManifestDocsNode']
-    exposures: Dict[str, 'ManifestExposureNode']
-    metrics: Dict[str, 'ManifestMetricNode']
+    sources: Dict[str, "ManifestSourceNode"]
+    macros: Dict[str, "ManifestMacroNode"]
+    docs: Dict[str, "ManifestDocsNode"]
+    exposures: Dict[str, "ManifestExposureNode"]
+    metrics: Dict[str, "ManifestMetricNode"]
     selectors: dict
     disabled: Union[dict, None]
-    parent_map: Union[Dict[str, List['ManifestNodeReference']], None]
-    child_map: Union[Dict[str, List['ManifestNodeReference']], None]
+    parent_map: Union[Dict[str, List["ManifestNodeReference"]], None]
+    child_map: Union[Dict[str, List["ManifestNodeReference"]], None]
 
     @property
     def resources(self) -> Dict:
@@ -259,8 +570,8 @@ class RunResultsModel(Deserializer):
 
     _test_path = "run_results"
 
-    metadata: 'Metadata'
-    results: List['RunResultNode']
+    metadata: "Metadata"
+    results: List["RunResultNode"]
     elapsed_time: float
     args: Union[dict, None]
 
@@ -278,9 +589,9 @@ class CatalogModel(Deserializer):
 
     _test_path = "catalog"
 
-    metadata: 'Metadata'
-    nodes: Dict[str, 'CatalogNode']
-    sources: Dict[str, 'CatalogNode']
+    metadata: "Metadata"
+    nodes: Dict[str, "CatalogNode"]
+    sources: Dict[str, "CatalogNode"]
     errors: Union[List[str], None]
 
 
@@ -296,8 +607,8 @@ class SourcesModel(Deserializer):
 
     _test_path = "sources"
 
-    metadata: 'Metadata'
-    results: List['SourcesFreshnessResult']
+    metadata: "Metadata"
+    results: List["SourcesFreshnessResult"]
     elapsed_time: float
 
 
@@ -906,9 +1217,9 @@ class CatalogNode(ArtifactNodeReader, Deserializer):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"]'
 
-    metadata: 'CatalogNodeMetadata'
-    columns: Dict[str, 'CatalogNodeColumn']
-    stats: Dict[str, 'CatalogNodeStats']
+    metadata: "CatalogNodeMetadata"
+    columns: Dict[str, "CatalogNodeColumn"]
+    stats: Dict[str, "CatalogNodeStats"]
     unique_id: str
 
 
