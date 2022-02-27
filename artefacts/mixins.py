@@ -7,25 +7,25 @@ if TYPE_CHECKING:
 
 class ArtifactReader:
     @property
-    def run_results_artifact(self) -> 'RunResultsModel':
+    def run_results_artifact(self) -> "RunResultsModel":
         """A reference to the :class:`RunResults` artifact."""
 
         return self.get_artifact("run_results")
 
     @property
-    def manifest_artifact(self) -> 'ManifestModel':
+    def manifest_artifact(self) -> "ManifestModel":
         """A reference to the :class:`Manifest` artifact."""
 
         return self.get_artifact("manifest")
 
     @property
-    def catalog_artifact(self) -> 'CatalogModel':
+    def catalog_artifact(self) -> "CatalogModel":
         """A reference to the :class:`Catalog` artifact."""
 
         return self.get_artifact("catalog")
 
     @property
-    def sources_artifact(self) -> 'SourcesModel':
+    def sources_artifact(self) -> "SourcesModel":
         """A reference to the :class:`Sources` artifact."""
 
         return self.get_artifact("sources")
