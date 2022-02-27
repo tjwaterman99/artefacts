@@ -9,8 +9,6 @@ import packaging.version
 from artefacts.mixins import ArtifactNodeReader
 
 
-CatalogModel = typing.ForwardRef("CatalogModel")
-CatalogNode = typing.ForwardRef("CatalogNode")
 CatalogNodeColumn = typing.ForwardRef("CatalogNodeColumn")
 CatalogNodeMetadata = typing.ForwardRef("CatalogNodeMetadata")
 CatalogNodeStats = typing.ForwardRef("CatalogNodeStats")
@@ -19,16 +17,12 @@ ManifestDocsNode = typing.ForwardRef("ManifestDocsNode")
 ManifestExposureNode = typing.ForwardRef("ManifestExposureNode")
 ManifestMacroNode = typing.ForwardRef("ManifestMacroNode")
 ManifestMetricNode = typing.ForwardRef("ManifestMetricNode")
-ManifestNode = typing.ForwardRef("ManifestNode")
 ManifestNodeReference = typing.ForwardRef("ManifestNodeReference")
 ManifestSourceNode = typing.ForwardRef("ManifestSourceNode")
 Metadata = typing.ForwardRef("Metadata")
 ResultTiming = typing.ForwardRef("ResultTiming")
 RunResultNode = typing.ForwardRef("RunResultNode")
 RunResultsModel = typing.ForwardRef("RunResultsModel")
-SourcesModel = typing.ForwardRef("SourcesModel")
-SourcesFreshnessResult = typing.ForwardRef("SourcesFreshnessResult")
-ModelNode = typing.ForwardRef("ModelNode")
 
 
 # TODO: rename this to `Model`
@@ -226,8 +220,8 @@ class CatalogModel(Deserializer):
     _test_path = "catalog"
 
     metadata: Metadata
-    nodes: typing.Dict[str, CatalogNode]
-    sources: typing.Dict[str, CatalogNode]
+    nodes: typing.Dict[str, 'CatalogNode']
+    sources: typing.Dict[str, 'CatalogNode']
     errors: typing.Union[typing.List[str], None]
 
 
@@ -244,7 +238,7 @@ class SourcesModel(Deserializer):
     _test_path = "sources"
 
     metadata: Metadata
-    results: typing.List[SourcesFreshnessResult]
+    results: typing.List['SourcesFreshnessResult']
     elapsed_time: float
 
 
