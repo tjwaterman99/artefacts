@@ -18,7 +18,7 @@ jobs:
       run: |
         pipx install flake8
     - name: flake8
-      run: poetry run flake8 artefacts/ tests/
+      run:flake8 artefacts/ tests/
 
   black:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
       run: |
         pipx install black
     - name: black
-      run: poetry run black --check artefacts/ tests/
+      run: black --check artefacts/ tests/
 
   mypy:
     runs-on: ubuntu-latest
@@ -49,5 +49,5 @@ jobs:
         pipx install mypy
     - name: mypy
       run: |
-        pipx install myppy
+        pipx install mypy
         mypy -m artefacts --ignore-missing-imports --install-types --non-interactive
