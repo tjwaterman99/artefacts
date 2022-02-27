@@ -20,8 +20,8 @@ def iter_base_models():
         obj = getattr(artefacts.models, name)
         try:
             if (
-                issubclass(obj, artefacts.models.Deserializer)
-                and obj != artefacts.models.Deserializer
+                issubclass(obj, artefacts.models.Model)
+                and obj != artefacts.models.Model
             ):
                 yield obj
         except TypeError:  # Raised when `obj` is not a class

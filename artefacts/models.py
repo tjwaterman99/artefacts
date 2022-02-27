@@ -9,7 +9,7 @@ from artefacts.mixins import ArtifactNodeReader
 
 
 # TODO: rename this to `Model`
-class Deserializer(pydantic.BaseModel):
+class Model(pydantic.BaseModel):
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
 
@@ -31,7 +31,7 @@ class Deserializer(pydantic.BaseModel):
         )
 
 
-class ManifestModelNode(ArtifactNodeReader, Deserializer):
+class ManifestModelNode(ArtifactNodeReader, Model):
     """
     An object representing a model in the dbt project.
 
@@ -117,7 +117,7 @@ class ManifestModelNode(ArtifactNodeReader, Deserializer):
     _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
 
-class ManifestTestNode(ArtifactNodeReader, Deserializer):
+class ManifestTestNode(ArtifactNodeReader, Model):
     """
     An object representing a test in the dbt project.
 
@@ -206,7 +206,7 @@ class ManifestTestNode(ArtifactNodeReader, Deserializer):
     )
 
 
-class ManifestOperationNode(ArtifactNodeReader, Deserializer):
+class ManifestOperationNode(ArtifactNodeReader, Model):
     """
     An object representing a macro operation in the dbt project.
 
@@ -294,7 +294,7 @@ class ManifestOperationNode(ArtifactNodeReader, Deserializer):
     )
 
 
-class ManifestSnapshotNode(ArtifactNodeReader, Deserializer):
+class ManifestSnapshotNode(ArtifactNodeReader, Model):
     """
     An object representing a snapshot in the dbt project.
 
@@ -380,7 +380,7 @@ class ManifestSnapshotNode(ArtifactNodeReader, Deserializer):
     _test_path = "manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"
 
 
-class ManifestSeedNode(ArtifactNodeReader, Deserializer):
+class ManifestSeedNode(ArtifactNodeReader, Model):
     """
     An object representing a seed in the dbt project.
 
@@ -479,7 +479,7 @@ ManifestNode = Annotated[
 ]
 
 
-class ManifestModel(Deserializer):
+class ManifestModel(Model):
     """
     The manifest artifact.
 
@@ -554,7 +554,7 @@ class ManifestModel(Deserializer):
                 yield v
 
 
-class RunResultsModel(Deserializer):
+class RunResultsModel(Model):
     """The run_results artifact.
 
     Attributes:
@@ -576,7 +576,7 @@ class RunResultsModel(Deserializer):
     args: Union[dict, None]
 
 
-class CatalogModel(Deserializer):
+class CatalogModel(Model):
     """The catalog artifact.
 
     Attributes:
@@ -595,7 +595,7 @@ class CatalogModel(Deserializer):
     errors: Union[List[str], None]
 
 
-class SourcesModel(Deserializer):
+class SourcesModel(Model):
     """The sources artifact.
 
     Attributes:
@@ -612,7 +612,7 @@ class SourcesModel(Deserializer):
     elapsed_time: float
 
 
-class Metadata(Deserializer):
+class Metadata(Model):
     """Data about the context in which the artifact was generated.
 
     Attributes:
@@ -660,7 +660,7 @@ class Metadata(Deserializer):
         return packaging.version.Version(self.dbt_version_raw)
 
 
-class Quoting(Deserializer):
+class Quoting(Model):
     """Details about quoting requirements for database objects
 
     Attributes:
@@ -684,7 +684,7 @@ class Quoting(Deserializer):
         }
 
 
-class ExternalPartition(Deserializer):
+class ExternalPartition(Model):
     """
     Object representing a partition on an external table
 
@@ -707,7 +707,7 @@ class ExternalPartition(Deserializer):
     meta: Union[dict, None]
 
 
-class ExternalTable(Deserializer):
+class ExternalTable(Model):
     """
     Object representing an external table
 
@@ -731,7 +731,7 @@ class ExternalTable(Deserializer):
     partitions: Union[List[ExternalPartition], None]
 
 
-class ColumnInfo(Deserializer):
+class ColumnInfo(Model):
     """Column details of a documented model
 
     Attributes:
@@ -756,7 +756,7 @@ class ColumnInfo(Deserializer):
     tags: Union[None, List[str]]
 
 
-class TimingResult(Deserializer):
+class TimingResult(Model):
     """Timing details from running the node.
 
     Attributes:
@@ -773,7 +773,7 @@ class TimingResult(Deserializer):
     completed_at: Union[None, datetime.datetime]
 
 
-class SourceConfig(Deserializer):
+class SourceConfig(Model):
     """An object containing details about a source's config
 
     Attributes:
@@ -785,7 +785,7 @@ class SourceConfig(Deserializer):
     enabled: Union[bool, None]
 
 
-class Time(Deserializer):
+class Time(Model):
     """An object representing a time interval, used for example when
     configuring a source freshness check
 
@@ -802,7 +802,7 @@ class Time(Deserializer):
     period: Union[str, None]
 
 
-class FreshnessThreshold(Deserializer):
+class FreshnessThreshold(Model):
     """Details of the criteria used when checking a source's freshness
 
     Attributes:
@@ -821,7 +821,7 @@ class FreshnessThreshold(Deserializer):
     filter: Union[str, None]
 
 
-class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
+class SourcesFreshnessResult(ArtifactNodeReader, Model):
     """Result details from checking the freshness of a source.
 
     Attributes:
@@ -854,7 +854,7 @@ class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
     execution_time: Union[None, float]
 
 
-class RunResultNode(ArtifactNodeReader, Deserializer):
+class RunResultNode(ArtifactNodeReader, Model):
     """Details about the results of running a specific model, test, etc.
 
     Attributes:
@@ -915,7 +915,7 @@ class ManifestNodeReference(ArtifactNodeReader):
         return self.manifest_artifact.resources[self.unique_id]
 
 
-class ManifestSourceNode(ArtifactNodeReader, Deserializer):
+class ManifestSourceNode(ArtifactNodeReader, Model):
     """Details about a Source node.
 
     Attributes:
@@ -987,7 +987,7 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
         }
 
 
-class MacroArgument(Deserializer):
+class MacroArgument(Model):
     """Details about the arguments of a macro
 
     Attributes:
@@ -1006,7 +1006,7 @@ class MacroArgument(Deserializer):
     description: Union[str, None]
 
 
-class ManifestMacroNode(ArtifactNodeReader, Deserializer):
+class ManifestMacroNode(ArtifactNodeReader, Model):
     """Details about a Macro node.
 
     Attributes:
@@ -1051,7 +1051,7 @@ class ManifestMacroNode(ArtifactNodeReader, Deserializer):
     depends_on: Union[None, Dict[str, List[str]]]
 
 
-class ManifestDocsNode(Deserializer):
+class ManifestDocsNode(Model):
     """Details about a Docs node.
 
     Attributes:
@@ -1076,7 +1076,7 @@ class ManifestDocsNode(Deserializer):
     block_contents: str
 
 
-class ManifestExposureNode(ArtifactNodeReader, Deserializer):
+class ManifestExposureNode(ArtifactNodeReader, Model):
     """Details about an Exposure node.
 
     Attributes:
@@ -1128,7 +1128,7 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
         fields = {"db_schema": "schema", "node_type": "type"}
 
 
-class MetricFilter(Deserializer):
+class MetricFilter(Model):
     """Details about a Metric filter.
 
     Attributes:
@@ -1144,7 +1144,7 @@ class MetricFilter(Deserializer):
     value: str
 
 
-class ManifestMetricNode(ArtifactNodeReader, Deserializer):
+class ManifestMetricNode(ArtifactNodeReader, Model):
     """Details about a Metric node.
 
     Attributes:
@@ -1204,7 +1204,7 @@ class ManifestMetricNode(ArtifactNodeReader, Deserializer):
         fields = {"node_type": "type"}
 
 
-class CatalogNode(ArtifactNodeReader, Deserializer):
+class CatalogNode(ArtifactNodeReader, Model):
     """Details about a Catalog node.
 
     Attributes:
@@ -1223,7 +1223,7 @@ class CatalogNode(ArtifactNodeReader, Deserializer):
     unique_id: str
 
 
-class CatalogNodeMetadata(Deserializer):
+class CatalogNodeMetadata(Model):
     """Metadata details about a CatalogNode.
 
     Attributes:
@@ -1249,7 +1249,7 @@ class CatalogNodeMetadata(Deserializer):
         fields = {"db_schema": "schema", "node_type": "type"}
 
 
-class CatalogNodeColumn(Deserializer):
+class CatalogNodeColumn(Model):
     """Details about the columns in a CatalogNode.
 
     Attributes:
@@ -1273,7 +1273,7 @@ class CatalogNodeColumn(Deserializer):
         fields = {"node_type": "type"}
 
 
-class CatalogNodeStats(Deserializer):
+class CatalogNodeStats(Model):
     """Statics about a CatalogNode.
 
     Attributes:
