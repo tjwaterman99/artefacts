@@ -1,35 +1,14 @@
 import datetime
 import uuid
 import pydantic
-import typing
+from typing import Union, Literal, Dict, List, Iterable, Optional
+from typing_extensions import Annotated
 import packaging.version
 
 from artefacts.mixins import ArtifactNodeReader
 
 
-CatalogModel = typing.ForwardRef("CatalogModel")
-CatalogNode = typing.ForwardRef("CatalogNode")
-CatalogNodeColumn = typing.ForwardRef("CatalogNodeColumn")
-CatalogNodeMetadata = typing.ForwardRef("CatalogNodeMetadata")
-CatalogNodeStats = typing.ForwardRef("CatalogNodeStats")
-ManifestModel = typing.ForwardRef("ManifestModel")
-ManifestDocsNode = typing.ForwardRef("ManifestDocsNode")
-ManifestExposureNode = typing.ForwardRef("ManifestExposureNode")
-ManifestMacroNode = typing.ForwardRef("ManifestMacroNode")
-ManifestMetricNode = typing.ForwardRef("ManifestMetricNode")
-ManifestNode = typing.ForwardRef("ManifestNode")
-ManifestNodeReference = typing.ForwardRef("ManifestNodeReference")
-ManifestSourceNode = typing.ForwardRef("ManifestSourceNode")
-Metadata = typing.ForwardRef("Metadata")
-ResultTiming = typing.ForwardRef("ResultTiming")
-RunResultNode = typing.ForwardRef("RunResultNode")
-RunResultsModel = typing.ForwardRef("RunResultsModel")
-SourcesModel = typing.ForwardRef("SourcesModel")
-SourcesFreshnessResult = typing.ForwardRef("SourcesFreshnessResult")
-
-
-# TODO: rename this to `Model`
-class Deserializer(pydantic.BaseModel):
+class Model(pydantic.BaseModel):
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
 
@@ -51,409 +30,9 @@ class Deserializer(pydantic.BaseModel):
         )
 
 
-class ManifestModel(Deserializer):
+class ManifestModelNode(ArtifactNodeReader, Model):
     """
-    The manifest artifact.
-
-    Attributes:
-        metadata: reference to the Manifest's metadata
-        nodes: reference to the Manifest's nodes
-        sources: reference to the Manifest's sources
-        macros: reference to the Manifest's macros
-        docs: reference to the Manifest's docs
-        exposures: reference to the Manifest's exposures
-        metrics: reference to the Manifest's metrics
-        selectors: reference to the Manifest's selectors
-        disabled: reference to the Manifest's disabled
-        parent_map: reference to the Manifest's parent_map
-        child_map: reference to the Manifest's child_map
-
-    """
-
-    _test_path = "manifest"
-
-    # TODO: improve the way we validate minimum dbt versions. We should
-    # probably do the validation on every artifact.
-    @pydantic.validator("metadata")
-    def validate_metadata(cls, metadata):
-        if metadata.dbt_version < packaging.version.parse("1.0"):
-            raise ValueError(
-                f"\n\tUnsupported dbt version: {metadata.dbt_version}. "
-                "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
-            )
-        return metadata
-
-    class Config:
-        arbitrary_types_allowed = True
-
-    metadata: Metadata
-    nodes: typing.Dict[str, ManifestNode]
-    sources: typing.Dict[str, ManifestSourceNode]
-    macros: typing.Dict[str, ManifestMacroNode]
-    docs: typing.Dict[str, ManifestDocsNode]
-    exposures: typing.Dict[str, ManifestExposureNode]
-    metrics: typing.Dict[str, ManifestMetricNode]
-    selectors: dict
-    disabled: typing.Union[dict, None]
-    parent_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
-    child_map: typing.Union[typing.Dict[str, typing.List[ManifestNodeReference]], None]
-
-    @property
-    def resources(self) -> typing.Dict:
-        return {
-            **self.nodes,
-            **self.sources,
-            **self.macros,
-            **self.exposures,
-            **self.metrics,
-        }
-
-    def iter_resource_type(
-        self, resource_type: str, package_name: str = None
-    ) -> typing.Iterable:
-        """Iterate over all resources of a specific type
-
-        Args:
-            resource_type (str): The type of resource, eg 'model', 'source',
-                                 'exposure', etc.
-            package_name (str): nly return resources from the specified dbt package.
-        """
-
-        for k, v in self.resources.items():
-            if package_name and v.package_name != package_name:
-                continue
-            if v.resource_type == resource_type:
-                yield v
-
-
-class RunResultsModel(Deserializer):
-    """The run_results artifact.
-
-    Attributes:
-        metadata: The :class:`Metadata` associated with the run, such as when
-                  the run was generated, the environment variables present
-                  during the run, etc.
-        results: A list of :class:`RunResultNode` s, which contain details
-                 about how long each node ran, whether it was successful, etc.
-        elapsed_time: The total duration of the run
-        args: The arguments used when at the start of the run or build
-
-    """
-
-    _test_path = "run_results"
-
-    metadata: Metadata
-    results: typing.List[RunResultNode]
-    elapsed_time: float
-    args: typing.Union[dict, None]
-
-
-class CatalogModel(Deserializer):
-    """The catalog artifact.
-
-    Attributes:
-        metadata: The metadata attribute of the catalog
-        nodes: The nodes attribute of the catalog
-        sources: The sources attribute of the catalog
-        errors: The errors attribute of the catalog
-
-    """
-
-    _test_path = "catalog"
-
-    metadata: Metadata
-    nodes: typing.Dict[str, CatalogNode]
-    sources: typing.Dict[str, CatalogNode]
-    errors: typing.Union[typing.List[str], None]
-
-
-class SourcesModel(Deserializer):
-    """The sources artifact.
-
-    Attributes:
-        metadata: The metadata attribute
-        results: The results attribute
-        elapsed_time: The elapsed_time attribute
-
-    """
-
-    _test_path = "sources"
-
-    metadata: Metadata
-    results: typing.List[SourcesFreshnessResult]
-    elapsed_time: float
-
-
-class Metadata(Deserializer):
-    """Data about the context in which the artifact was generated.
-
-    Attributes:
-        generated_at: The generated_at attribute
-        invocation_id: The invocation_id attribute
-        env: The env attribute
-        project_id: The project_id attribute
-        user_id: The user_id attribute
-        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute
-        adapter_type: The adapter_type attribute
-
-    """
-
-    _test_path = "manifest.metadata"
-
-    dbt_schema_version_raw: str
-    dbt_version_raw: str
-    generated_at: datetime.datetime
-    invocation_id: uuid.UUID
-    env: dict
-    project_id: typing.Union[str, None]
-    user_id: typing.Union[str, None]
-    send_anonymous_usage_stats: typing.Union[bool, None]
-    adapter_type: typing.Union[str, None]
-
-    class Config:
-        fields = {
-            "dbt_version_raw": "dbt_version",
-            "dbt_schema_version_raw": "dbt_schema_version",
-        }
-
-    @property
-    def dbt_schema_version(self) -> int:
-        """The artifact's schema version.
-
-        See https://schemas.getdbt.com for details.
-        """
-
-        return int(self.dbt_schema_version_raw.split("/")[-1].split(".")[0][1])
-
-    @property
-    def dbt_version(self) -> str:
-        """The dbt version that generated the artifact."""
-
-        return packaging.version.Version(self.dbt_version_raw)
-
-
-class Quoting(Deserializer):
-    """Details about quoting requirements for database objects
-
-    Attributes:
-        database: Whether to quote the "database" component of an object path
-        identifier: Whether to quote the "identifier" component of an object path
-        db_schema: Whether to quote the "db_schema" component of an object path
-        column: Whether to quote the "column" component of an object path
-
-    """
-
-    _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
-
-    database: typing.Union[bool, None]
-    identifier: typing.Union[bool, None]
-    db_schema: typing.Union[bool, None]
-    column: typing.Union[bool, None]
-
-    class Config:
-        fields = {
-            "db_schema": "schema",
-        }
-
-
-class ExternalPartition(Deserializer):
-    """
-    Object representing a partition on an external table
-
-    Attributes:
-        name: The name attribute
-        description: The description attribute
-        data_type: The data_type attribute
-        meta: The meta attribute
-
-    """
-
-    _test_path = ("manifest.sources['source.poffertjes_shop.raw.external_events']"
-                  ".external.partitions[0]")
-
-    name: typing.Union[str, None]
-    description: typing.Union[str, None]
-    data_type: typing.Union[str, None]
-    meta: typing.Union[dict, None]
-
-
-class ExternalTable(Deserializer):
-    """
-    Object representing an external table
-
-    Attributes:
-        location: The location attribute
-        file_format: The file_format attribute
-        row_format: The row_format attribute
-        tbl_properties: The tbl_properties attribute
-        partitions: The partitions attribute
-
-    """
-
-    _test_path = (
-        "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
-    )
-
-    location: typing.Union[None, str]
-    file_format: typing.Union[None, str]
-    row_format: typing.Union[None, str]
-    tbl_properties: typing.Union[None, str]
-    partitions: typing.Union[typing.List[ExternalPartition], None]
-
-
-class ColumnInfo(Deserializer):
-    """Column details of a documented model
-
-    Attributes:
-        name: The name attribute
-        description: The description attribute
-        meta: The meta attribute
-        data_type: The data_type attribute
-        quote: The quote attribute
-        tags: The tags attribute
-
-    """
-
-    _test_path = (
-        "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
-    )
-
-    name: str
-    description: typing.Union[None, str]
-    meta: typing.Union[None, dict]
-    data_type: typing.Union[None, str]
-    quote: typing.Union[None, bool]
-    tags: typing.Union[None, typing.List[str]]
-
-
-class TimingResult(Deserializer):
-    """Timing details from running the node.
-
-    Attributes:
-        name: the name attribute
-        started_at: the started_at attribute
-        completed_at: the completed_at attribute
-
-    """
-
-    _test_path = "sources.results[0].timing[0]"
-
-    name: str
-    started_at: typing.Union[None, datetime.datetime]
-    completed_at: typing.Union[None, datetime.datetime]
-
-
-class SourceConfig(Deserializer):
-    """An object containing details about a source's config
-
-    Attributes:
-        enabled: Whether the source is enabled
-    """
-
-    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].config"
-
-    enabled: typing.Union[bool, None]
-
-
-class Time(Deserializer):
-    """An object representing a time interval, used for example when
-    configuring a source freshness check
-
-    Attributes:
-        period: The length of the time interval, eg days, hours, seconds
-        count: The number of periods associed with the time interval
-    """
-
-    _test_path = (
-        "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
-    )
-
-    count: typing.Union[int, None]
-    period: typing.Union[str, None]
-
-
-class FreshnessThreshold(Deserializer):
-    """Details of the criteria used when checking a source's freshness
-
-    Attributes:
-        warn_after: The freshness criteria after which a freshness check will
-                    raise a warning.
-        error_after: The freshness criteria after which a freshness check will
-                     raise an error.
-        filter: A SQL statement used to filter the table when running a
-                freshness check.
-    """
-
-    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness"
-
-    warn_after: typing.Union[Time, None]
-    error_after: typing.Union[Time, None]
-    filter: typing.Union[str, None]
-
-
-class SourcesFreshnessResult(ArtifactNodeReader, Deserializer):
-    """Result details from checking the freshness of a source.
-
-    Attributes:
-        unique_id: The unique_id attribute
-        status: The status attribute
-        error: The error attribute
-        max_loaded_at: The max_loaded_at attribute
-        snapshotted_at: The snapshotted_at attribute
-        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute
-        criteria: The criteria attribute
-        adapter_response: The adapter_response attribute
-        timing: The timing attribute
-        thread_id: The thread_id attribute
-        execution_time: The execution_time attribute
-
-    """
-
-    _test_path = "sources.results[0]"
-
-    unique_id: str
-    status: str
-    error: typing.Union[None, str]
-    max_loaded_at: typing.Union[None, str]
-    snapshotted_at: typing.Union[None, str]
-    max_loaded_at_time_ago_in_s: typing.Union[None, float]
-    criteria: typing.Union[None, FreshnessThreshold]
-    adapter_response: typing.Union[None, dict]
-    timing: typing.Union[None, typing.List[TimingResult]]
-    thread_id: typing.Union[None, str]
-    execution_time: typing.Union[None, float]
-
-
-class RunResultNode(ArtifactNodeReader, Deserializer):
-    """Details about the results of running a specific model, test, etc.
-
-    Attributes:
-        status: The status attribute
-        timing: The timing attribute
-        thread_id: The thread_id attribute
-        execution_time: The execution_time attribute
-        adapter_response: The adapter_response attribute
-        message: The message attribute
-        failures: The failures attribute
-        unique_id: The unique_id attribute
-
-    """
-
-    _test_path = "run_results.results[0]"
-
-    status: str
-    timing: typing.List[TimingResult]
-    thread_id: str
-    execution_time: float
-    adapter_response: dict
-    message: typing.Union[str, None]
-    failures: typing.Union[int, None]
-    unique_id: str
-
-
-class ManifestNode(ArtifactNodeReader, Deserializer):
-    """
-    An object representing a node, such as a model, test, or macro.
+    An object representing a model in the dbt project.
 
     Attributes:
         raw_sql: the raw_sql attribute
@@ -492,52 +71,813 @@ class ManifestNode(ArtifactNodeReader, Deserializer):
         relation_name: the relation_name attribute
         column_name: the column_name attribute
         file_key_name: the file_key_name attribute
-
     """
 
-    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
 
     raw_sql: str
-    compiled: typing.Union[str, None]
-    database: typing.Union[str, None]
+    compiled: Optional['str']
+    database: Optional['str']
     db_schema: str
-    fqn: typing.List[str]
+    fqn: List[str]
     unique_id: str
     package_name: str
     root_path: str
     path: str
     original_file_path: str
     name: str
-    resource_type: str
+    resource_type: Literal["model"]
     alias: str
     checksum: dict
-    config: typing.Union[None, typing.Dict]
-    tags: typing.Union[None, typing.List[str]]
-    refs: typing.Union[None, typing.List]
-    sources: typing.Union[None, typing.List[typing.List[str]]]
-    depends_on: typing.Union[None, typing.Dict]
-    description: typing.Union[None, str]
-    columns: typing.Union[None, typing.Dict]
-    meta: typing.Union[None, typing.Dict]
-    docs: typing.Union[None, typing.Dict]
-    patch_path: typing.Union[None, str]
-    compiled_path: typing.Union[None, str]
-    build_path: typing.Union[None, str]
-    deferred: typing.Union[None, bool]
-    unrendered_config: typing.Union[None, dict]
-    created_at: typing.Union[None, float]
-    config_call_dict: typing.Union[None, dict]
-    compiled_sql: typing.Union[None, str]
-    extra_ctes_injected: typing.Union[None, bool]
-    extra_ctes: typing.Union[None, typing.List[typing.Dict]]
-    relation_name: typing.Union[None, str]
-    column_name: typing.Union[None, str]  # only for generic test node
-    file_key_name: typing.Union[None, str]  # only for generic test node
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
+
+    _test_path = "manifest.nodes['model.poffertjes_shop.products']"
+
+
+class ManifestTestNode(ArtifactNodeReader, Model):
+    """
+    An object representing a test in the dbt project.
+
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
 
     class Config:
         fields = {
             "db_schema": "schema",
         }
+
+    raw_sql: str
+    compiled: Optional['str']
+    database: Optional['str']
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["test"]
+    alias: str
+    checksum: dict
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
+
+    _test_path = (
+        "manifest.nodes['test.poffertjes_shop.not_null_base_"
+        "customers_customer_id.59e00b9238']"
+    )
+
+
+class ManifestOperationNode(ArtifactNodeReader, Model):
+    """
+    An object representing a macro operation in the dbt project.
+
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
+
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Optional['str']
+    database: Optional['str']
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["operation"]
+    alias: str
+    checksum: dict
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
+
+    _test_path = (
+        "manifest.nodes['operation.poffertjes_shop.poffertjes_" "shop-on-run-start-0']"
+    )
+
+
+class ManifestSnapshotNode(ArtifactNodeReader, Model):
+    """
+    An object representing a snapshot in the dbt project.
+
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
+
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Optional['str']
+    database: Optional['str']
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["snapshot"]
+    alias: str
+    checksum: dict
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
+
+    _test_path = "manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"
+
+
+class ManifestSeedNode(ArtifactNodeReader, Model):
+    """
+    An object representing a seed in the dbt project.
+
+    Attributes:
+        raw_sql: the raw_sql attribute
+        compiled: the compiled attribute
+        database: the database attribute
+        db_schema: the db_schema attribute
+        fqn: the fqn attribute
+        unique_id: the unique_id attribute
+        package_name: the package_name attribute
+        root_path: the root_path attribute
+        path: the path attribute
+        original_file_path: the original_file_path attribute
+        name: the name attribute
+        resource_type: the resource_type attribute
+        alias: the alias attribute
+        checksum: the checksum attribute
+        config: the config attribute
+        tags: the tags attribute
+        refs: the refs attribute
+        sources: the sources attribute
+        depends_on: the depends_on attribute
+        description: the description attribute
+        columns: the columns attribute
+        meta: the meta attribute
+        docs: the docs attribute
+        patch_path: the patch_path attribute
+        compiled_path: the compiled_path attribute
+        build_path: the build_path attribute
+        deferred: the deferred attribute
+        unrendered_config: the unrendered_config attribute
+        created_at: the created_at attribute
+        config_call_dict: the config_call_dict attribute
+        compiled_sql: the compiled_sql attribute
+        extra_ctes_injected: the extra_ctes_injected attribute
+        extra_ctes: the extra_ctes attribute
+        relation_name: the relation_name attribute
+        column_name: the column_name attribute
+        file_key_name: the file_key_name attribute
+    """
+
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    compiled: Optional['str']
+    database: Optional['str']
+    db_schema: str
+    fqn: List[str]
+    unique_id: str
+    package_name: str
+    root_path: str
+    path: str
+    original_file_path: str
+    name: str
+    resource_type: Literal["seed"]
+    alias: str
+    checksum: dict
+    config: Optional[Dict]
+    tags: Optional[List[str]]
+    refs: Optional[List]
+    sources: Optional[List[List[str]]]
+    depends_on: Optional[Dict]
+    description: Optional[str]
+    columns: Optional[Dict]
+    meta: Optional[Dict]
+    docs: Optional[Dict]
+    patch_path: Optional[str]
+    compiled_path: Optional[str]
+    build_path: Optional[str]
+    deferred: Optional[bool]
+    unrendered_config: Optional[dict]
+    created_at: Optional[float]
+    config_call_dict: Optional[dict]
+    compiled_sql: Optional[str]
+    extra_ctes_injected: Optional[bool]
+    extra_ctes: Optional[List[Dict]]
+    relation_name: Optional[str]
+
+    _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
+
+
+ManifestModelUnion = Union[
+    ManifestModelNode,
+    ManifestTestNode,
+    ManifestOperationNode,
+    ManifestSnapshotNode,
+    ManifestSeedNode,
+]
+
+ManifestNode = Annotated[
+    ManifestModelUnion, pydantic.Field(discriminator="resource_type")
+]
+
+
+class ManifestModel(Model):
+    """
+    The manifest artifact.
+
+    Attributes:
+        metadata: reference to the Manifest's metadata
+        nodes: reference to the Manifest's nodes
+        sources: reference to the Manifest's sources
+        macros: reference to the Manifest's macros
+        docs: reference to the Manifest's docs
+        exposures: reference to the Manifest's exposures
+        metrics: reference to the Manifest's metrics
+        selectors: reference to the Manifest's selectors
+        disabled: reference to the Manifest's disabled
+        parent_map: reference to the Manifest's parent_map
+        child_map: reference to the Manifest's child_map
+
+    """
+
+    _test_path = "manifest"
+
+    # TODO: improve the way we validate minimum dbt versions. We should
+    # probably do the validation on every artifact.
+    @pydantic.validator("metadata")
+    def validate_metadata(cls, metadata):
+        if metadata.dbt_version < packaging.version.parse("1.0"):
+            raise ValueError(
+                f"\n\tUnsupported dbt version: {metadata.dbt_version}. "
+                "\n\tPlease upgrade dbt to at least v1.0 to use artefacts"
+            )
+        return metadata
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    metadata: "Metadata"
+    nodes: Dict[str, ManifestNode]
+    sources: Dict[str, "ManifestSourceNode"]
+    macros: Dict[str, "ManifestMacroNode"]
+    docs: Dict[str, "ManifestDocsNode"]
+    exposures: Dict[str, "ManifestExposureNode"]
+    metrics: Dict[str, "ManifestMetricNode"]
+    selectors: dict
+    disabled: Optional[Dict]
+    parent_map: Optional[Dict[str, List["ManifestNodeReference"]]]
+    child_map: Optional[Dict[str, List["ManifestNodeReference"]]]
+
+    @property
+    def resources(self) -> Dict:
+        return {
+            **self.nodes,
+            **self.sources,
+            **self.macros,
+            **self.exposures,
+            **self.metrics,
+        }
+
+    def iter_resource_type(
+        self, resource_type: str, package_name: str = None
+    ) -> Iterable:
+        """Iterate over all resources of a specific type
+
+        Args:
+            resource_type (str): The type of resource, eg 'model', 'source',
+                                 'exposure', etc.
+            package_name (str): nly return resources from the specified dbt package.
+        """
+
+        for k, v in self.resources.items():
+            if package_name and v.package_name != package_name:
+                continue
+            if v.resource_type == resource_type:
+                yield v
+
+
+class RunResultsModel(Model):
+    """The run_results artifact.
+
+    Attributes:
+        metadata: The :class:`Metadata` associated with the run, such as when
+                  the run was generated, the environment variables present
+                  during the run, etc.
+        results: A list of :class:`RunResultNode` s, which contain details
+                 about how long each node ran, whether it was successful, etc.
+        elapsed_time: The total duration of the run
+        args: The arguments used when at the start of the run or build
+
+    """
+
+    _test_path = "run_results"
+
+    metadata: "Metadata"
+    results: List["RunResultNode"]
+    elapsed_time: float
+    args: Optional[Dict]
+
+
+class CatalogModel(Model):
+    """The catalog artifact.
+
+    Attributes:
+        metadata: The metadata attribute of the catalog
+        nodes: The nodes attribute of the catalog
+        sources: The sources attribute of the catalog
+        errors: The errors attribute of the catalog
+
+    """
+
+    _test_path = "catalog"
+
+    metadata: "Metadata"
+    nodes: Dict[str, "CatalogNode"]
+    sources: Dict[str, "CatalogNode"]
+    errors: Optional[List[str]]
+
+
+class SourcesModel(Model):
+    """The sources artifact.
+
+    Attributes:
+        metadata: The metadata attribute
+        results: The results attribute
+        elapsed_time: The elapsed_time attribute
+
+    """
+
+    _test_path = "sources"
+
+    metadata: "Metadata"
+    results: List["SourcesFreshnessResult"]
+    elapsed_time: float
+
+
+class Metadata(Model):
+    """Data about the context in which the artifact was generated.
+
+    Attributes:
+        generated_at: The generated_at attribute
+        invocation_id: The invocation_id attribute
+        env: The env attribute
+        project_id: The project_id attribute
+        user_id: The user_id attribute
+        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute
+        adapter_type: The adapter_type attribute
+
+    """
+
+    _test_path = "manifest.metadata"
+
+    dbt_schema_version_raw: str
+    dbt_version_raw: str
+    generated_at: datetime.datetime
+    invocation_id: uuid.UUID
+    env: dict
+    project_id: Optional['str']
+    user_id: Optional['str']
+    send_anonymous_usage_stats: Optional[bool]
+    adapter_type: Optional['str']
+
+    class Config:
+        fields = {
+            "dbt_version_raw": "dbt_version",
+            "dbt_schema_version_raw": "dbt_schema_version",
+        }
+
+    @property
+    def dbt_schema_version(self) -> int:
+        """The artifact's schema version.
+
+        See https://schemas.getdbt.com for details.
+        """
+
+        return int(self.dbt_schema_version_raw.split("/")[-1].split(".")[0][1])
+
+    @property
+    def dbt_version(self) -> str:
+        """The dbt version that generated the artifact."""
+
+        return packaging.version.Version(self.dbt_version_raw)
+
+
+class Quoting(Model):
+    """Details about quoting requirements for database objects
+
+    Attributes:
+        database: Whether to quote the "database" component of an object path
+        identifier: Whether to quote the "identifier" component of an object path
+        db_schema: Whether to quote the "db_schema" component of an object path
+        column: Whether to quote the "column" component of an object path
+
+    """
+
+    _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
+
+    database: Optional[bool]
+    identifier: Optional[bool]
+    db_schema: Optional[bool]
+    column: Optional[bool]
+
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
+
+
+class ExternalPartition(Model):
+    """
+    Object representing a partition on an external table
+
+    Attributes:
+        name: The name attribute
+        description: The description attribute
+        data_type: The data_type attribute
+        meta: The meta attribute
+
+    """
+
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.external_events']"
+        ".external.partitions[0]"
+    )
+
+    name: Optional['str']
+    description: Optional['str']
+    data_type: Optional['str']
+    meta: Optional[Dict]
+
+
+class ExternalTable(Model):
+    """
+    Object representing an external table
+
+    Attributes:
+        location: The location attribute
+        file_format: The file_format attribute
+        row_format: The row_format attribute
+        tbl_properties: The tbl_properties attribute
+        partitions: The partitions attribute
+
+    """
+
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.external_events'].external"
+    )
+
+    location: Optional[str]
+    file_format: Optional[str]
+    row_format: Optional[str]
+    tbl_properties: Optional[str]
+    partitions: Optional[List[ExternalPartition]]
+
+
+class ColumnInfo(Model):
+    """Column details of a documented model
+
+    Attributes:
+        name: The name attribute
+        description: The description attribute
+        meta: The meta attribute
+        data_type: The data_type attribute
+        quote: The quote attribute
+        tags: The tags attribute
+
+    """
+
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
+    )
+
+    name: str
+    description: Optional[str]
+    meta: Optional[dict]
+    data_type: Optional[str]
+    quote: Optional[bool]
+    tags: Optional[List[str]]
+
+
+class TimingResult(Model):
+    """Timing details from running the node.
+
+    Attributes:
+        name: the name attribute
+        started_at: the started_at attribute
+        completed_at: the completed_at attribute
+
+    """
+
+    _test_path = "sources.results[0].timing[0]"
+
+    name: str
+    started_at: Optional[datetime.datetime]
+    completed_at: Optional[datetime.datetime]
+
+
+class SourceConfig(Model):
+    """An object containing details about a source's config
+
+    Attributes:
+        enabled: Whether the source is enabled
+    """
+
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].config"
+
+    enabled: Optional[bool]
+
+
+class Time(Model):
+    """An object representing a time interval, used for example when
+    configuring a source freshness check
+
+    Attributes:
+        period: The length of the time interval, eg days, hours, seconds
+        count: The number of periods associed with the time interval
+    """
+
+    _test_path = (
+        "manifest.sources['source.poffertjes_shop.raw.products'].freshness.error_after"
+    )
+
+    count: Optional[int]
+    period: Optional['str']
+
+
+class FreshnessThreshold(Model):
+    """Details of the criteria used when checking a source's freshness
+
+    Attributes:
+        warn_after: The freshness criteria after which a freshness check will
+                    raise a warning.
+        error_after: The freshness criteria after which a freshness check will
+                     raise an error.
+        filter: A SQL statement used to filter the table when running a
+                freshness check.
+    """
+
+    _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness"
+
+    warn_after: Optional[Time]
+    error_after: Optional[Time]
+    filter: Optional['str']
+
+
+class SourcesFreshnessResult(ArtifactNodeReader, Model):
+    """Result details from checking the freshness of a source.
+
+    Attributes:
+        unique_id: The unique_id attribute
+        status: The status attribute
+        error: The error attribute
+        max_loaded_at: The max_loaded_at attribute
+        snapshotted_at: The snapshotted_at attribute
+        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute
+        criteria: The criteria attribute
+        adapter_response: The adapter_response attribute
+        timing: The timing attribute
+        thread_id: The thread_id attribute
+        execution_time: The execution_time attribute
+
+    """
+
+    _test_path = "sources.results[0]"
+
+    unique_id: str
+    status: str
+    error: Optional[str]
+    max_loaded_at: Optional[str]
+    snapshotted_at: Optional[str]
+    max_loaded_at_time_ago_in_s: Optional[float]
+    criteria: Optional[FreshnessThreshold]
+    adapter_response: Optional[dict]
+    timing: Optional[List[TimingResult]]
+    thread_id: Optional[str]
+    execution_time: Optional[float]
+
+
+class RunResultNode(ArtifactNodeReader, Model):
+    """Details about the results of running a specific model, test, etc.
+
+    Attributes:
+        status: The status attribute
+        timing: The timing attribute
+        thread_id: The thread_id attribute
+        execution_time: The execution_time attribute
+        adapter_response: The adapter_response attribute
+        message: The message attribute
+        failures: The failures attribute
+        unique_id: The unique_id attribute
+
+    """
+
+    _test_path = "run_results.results[0]"
+
+    status: str
+    timing: List[TimingResult]
+    thread_id: str
+    execution_time: float
+    adapter_response: dict
+    message: Optional['str']
+    failures: Optional[int]
+    unique_id: str
 
 
 class ManifestNodeReference(ArtifactNodeReader):
@@ -574,7 +914,7 @@ class ManifestNodeReference(ArtifactNodeReader):
         return self.manifest_artifact.resources[self.unique_id]
 
 
-class ManifestSourceNode(ArtifactNodeReader, Deserializer):
+class ManifestSourceNode(ArtifactNodeReader, Model):
     """Details about a Source node.
 
     Attributes:
@@ -611,8 +951,8 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products']"
 
-    fqn: typing.List[str]
-    database: typing.Union[None, str]
+    fqn: List[str]
+    database: Optional[str]
     db_schema: str
     unique_id: str
     package_name: str
@@ -625,20 +965,20 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
     loader: str
     identifier: str
     resource_type: str
-    quoting: typing.Union[Quoting, None]
-    loaded_at_field: typing.Union[None, str]
-    freshness: typing.Union[None, FreshnessThreshold]
-    external: typing.Union[None, ExternalTable]
-    description: typing.Union[None, str]
-    columns: typing.Union[None, typing.Dict[str, ColumnInfo]]
-    meta: typing.Union[dict, None]
-    source_meta: typing.Union[dict, None]
-    tags: typing.Union[typing.List[str], None]
-    config: typing.Union[SourceConfig, None]
-    patch_path: typing.Union[str, None]
-    unrendered_config: typing.Union[dict, None]
-    relation_name: typing.Union[str, None]
-    created_at: typing.Union[None, float]
+    quoting: Optional[Quoting]
+    loaded_at_field: Optional[str]
+    freshness: Optional[FreshnessThreshold]
+    external: Optional[ExternalTable]
+    description: Optional[str]
+    columns: Optional[Dict[str, ColumnInfo]]
+    meta: Optional[Dict]
+    source_meta: Optional[Dict]
+    tags: Optional[List[str]]
+    config: Optional[SourceConfig]
+    patch_path: Optional['str']
+    unrendered_config: Optional[Dict]
+    relation_name: Optional['str']
+    created_at: Optional[float]
 
     class Config:
         fields = {
@@ -646,7 +986,7 @@ class ManifestSourceNode(ArtifactNodeReader, Deserializer):
         }
 
 
-class MacroArgument(Deserializer):
+class MacroArgument(Model):
     """Details about the arguments of a macro
 
     Attributes:
@@ -661,11 +1001,11 @@ class MacroArgument(Deserializer):
     )
 
     name: str
-    type: typing.Union[str, None]
-    description: typing.Union[str, None]
+    type: Optional['str']
+    description: Optional['str']
 
 
-class ManifestMacroNode(ArtifactNodeReader, Deserializer):
+class ManifestMacroNode(ArtifactNodeReader, Model):
     """Details about a Macro node.
 
     Attributes:
@@ -700,17 +1040,17 @@ class ManifestMacroNode(ArtifactNodeReader, Deserializer):
     name: str
     macro_sql: str
     resource_type: str
-    tags: typing.Union[None, typing.List[str]]
-    patch_path: typing.Union[None, str]
-    created_at: typing.Union[None, float]
-    description: typing.Union[None, str]
-    meta: typing.Union[None, dict]
-    docs: typing.Union[None, dict]
-    arguments: typing.Union[None, typing.List[MacroArgument]]
-    depends_on: typing.Union[None, typing.Dict[str, typing.List[str]]]
+    tags: Optional[List[str]]
+    patch_path: Optional[str]
+    created_at: Optional[float]
+    description: Optional[str]
+    meta: Optional[dict]
+    docs: Optional[dict]
+    arguments: Optional[List[MacroArgument]]
+    depends_on: Optional[Dict[str, List[str]]]
 
 
-class ManifestDocsNode(Deserializer):
+class ManifestDocsNode(Model):
     """Details about a Docs node.
 
     Attributes:
@@ -730,12 +1070,12 @@ class ManifestDocsNode(Deserializer):
     package_name: str
     root_path: str
     path: str
-    original_filepath: typing.Union[str, None]
+    original_filepath: Optional['str']
     name: str
     block_contents: str
 
 
-class ManifestExposureNode(ArtifactNodeReader, Deserializer):
+class ManifestExposureNode(ArtifactNodeReader, Model):
     """Details about an Exposure node.
 
     Attributes:
@@ -763,7 +1103,7 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
 
     _test_path = 'manifest.exposures["exposure.poffertjes_shop.revenue_summary"]'
 
-    fqn: typing.List[str]
+    fqn: List[str]
     unique_id: str
     package_name: str
     root_path: str
@@ -772,22 +1112,22 @@ class ManifestExposureNode(ArtifactNodeReader, Deserializer):
     name: str
     node_type: str
     owner: dict
-    resource_type: typing.Union[str, None]
-    description: typing.Union[str, None]
-    maturity: typing.Union[str, None]
-    meta: typing.Union[dict, None]
-    tags: typing.Union[typing.List[str], None]
-    url: typing.Union[str, None]
-    refs: typing.Union[typing.List[list], None]
-    sources: typing.Union[typing.List[list], None]
-    created_at: typing.Union[float, None]
-    depends_on: typing.Union[None, typing.Dict[str, list]]
+    resource_type: Optional['str']
+    description: Optional['str']
+    maturity: Optional['str']
+    meta: Optional[Dict]
+    tags: Optional[List[str]]
+    url: Optional['str']
+    refs: Optional[List[list]]
+    sources: Optional[List[list]]
+    created_at: Optional[float]
+    depends_on: Optional[Dict[str, list]]
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
 
 
-class MetricFilter(Deserializer):
+class MetricFilter(Model):
     """Details about a Metric filter.
 
     Attributes:
@@ -803,7 +1143,7 @@ class MetricFilter(Deserializer):
     value: str
 
 
-class ManifestMetricNode(ArtifactNodeReader, Deserializer):
+class ManifestMetricNode(ArtifactNodeReader, Model):
     """Details about a Metric node.
 
     Attributes:
@@ -835,7 +1175,7 @@ class ManifestMetricNode(ArtifactNodeReader, Deserializer):
 
     _test_path = "manifest.metrics['metric.poffertjes_shop.revenue']"
 
-    fqn: typing.List[str]
+    fqn: List[str]
     unique_id: str
     package_name: str
     root_path: str
@@ -846,24 +1186,24 @@ class ManifestMetricNode(ArtifactNodeReader, Deserializer):
     description: str
     label: str
     node_type: str
-    filters: typing.List[MetricFilter]
-    time_grains: typing.List[str]
-    dimensions: typing.List[str]
-    sql: typing.Union[str, None]
-    timestamp: typing.Union[str, None]
-    resource_type: typing.Union[str, None]
-    meta: typing.Union[dict, None]
-    tags: typing.Union[list, None]
-    sources: typing.Union[typing.List[str], None]
-    refs: typing.Union[typing.List[typing.List[str]], None]
-    created_at: typing.Union[float, None]
-    depends_on: typing.Union[dict, None]
+    filters: List[MetricFilter]
+    time_grains: List[str]
+    dimensions: List[str]
+    sql: Optional['str']
+    timestamp: Optional['str']
+    resource_type: Optional['str']
+    meta: Optional[Dict]
+    tags: Optional[list]
+    sources: Optional[List[str]]
+    refs: Optional[List[List[str]]]
+    created_at: Optional[float]
+    depends_on: Optional[Dict]
 
     class Config:
         fields = {"node_type": "type"}
 
 
-class CatalogNode(ArtifactNodeReader, Deserializer):
+class CatalogNode(ArtifactNodeReader, Model):
     """Details about a Catalog node.
 
     Attributes:
@@ -876,13 +1216,13 @@ class CatalogNode(ArtifactNodeReader, Deserializer):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"]'
 
-    metadata: CatalogNodeMetadata
-    columns: typing.Dict[str, CatalogNodeColumn]
-    stats: typing.Dict[str, CatalogNodeStats]
+    metadata: "CatalogNodeMetadata"
+    columns: Dict[str, "CatalogNodeColumn"]
+    stats: Dict[str, "CatalogNodeStats"]
     unique_id: str
 
 
-class CatalogNodeMetadata(Deserializer):
+class CatalogNodeMetadata(Model):
     """Metadata details about a CatalogNode.
 
     Attributes:
@@ -900,15 +1240,15 @@ class CatalogNodeMetadata(Deserializer):
     node_type: str
     db_schema: str
     name: str
-    database: typing.Union[str, None]
-    comment: typing.Union[str, None]
-    owner: typing.Union[str, None]
+    database: Optional['str']
+    comment: Optional['str']
+    owner: Optional['str']
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
 
 
-class CatalogNodeColumn(Deserializer):
+class CatalogNodeColumn(Model):
     """Details about the columns in a CatalogNode.
 
     Attributes:
@@ -926,13 +1266,13 @@ class CatalogNodeColumn(Deserializer):
     node_type: str
     index: int
     name: str
-    comment: typing.Union[str, None]
+    comment: Optional['str']
 
     class Config:
         fields = {"node_type": "type"}
 
 
-class CatalogNodeStats(Deserializer):
+class CatalogNodeStats(Model):
     """Statics about a CatalogNode.
 
     Attributes:
@@ -945,11 +1285,11 @@ class CatalogNodeStats(Deserializer):
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'
 
-    description: typing.Union[str, None]
+    description: Optional['str']
     id: str
     include: bool
     label: str
-    value: typing.Union[str, None]
+    value: Optional['str']
 
 
 RunResultsModel.update_forward_refs()

@@ -26,7 +26,7 @@ def models(package_name: str = None) -> typing.List[ManifestNode]:
     >>> model.resource_type
     'model'
     >>> type(model)
-    <class 'artefacts.models.ManifestNode'>
+    <class 'artefacts.models.ManifestModelNode'>
 
     """
 
@@ -45,7 +45,7 @@ def tests(package_name: str = None) -> typing.List[ManifestNode]:
     >>> test.resource_type
     'test'
     >>> type(test)
-    <class 'artefacts.models.ManifestNode'>
+    <class 'artefacts.models.ManifestTestNode'>
 
     """
 
@@ -64,7 +64,7 @@ def seeds(package_name: str = None) -> typing.List[ManifestNode]:
     >>> seed.resource_type
     'seed'
     >>> type(seed)
-    <class 'artefacts.models.ManifestNode'>
+    <class 'artefacts.models.ManifestSeedNode'>
 
     """
 
@@ -83,7 +83,7 @@ def snapshots(package_name: str = None) -> typing.List[ManifestNode]:
     >>> snapshot.resource_type
     'snapshot'
     >>> type(snapshot)
-    <class 'artefacts.models.ManifestNode'>
+    <class 'artefacts.models.ManifestSnapshotNode'>
 
     """
 
@@ -102,7 +102,7 @@ def operations(package_name: str = None) -> typing.List[ManifestNode]:
     >>> operation.resource_type
     'operation'
     >>> type(operation)
-    <class 'artefacts.models.ManifestNode'>
+    <class 'artefacts.models.ManifestOperationNode'>
 
     """
 

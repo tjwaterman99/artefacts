@@ -46,10 +46,6 @@ Reference
     :members:
 
 
-.. autoclass:: artefacts.models.ManifestNode
-    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
-
-
 .. autoclass:: artefacts.models.ManifestNodeReference
     :members:
 
@@ -112,3 +108,23 @@ Reference
 
 .. autoclass:: artefacts.models.SourceConfig
     :members:
+
+
+.. autoclass:: artefacts.models.ManifestModelNode
+    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+
+
+.. autoclass:: artefacts.models.ManifestOperationNode
+    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+
+
+.. autoclass:: artefacts.models.ManifestSeedNode
+    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+
+
+.. autoclass:: artefacts.models.ManifestSnapshotNode
+    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+
+
+.. autoclass:: artefacts.models.ManifestTestNode
+    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
