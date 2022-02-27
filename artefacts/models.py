@@ -1,7 +1,7 @@
 import datetime
 import uuid
 import pydantic
-from typing import Union, Literal, Dict, List, Iterable
+from typing import Union, Literal, Dict, List, Iterable, Optional
 from typing_extensions import Annotated
 import packaging.version
 
@@ -79,7 +79,7 @@ class ManifestModelNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
-    compiled: Union[str, None]
+    compiled: Optional['str']
     database: Union[str, None]
     db_schema: str
     fqn: List[str]
