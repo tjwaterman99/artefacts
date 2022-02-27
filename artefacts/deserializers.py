@@ -8,7 +8,6 @@ import artefacts.state
 
 
 class ArtifactDeserializer(abc.ABC):
-
     @abc.abstractproperty
     def name(self):
         pass
@@ -26,13 +25,13 @@ class ArtifactDeserializer(abc.ABC):
 
     @classmethod
     def get_or_set_config(cls, config=None):
-        if artefacts.state.exists('config'):
-            return artefacts.state.get('config')
+        if artefacts.state.exists("config"):
+            return artefacts.state.get("config")
         elif config is None:
             config = Config()
-            return artefacts.state.set('config', config)
+            return artefacts.state.set("config", config)
         else:
-            return artefacts.state.set('config', config)
+            return artefacts.state.set("config", config)
 
     @classmethod
     def deserialize(cls, Loader=FileSystemLoader, config=None):
@@ -44,20 +43,20 @@ class ArtifactDeserializer(abc.ABC):
 
 
 class Manifest(ArtifactDeserializer):
-    name = 'manifest'
+    name = "manifest"
     model = ManifestModel
 
 
 class RunResults(ArtifactDeserializer):
-    name = 'run_results'
+    name = "run_results"
     model = RunResultsModel
 
 
 class Sources(ArtifactDeserializer):
-    name = 'sources'
+    name = "sources"
     model = SourcesModel
 
 
 class Catalog(ArtifactDeserializer):
-    name = 'catalog'
+    name = "catalog"
     model = CatalogModel

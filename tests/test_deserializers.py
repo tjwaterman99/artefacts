@@ -48,9 +48,9 @@ def test_sources_sets_state(clean_state):
 
 
 def test_loading_deserializer_caches_config(clean_state):
-    assert artefacts.state.get('config') is None
+    assert artefacts.state.get("config") is None
     manifest = Manifest()
-    assert artefacts.state.get('config') == Config()
+    assert artefacts.state.get("config") == Config()
 
 
 def test_loading_deserializer_uses_cached_config(clean_state):
