@@ -2,7 +2,8 @@ import datetime
 import uuid
 import pydantic
 import typing
-from typing import Union, Annotated, Literal
+from typing import Union, Literal
+from typing_extensions import Annotated
 import packaging.version
 
 from artefacts.mixins import ArtifactNodeReader
