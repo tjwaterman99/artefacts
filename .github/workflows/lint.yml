@@ -18,7 +18,7 @@ jobs:
       run: |
         pipx install flake8
     - name: flake8
-      run:flake8 artefacts/ tests/
+      run: flake8 artefacts/ tests/
 
   black:
     runs-on: ubuntu-latest
