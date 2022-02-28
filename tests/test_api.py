@@ -12,6 +12,7 @@ from artefacts.api import (
     selectors,
     operations,
     snapshots,
+    analyses,
 )
 from .conftest import testing_poffertjes_shop  # noqa
 
@@ -31,10 +32,17 @@ def test_snapshots():
 
 
 @pytest.mark.skipif("not testing_poffertjes_shop")
+def test_analyses():
+    assert len(snapshots()) > 0
+    assert len(snapshots(package_name="dbt_utils")) == 0
+    assert len(snapshots(package_name="poffertjes_shop")) > 0
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
 def test_models():
-    assert len(models()) > 0
-    assert len(models(package_name="dbt_utils")) == 0
-    assert len(models(package_name="poffertjes_shop")) > 0
+    assert len(analyses()) > 0
+    assert len(analyses(package_name="dbt_utils")) == 0
+    assert len(analyses(package_name="poffertjes_shop")) > 0
 
 
 @pytest.mark.skipif("not testing_poffertjes_shop")
