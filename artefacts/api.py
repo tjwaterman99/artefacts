@@ -15,12 +15,15 @@ from artefacts.models import (
 )
 
 
-def models(package_name: str = None) -> typing.List[ManifestNode]:
+def models(
+    package_name: str = None, include_disabled: bool = False
+) -> typing.List[ManifestNode]:
     """A list of all models in the dbt project.
 
     Args:
         package_name (str): Only return models from the specified dbt package.
                             Defaults to returning models from all packages.
+        include_disabled (bool): Include disabled models. Default False.
 
     >>> model = artefacts.api.models()[0]
     >>> model.resource_type
@@ -31,15 +34,22 @@ def models(package_name: str = None) -> typing.List[ManifestNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.iter_resource_type("model", package_name=package_name))
+    return list(
+        manifest.iter_resource_type(
+            "model", package_name=package_name, include_disabled=include_disabled
+        )
+    )
 
 
-def tests(package_name: str = None) -> typing.List[ManifestNode]:
+def tests(
+    package_name: str = None, include_disabled: bool = False
+) -> typing.List[ManifestNode]:
     """A list of all tests in the dbt project.
 
     Args:
         package_name (str): Only return tests from the specified dbt package.
                             Defaults to returning tests from all packages.
+        include_disabled (bool): Include disabled tests. Default False.
 
     >>> test = artefacts.api.tests()[0]
     >>> test.resource_type
@@ -50,15 +60,22 @@ def tests(package_name: str = None) -> typing.List[ManifestNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.iter_resource_type("test", package_name=package_name))
+    return list(
+        manifest.iter_resource_type(
+            "test", package_name=package_name, include_disabled=include_disabled
+        )
+    )
 
 
-def seeds(package_name: str = None) -> typing.List[ManifestNode]:
+def seeds(
+    package_name: str = None, include_disabled: bool = False
+) -> typing.List[ManifestNode]:
     """A list of all seeds in the dbt project.
 
     Args:
         package_name (str): Only return seeds from the specified dbt package.
                             Defaults to returning seeds from all packages.
+        include_disabled (bool): Include disabled seeds. Default False.
 
     >>> seed = artefacts.api.seeds()[0]
     >>> seed.resource_type
@@ -69,15 +86,22 @@ def seeds(package_name: str = None) -> typing.List[ManifestNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.iter_resource_type("seed", package_name=package_name))
+    return list(
+        manifest.iter_resource_type(
+            "seed", package_name=package_name, include_disabled=include_disabled
+        )
+    )
 
 
-def snapshots(package_name: str = None) -> typing.List[ManifestNode]:
+def snapshots(
+    package_name: str = None, include_disabled=False
+) -> typing.List[ManifestNode]:
     """A list of all snapshots in the dbt project.
 
     Args:
         package_name (str): Only return snapshots from the specified dbt package.
                             Defaults to returning snapshots from all packages.
+        include_disabled (bool): Include disabled snapshots. Default False
 
     >>> snapshot = artefacts.api.snapshots()[0]
     >>> snapshot.resource_type
@@ -88,7 +112,11 @@ def snapshots(package_name: str = None) -> typing.List[ManifestNode]:
     """
 
     manifest = Manifest()
-    return list(manifest.iter_resource_type("snapshot", package_name=package_name))
+    return list(
+        manifest.iter_resource_type(
+            "snapshot", package_name=package_name, include_disabled=include_disabled
+        )
+    )
 
 
 def operations(package_name: str = None) -> typing.List[ManifestNode]:
@@ -127,6 +155,25 @@ def sources(package_name: str = None) -> typing.List[ManifestSourceNode]:
 
     manifest = Manifest()
     return list(manifest.iter_resource_type("source", package_name=package_name))
+
+
+def analyses(package_name: str = None) -> typing.List[ManifestSourceNode]:
+    """A list of all analyses in the dbt project.
+
+    Args:
+        package_name (str): Only return analyses from the specified dbt package.
+                            Defaults to returning analyses from all packages.
+
+    >>> analysis = artefacts.api.analyses()[0]
+    >>> analysis.resource_type
+    'analysis'
+    >>> type(analysis)
+    <class 'artefacts.models.ManifestAnalysisNode'>
+
+    """
+
+    manifest = Manifest()
+    return list(manifest.iter_resource_type("analysis", package_name=package_name))
 
 
 def docs() -> typing.List[ManifestDocsNode]:

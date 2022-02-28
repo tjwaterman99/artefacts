@@ -32,6 +32,28 @@ def test_models_have_reference_defined(base_model, reference_docs):
 
 
 @pytest.mark.skipif("not testing_poffertjes_shop")
+def test_disabled_models_are_disabled(manifest):
+    disabled_model = manifest.resources["model.poffertjes_shop.base_employees"]
+    assert disabled_model.config["enabled"] is False
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
+def test_manifest_iter_resources_can_include_disabled(manifest):
+    for model in manifest.iter_resource_type("model", include_disabled=True):
+        if model.disabled:
+            return
+    else:
+        raise Exception("No disabled models found when include_disabled=True")
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
+def test_manifest_iter_resources_excludes_disabled(manifest):
+    for model in manifest.iter_resource_type("model"):
+        if model.disabled:
+            raise Exception("Found a disabled model when include_disabled=False")
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
 def test_models_are_deserialized_at_least_once(
     manifest, sources, run_results, catalog, base_model
 ):
