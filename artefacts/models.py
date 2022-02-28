@@ -610,12 +610,128 @@ class ManifestSeedNode(ArtifactNodeReader, Model):
     _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
 
 
+class ManifestAnalysisNode(ArtifactNodeReader, Model):
+    """
+    An object representing an analysis in the dbt project.
+    """
+
+    class Config:
+        fields = {
+            "db_schema": "schema",
+        }
+
+    raw_sql: str
+    """ The raw_sql attribute """
+
+    compiled: Optional["str"]
+    """ The compiled attribute """
+
+    database: Optional["str"]
+    """ The database attribute """
+
+    db_schema: str
+    """ The db_schema attribute """
+
+    fqn: List[str]
+    """ The fqn attribute """
+
+    unique_id: str
+    """ The unique_id attribute """
+
+    package_name: str
+    """ The package_name attribute """
+
+    root_path: str
+    """ The root_path attribute """
+
+    path: str
+    """ The path attribute """
+
+    original_file_path: str
+    """ The original_file_path attribute """
+
+    name: str
+    """ The name attribute """
+
+    resource_type: Literal["analysis"]
+    """ The resource_type attribute """
+
+    alias: str
+    """ The alias attribute """
+
+    checksum: dict
+    """ The checksum attribute """
+
+    config: Optional[Dict]
+    """ The config attribute """
+
+    tags: Optional[List[str]]
+    """ The tags attribute """
+
+    refs: Optional[List]
+    """ The refs attribute """
+
+    sources: Optional[List[List[str]]]
+    """ The sources attribute """
+
+    depends_on: Optional[Dict]
+    """ The depends_on attribute """
+
+    description: Optional[str]
+    """ The description attribute """
+
+    columns: Optional[Dict]
+    """ The columns attribute """
+
+    meta: Optional[Dict]
+    """ The meta attribute """
+
+    docs: Optional[Dict]
+    """ The docs attribute """
+
+    patch_path: Optional[str]
+    """ The patch_path attribute """
+
+    compiled_path: Optional[str]
+    """ The compiled_path attribute """
+
+    build_path: Optional[str]
+    """ The build_path attribute """
+
+    deferred: Optional[bool]
+    """ The deferred attribute """
+
+    unrendered_config: Optional[dict]
+    """ The unrendered_config attribute """
+
+    created_at: Optional[float]
+    """ The created_at attribute """
+
+    config_call_dict: Optional[dict]
+    """ The config_call_dict attribute """
+
+    compiled_sql: Optional[str]
+    """ The compiled_sql attribute """
+
+    extra_ctes_injected: Optional[bool]
+    """ The extra_ctes_injected attribute """
+
+    extra_ctes: Optional[List[Dict]]
+    """ The extra_ctes attribute """
+
+    relation_name: Optional[str]
+    """ The relation_name attribute """
+
+    _test_path = "manifest.nodes['analysis.poffertjes_shop.poffertjes_per_person']"
+
+
 ManifestModelUnion = Union[
     ManifestModelNode,
     ManifestTestNode,
     ManifestOperationNode,
     ManifestSnapshotNode,
     ManifestSeedNode,
+    ManifestAnalysisNode,
 ]
 
 ManifestNode = Annotated[

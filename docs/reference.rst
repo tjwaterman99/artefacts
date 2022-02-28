@@ -40,6 +40,11 @@ Reference
     :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
+.. autoclass:: artefacts.models.ManifestAnalysisNode
+    :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
+
+
 .. autoclass:: artefacts.models.ManifestMacroNode
     :members:
     :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
