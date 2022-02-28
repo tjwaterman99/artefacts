@@ -3,6 +3,7 @@ import uuid
 import pydantic
 from typing import Union, Literal, Dict, List, Iterable, Optional
 from typing_extensions import Annotated
+from collections import defaultdict
 import packaging.version
 
 from artefacts.mixins import ArtifactNodeReader
@@ -818,6 +819,20 @@ class ManifestModel(Model):
         """
 
         return {k: v[0] for k, v in self.raw_disabled.items()}
+
+    @property
+    def tags(self) -> Dict:
+        """
+        A dictionary mapping tags to their various resources
+        """
+
+        result = defaultdict(list)
+
+        for k, v in self.resources.items():
+            for tag in v.tags:
+                result[tag].append(v)
+        else:
+            return dict(result)
 
     def iter_resource_type(
         self,
