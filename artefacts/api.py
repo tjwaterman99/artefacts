@@ -257,3 +257,18 @@ def selectors() -> typing.List[dict]:
 
     manifest = Manifest()
     return list(manifest.selectors.values())
+
+
+def tags() -> typing.List[ManifestMetricNode]:
+    """A dictionary mapping tags to their various resources
+
+    >>> tags = artefacts.api.tags()
+    >>> type(tags)
+    <class 'dict'>
+    >>> type(tags['internal'])
+    <class 'list'>
+
+    """
+
+    manifest = Manifest()
+    return manifest.tags
