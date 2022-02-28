@@ -803,12 +803,128 @@
     <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.nodes['seed.poffertjes_shop.shoppes']"</span></div>
 
 
+<div class="viewcode-block" id="ManifestAnalysisNode"><a class="viewcode-back" href="../../reference.html#artefacts.models.ManifestAnalysisNode">[docs]</a><span class="k">class</span> <span class="nc">ManifestAnalysisNode</span><span class="p">(</span><span class="n">ArtifactNodeReader</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An object representing an analysis in the dbt project.</span>
+<span class="sd">    """</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"db_schema"</span><span class="p">:</span> <span class="s2">"schema"</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">raw_sql</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The raw_sql attribute """</span>
+
+    <span class="n">compiled</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">"str"</span><span class="p">]</span>
+    <span class="sd">""" The compiled attribute """</span>
+
+    <span class="n">database</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">"str"</span><span class="p">]</span>
+    <span class="sd">""" The database attribute """</span>
+
+    <span class="n">db_schema</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The db_schema attribute """</span>
+
+    <span class="n">fqn</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The fqn attribute """</span>
+
+    <span class="n">unique_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The unique_id attribute """</span>
+
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The package_name attribute """</span>
+
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The root_path attribute """</span>
+
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The path attribute """</span>
+
+    <span class="n">original_file_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The original_file_path attribute """</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The name attribute """</span>
+
+    <span class="n">resource_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"analysis"</span><span class="p">]</span>
+    <span class="sd">""" The resource_type attribute """</span>
+
+    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">""" The alias attribute """</span>
+
+    <span class="n">checksum</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="sd">""" The checksum attribute """</span>
+
+    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="sd">""" The config attribute """</span>
+
+    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="sd">""" The tags attribute """</span>
+
+    <span class="n">refs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="sd">""" The refs attribute """</span>
+
+    <span class="n">sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="sd">""" The sources attribute """</span>
+
+    <span class="n">depends_on</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="sd">""" The depends_on attribute """</span>
+
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The description attribute """</span>
+
+    <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="sd">""" The columns attribute """</span>
+
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="sd">""" The meta attribute """</span>
+
+    <span class="n">docs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="sd">""" The docs attribute """</span>
+
+    <span class="n">patch_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The patch_path attribute """</span>
+
+    <span class="n">compiled_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The compiled_path attribute """</span>
+
+    <span class="n">build_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The build_path attribute """</span>
+
+    <span class="n">deferred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="sd">""" The deferred attribute """</span>
+
+    <span class="n">unrendered_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="sd">""" The unrendered_config attribute """</span>
+
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="sd">""" The created_at attribute """</span>
+
+    <span class="n">config_call_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="sd">""" The config_call_dict attribute """</span>
+
+    <span class="n">compiled_sql</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The compiled_sql attribute """</span>
+
+    <span class="n">extra_ctes_injected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="sd">""" The extra_ctes_injected attribute """</span>
+
+    <span class="n">extra_ctes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]</span>
+    <span class="sd">""" The extra_ctes attribute """</span>
+
+    <span class="n">relation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="sd">""" The relation_name attribute """</span>
+
+    <span class="n">_test_path</span> <span class="o">=</span> <span class="s2">"manifest.nodes['analysis.poffertjes_shop.poffertjes_per_person']"</span></div>
+
+
 <span class="n">ManifestModelUnion</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
     <span class="n">ManifestModelNode</span><span class="p">,</span>
     <span class="n">ManifestTestNode</span><span class="p">,</span>
     <span class="n">ManifestOperationNode</span><span class="p">,</span>
     <span class="n">ManifestSnapshotNode</span><span class="p">,</span>
     <span class="n">ManifestSeedNode</span><span class="p">,</span>
+    <span class="n">ManifestAnalysisNode</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="n">ManifestNode</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
