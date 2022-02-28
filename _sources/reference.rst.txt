@@ -12,6 +12,7 @@ Reference
 
 .. autoclass:: artefacts.models.CatalogNode
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.CatalogNodeColumn
@@ -36,14 +37,17 @@ Reference
 
 .. autoclass:: artefacts.models.ManifestExposureNode
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.ManifestMacroNode
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.ManifestMetricNode
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.ManifestNodeReference
@@ -52,6 +56,7 @@ Reference
 
 .. autoclass:: artefacts.models.ManifestSourceNode
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.Metadata
@@ -60,6 +65,7 @@ Reference
 
 .. autoclass:: artefacts.models.RunResultNode
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.RunResultsModel
@@ -72,6 +78,7 @@ Reference
 
 .. autoclass:: artefacts.models.SourcesFreshnessResult
     :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.TimingResult
@@ -111,20 +118,25 @@ Reference
 
 
 .. autoclass:: artefacts.models.ManifestModelNode
-    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+    :members: 
+    :inherited-members:
 
 
 .. autoclass:: artefacts.models.ManifestOperationNode
-    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+    :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.ManifestSeedNode
-    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+    :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.ManifestSnapshotNode
-    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+    :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
 
 
 .. autoclass:: artefacts.models.ManifestTestNode
-    :members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact
+    :members:
+    :inherited-members: manifest_artifact, catalog_artifact, sources_artifact, run_results_artifact, children, freshness_check_results, parents, snapshots, tests
