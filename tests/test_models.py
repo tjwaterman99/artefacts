@@ -141,3 +141,9 @@ def test_models_have_attribute_docs(base_model, compiled_reference_docs):
     if any(errors):
         msg = f"Missing attribute docs for {str(base_model)} attributes: {errors}"
         raise Exception(msg)
+
+
+@pytest.mark.skipif("not testing_poffertjes_shop")
+def test_manifest_tags(manifest):
+    assert len(manifest.tags) > 0
+    assert len(manifest.tags["internal"]) > 0
