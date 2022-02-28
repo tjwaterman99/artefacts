@@ -54,7 +54,7 @@ def reference_docs():
 
 @pytest.fixture(scope="session")
 def compiled_reference_docs():
-    with open('docs/_build/reference.html') as fh:
+    with open("docs/_build/reference.html") as fh:
         return fh.read()
 
 
