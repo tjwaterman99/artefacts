@@ -41,7 +41,6 @@ extensions = [
     'sphinx_toolbox',
     'sphinx_toolbox.more_autodoc',
     'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',
     'sphinx.ext.autosectionlabel',
 ]
 

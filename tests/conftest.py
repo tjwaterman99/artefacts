@@ -52,6 +52,12 @@ def reference_docs():
         return fh.read()
 
 
+@pytest.fixture(scope="session")
+def compiled_reference_docs():
+    with open("docs/_build/reference.html") as fh:
+        return fh.read()
+
+
 @pytest.fixture(scope="session", params=list(iter_node_reader_classes()))
 def node_reader_class(request):
     yield request.param

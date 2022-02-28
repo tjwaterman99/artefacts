@@ -33,44 +33,6 @@ class Model(pydantic.BaseModel):
 class ManifestModelNode(ArtifactNodeReader, Model):
     """
     An object representing a model in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -79,39 +41,106 @@ class ManifestModelNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    """ The raw_sql attribute """
+
     compiled: Optional["str"]
+    """ The compiled attribute """
+
     database: Optional["str"]
+    """ The database attribute """
+
     db_schema: str
+    """ The db_schema attribute """
+
     fqn: List[str]
+    """ The fqn attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     resource_type: Literal["model"]
+    """ The resource_type attribute """
+
     alias: str
+    """ The alias attribute """
+
     checksum: dict
+    """ The checksum attribute """
+
     config: Optional[Dict]
+    """ The config attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     refs: Optional[List]
+    """ The refs attribute """
+
     sources: Optional[List[List[str]]]
+    """ The sources attribute """
+
     depends_on: Optional[Dict]
+    """ The depends_on attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     columns: Optional[Dict]
+    """ The columns attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     docs: Optional[Dict]
+    """ The docs attribute """
+
     patch_path: Optional[str]
+    """ The patch_path attribute """
+
     compiled_path: Optional[str]
+    """ The compiled_path attribute """
+
     build_path: Optional[str]
+    """ The build_path attribute """
+
     deferred: Optional[bool]
+    """ The deferred attribute """
+
     unrendered_config: Optional[dict]
+    """ The unrendered_config attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     config_call_dict: Optional[dict]
+    """ The config_call_dict attribute """
+
     compiled_sql: Optional[str]
+    """ The compiled_sql attribute """
+
     extra_ctes_injected: Optional[bool]
+    """ The extra_ctes_injected attribute """
+
     extra_ctes: Optional[List[Dict]]
+    """ The extra_ctes attribute """
+
     relation_name: Optional[str]
+    """ The relation_name attribute """
 
     _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
@@ -119,44 +148,6 @@ class ManifestModelNode(ArtifactNodeReader, Model):
 class ManifestTestNode(ArtifactNodeReader, Model):
     """
     An object representing a test in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -165,39 +156,106 @@ class ManifestTestNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    "The raw_sql attribute"
+
     compiled: Optional["str"]
+    "The compiled attribute"
+
     database: Optional["str"]
+    "The database attribute"
+
     db_schema: str
+    "The db_schema attribute"
+
     fqn: List[str]
+    "The fqn attribute"
+
     unique_id: str
+    "The unique_id attribute"
+
     package_name: str
+    "The package_name attribute"
+
     root_path: str
+    "The root_path attribute"
+
     path: str
+    "The path attribute"
+
     original_file_path: str
+    "The original_file_path attribute"
+
     name: str
+    "The name attribute"
+
     resource_type: Literal["test"]
+    "The resource_type attribute"
+
     alias: str
+    "The alias attribute"
+
     checksum: dict
+    "The checksum attribute"
+
     config: Optional[Dict]
+    "The config attribute"
+
     tags: Optional[List[str]]
+    "The tags attribute"
+
     refs: Optional[List]
+    "The refs attribute"
+
     sources: Optional[List[List[str]]]
+    "The sources attribute"
+
     depends_on: Optional[Dict]
+    "The depends_on attribute"
+
     description: Optional[str]
+    "The description attribute"
+
     columns: Optional[Dict]
+    "The columns attribute"
+
     meta: Optional[Dict]
+    "The meta attribute"
+
     docs: Optional[Dict]
+    "The docs attribute"
+
     patch_path: Optional[str]
+    "The patch_path attribute"
+
     compiled_path: Optional[str]
+    "The compiled_path attribute"
+
     build_path: Optional[str]
+    "The build_path attribute"
+
     deferred: Optional[bool]
+    "The deferred attribute"
+
     unrendered_config: Optional[dict]
+    "The unrendered_config attribute"
+
     created_at: Optional[float]
+    "The created_at attribute"
+
     config_call_dict: Optional[dict]
+    "The config_call_dict attribute"
+
     compiled_sql: Optional[str]
+    "The compiled_sql attribute"
+
     extra_ctes_injected: Optional[bool]
+    "The extra_ctes_injected attribute"
+
     extra_ctes: Optional[List[Dict]]
+    "The extra_ctes attribute"
+
     relation_name: Optional[str]
+    "The relation_name attribute"
 
     _test_path = (
         "manifest.nodes['test.poffertjes_shop.not_null_base_"
@@ -208,44 +266,6 @@ class ManifestTestNode(ArtifactNodeReader, Model):
 class ManifestOperationNode(ArtifactNodeReader, Model):
     """
     An object representing a macro operation in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -254,39 +274,106 @@ class ManifestOperationNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    """The raw_sql attribute"""
+
     compiled: Optional["str"]
+    """The compiled attribute"""
+
     database: Optional["str"]
+    """The database attribute"""
+
     db_schema: str
+    """The db_schema attribute"""
+
     fqn: List[str]
+    """The fqn attribute"""
+
     unique_id: str
+    """The unique_id attribute"""
+
     package_name: str
+    """The package_name attribute"""
+
     root_path: str
+    """The root_path attribute"""
+
     path: str
+    """The path attribute"""
+
     original_file_path: str
+    """The original_file_path attribute"""
+
     name: str
+    """The name attribute"""
+
     resource_type: Literal["operation"]
+    """The resource_type attribute"""
+
     alias: str
+    """The alias attribute"""
+
     checksum: dict
+    """The checksum attribute"""
+
     config: Optional[Dict]
+    """The config attribute"""
+
     tags: Optional[List[str]]
+    """The tags attribute"""
+
     refs: Optional[List]
+    """The refs attribute"""
+
     sources: Optional[List[List[str]]]
+    """The sources attribute"""
+
     depends_on: Optional[Dict]
+    """The depends_on attribute"""
+
     description: Optional[str]
+    """The description attribute"""
+
     columns: Optional[Dict]
+    """The columns attribute"""
+
     meta: Optional[Dict]
+    """The meta attribute"""
+
     docs: Optional[Dict]
+    """The docs attribute"""
+
     patch_path: Optional[str]
+    """The patch_path attribute"""
+
     compiled_path: Optional[str]
+    """The compiled_path attribute"""
+
     build_path: Optional[str]
+    """The build_path attribute"""
+
     deferred: Optional[bool]
+    """The deferred attribute"""
+
     unrendered_config: Optional[dict]
+    """The unrendered_config attribute"""
+
     created_at: Optional[float]
+    """The created_at attribute"""
+
     config_call_dict: Optional[dict]
+    """The config_call_dict attribute"""
+
     compiled_sql: Optional[str]
+    """The compiled_sql attribute"""
+
     extra_ctes_injected: Optional[bool]
+    """The extra_ctes_injected attribute"""
+
     extra_ctes: Optional[List[Dict]]
+    """The extra_ctes attribute"""
+
     relation_name: Optional[str]
+    """The relation_name attribute"""
 
     _test_path = (
         "manifest.nodes['operation.poffertjes_shop.poffertjes_" "shop-on-run-start-0']"
@@ -296,44 +383,6 @@ class ManifestOperationNode(ArtifactNodeReader, Model):
 class ManifestSnapshotNode(ArtifactNodeReader, Model):
     """
     An object representing a snapshot in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -342,39 +391,106 @@ class ManifestSnapshotNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    """ The raw_sql attribute """
+
     compiled: Optional["str"]
+    """ The compiled attribute """
+
     database: Optional["str"]
+    """ The database attribute """
+
     db_schema: str
+    """ The db_schema attribute """
+
     fqn: List[str]
+    """ The fqn attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     resource_type: Literal["snapshot"]
+    """ The resource_type attribute """
+
     alias: str
+    """ The alias attribute """
+
     checksum: dict
+    """ The checksum attribute """
+
     config: Optional[Dict]
+    """ The config attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     refs: Optional[List]
+    """ The refs attribute """
+
     sources: Optional[List[List[str]]]
+    """ The sources attribute """
+
     depends_on: Optional[Dict]
+    """ The depends_on attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     columns: Optional[Dict]
+    """ The columns attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     docs: Optional[Dict]
+    """ The docs attribute """
+
     patch_path: Optional[str]
+    """ The patch_path attribute """
+
     compiled_path: Optional[str]
+    """ The compiled_path attribute """
+
     build_path: Optional[str]
+    """ The build_path attribute """
+
     deferred: Optional[bool]
+    """ The deferred attribute """
+
     unrendered_config: Optional[dict]
+    """ The unrendered_config attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     config_call_dict: Optional[dict]
+    """ The config_call_dict attribute """
+
     compiled_sql: Optional[str]
+    """ The compiled_sql attribute """
+
     extra_ctes_injected: Optional[bool]
+    """ The extra_ctes_injected attribute """
+
     extra_ctes: Optional[List[Dict]]
+    """ The extra_ctes attribute """
+
     relation_name: Optional[str]
+    """ The relation_name attribute """
 
     _test_path = "manifest.nodes['snapshot.poffertjes_shop.orders_snapshot']"
 
@@ -382,44 +498,6 @@ class ManifestSnapshotNode(ArtifactNodeReader, Model):
 class ManifestSeedNode(ArtifactNodeReader, Model):
     """
     An object representing a seed in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -428,39 +506,106 @@ class ManifestSeedNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    """ The raw_sql attribute """
+
     compiled: Optional["str"]
+    """ The compiled attribute """
+
     database: Optional["str"]
+    """ The database attribute """
+
     db_schema: str
+    """ The db_schema attribute """
+
     fqn: List[str]
+    """ The fqn attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     resource_type: Literal["seed"]
+    """ The resource_type attribute """
+
     alias: str
+    """ The alias attribute """
+
     checksum: dict
+    """ The checksum attribute """
+
     config: Optional[Dict]
+    """ The config attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     refs: Optional[List]
+    """ The refs attribute """
+
     sources: Optional[List[List[str]]]
+    """ The sources attribute """
+
     depends_on: Optional[Dict]
+    """ The depends_on attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     columns: Optional[Dict]
+    """ The columns attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     docs: Optional[Dict]
+    """ The docs attribute """
+
     patch_path: Optional[str]
+    """ The patch_path attribute """
+
     compiled_path: Optional[str]
+    """ The compiled_path attribute """
+
     build_path: Optional[str]
+    """ The build_path attribute """
+
     deferred: Optional[bool]
+    """ The deferred attribute """
+
     unrendered_config: Optional[dict]
+    """ The unrendered_config attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     config_call_dict: Optional[dict]
+    """ The config_call_dict attribute """
+
     compiled_sql: Optional[str]
+    """ The compiled_sql attribute """
+
     extra_ctes_injected: Optional[bool]
+    """ The extra_ctes_injected attribute """
+
     extra_ctes: Optional[List[Dict]]
+    """ The extra_ctes attribute """
+
     relation_name: Optional[str]
+    """ The relation_name attribute """
 
     _test_path = "manifest.nodes['seed.poffertjes_shop.shoppes']"
 
@@ -481,20 +626,6 @@ ManifestNode = Annotated[
 class ManifestModel(Model):
     """
     The manifest artifact.
-
-    Attributes:
-        metadata: reference to the Manifest's metadata
-        nodes: reference to the Manifest's nodes
-        sources: reference to the Manifest's sources
-        macros: reference to the Manifest's macros
-        docs: reference to the Manifest's docs
-        exposures: reference to the Manifest's exposures
-        metrics: reference to the Manifest's metrics
-        selectors: reference to the Manifest's selectors
-        disabled: reference to the Manifest's disabled
-        parent_map: reference to the Manifest's parent_map
-        child_map: reference to the Manifest's child_map
-
     """
 
     _test_path = "manifest"
@@ -514,19 +645,42 @@ class ManifestModel(Model):
         arbitrary_types_allowed = True
 
     metadata: "Metadata"
+    """ The metadata attribute """
+
     nodes: Dict[str, ManifestNode]
+    """ The nodes attribute """
+
     sources: Dict[str, "ManifestSourceNode"]
+    """ The sources attribute """
+
     macros: Dict[str, "ManifestMacroNode"]
+    """ The macros attribute """
+
     docs: Dict[str, "ManifestDocsNode"]
+    """ The docs attribute """
+
     exposures: Dict[str, "ManifestExposureNode"]
+    """ The exposures attribute """
+
     metrics: Dict[str, "ManifestMetricNode"]
+    """ The metrics attribute """
+
     selectors: dict
+    """ The selectors attribute """
+
     disabled: Optional[Dict]
+    """ The disabled attribute """
+
     parent_map: Optional[Dict[str, List["ManifestNodeReference"]]]
+    """ The parent_map attribute """
+
     child_map: Optional[Dict[str, List["ManifestNodeReference"]]]
+    """ The child_map attribute """
 
     @property
     def resources(self) -> Dict:
+        """A dictionary containing all resources defined in the dbt project"""
+
         return {
             **self.nodes,
             **self.sources,
@@ -554,88 +708,87 @@ class ManifestModel(Model):
 
 
 class RunResultsModel(Model):
-    """The run_results artifact.
-
-    Attributes:
-        metadata: The :class:`Metadata` associated with the run, such as when
-                  the run was generated, the environment variables present
-                  during the run, etc.
-        results: A list of :class:`RunResultNode` s, which contain details
-                 about how long each node ran, whether it was successful, etc.
-        elapsed_time: The total duration of the run
-        args: The arguments used when at the start of the run or build
-
-    """
+    """The run_results artifact."""
 
     _test_path = "run_results"
 
     metadata: "Metadata"
+    """ The metadata attribute """
+
     results: List["RunResultNode"]
+    """ The results attribute """
+
     elapsed_time: float
+    """ The elapsed_time attribute """
+
     args: Optional[Dict]
+    """ The args attribute """
 
 
 class CatalogModel(Model):
-    """The catalog artifact.
-
-    Attributes:
-        metadata: The metadata attribute of the catalog
-        nodes: The nodes attribute of the catalog
-        sources: The sources attribute of the catalog
-        errors: The errors attribute of the catalog
-
-    """
+    """The catalog artifact."""
 
     _test_path = "catalog"
 
     metadata: "Metadata"
+    """ The metadata attribute """
+
     nodes: Dict[str, "CatalogNode"]
+    """ The nodes attribute """
+
     sources: Dict[str, "CatalogNode"]
+    """ The sources attribute """
+
     errors: Optional[List[str]]
+    """ The errors attribute """
 
 
 class SourcesModel(Model):
-    """The sources artifact.
-
-    Attributes:
-        metadata: The metadata attribute
-        results: The results attribute
-        elapsed_time: The elapsed_time attribute
-
-    """
+    """The sources artifact."""
 
     _test_path = "sources"
 
     metadata: "Metadata"
+    """ The metadata attribute """
+
     results: List["SourcesFreshnessResult"]
+    """ The results attribute """
+
     elapsed_time: float
+    """ The elapsed_time attribute """
 
 
 class Metadata(Model):
-    """Data about the context in which the artifact was generated.
-
-    Attributes:
-        generated_at: The generated_at attribute
-        invocation_id: The invocation_id attribute
-        env: The env attribute
-        project_id: The project_id attribute
-        user_id: The user_id attribute
-        send_anonymous_usage_stats: The send_anonymous_usage_stats attribute
-        adapter_type: The adapter_type attribute
-
-    """
+    """Data about the context in which the artifact was generated."""
 
     _test_path = "manifest.metadata"
 
     dbt_schema_version_raw: str
+    """ The dbt_schema_version_raw attribute """
+
     dbt_version_raw: str
+    """ The dbt_version_raw attribute """
+
     generated_at: datetime.datetime
+    """ The generated_at attribute """
+
     invocation_id: uuid.UUID
+    """ The invocation_id attribute """
+
     env: dict
+    """ The env attribute """
+
     project_id: Optional["str"]
+    """ The project_id attribute """
+
     user_id: Optional["str"]
+    """ The user_id attribute """
+
     send_anonymous_usage_stats: Optional[bool]
+    """ The send_anonymous_usage_stats attribute """
+
     adapter_type: Optional["str"]
+    """ The adapter_type attribute """
 
     class Config:
         fields = {
@@ -673,9 +826,16 @@ class Quoting(Model):
     _test_path = 'manifest.sources["source.poffertjes_shop.raw.orders"].quoting'
 
     database: Optional[bool]
+    """ The database attribute """
+
     identifier: Optional[bool]
+    """ The identifier attribute """
+
     db_schema: Optional[bool]
+    """ The db_schema attribute """
+
     column: Optional[bool]
+    """ The column attribute """
 
     class Config:
         fields = {
@@ -686,13 +846,6 @@ class Quoting(Model):
 class ExternalPartition(Model):
     """
     Object representing a partition on an external table
-
-    Attributes:
-        name: The name attribute
-        description: The description attribute
-        data_type: The data_type attribute
-        meta: The meta attribute
-
     """
 
     _test_path = (
@@ -701,22 +854,21 @@ class ExternalPartition(Model):
     )
 
     name: Optional["str"]
+    """ The name attribute """
+
     description: Optional["str"]
+    """ The description attribute """
+
     data_type: Optional["str"]
+    """ The data_type attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
 
 
 class ExternalTable(Model):
     """
     Object representing an external table
-
-    Attributes:
-        location: The location attribute
-        file_format: The file_format attribute
-        row_format: The row_format attribute
-        tbl_properties: The tbl_properties attribute
-        partitions: The partitions attribute
-
     """
 
     _test_path = (
@@ -724,35 +876,45 @@ class ExternalTable(Model):
     )
 
     location: Optional[str]
+    """ The location attribute """
+
     file_format: Optional[str]
+    """ The file_format attribute """
+
     row_format: Optional[str]
+    """ The row_format attribute """
+
     tbl_properties: Optional[str]
+    """ The tbl_properties attribute """
+
     partitions: Optional[List[ExternalPartition]]
+    """ The partitions attribute """
 
 
 class ColumnInfo(Model):
-    """Column details of a documented model
-
-    Attributes:
-        name: The name attribute
-        description: The description attribute
-        meta: The meta attribute
-        data_type: The data_type attribute
-        quote: The quote attribute
-        tags: The tags attribute
-
-    """
+    """Column details of a documented model"""
 
     _test_path = (
         "manifest.sources['source.poffertjes_shop.raw.orders'].columns['order_id']"
     )
 
     name: str
+    """ The name attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     meta: Optional[dict]
+    """ The meta attribute """
+
     data_type: Optional[str]
+    """ The data_type attribute """
+
     quote: Optional[bool]
+    """ The quote attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
 
 
 class TimingResult(Model):
@@ -768,29 +930,27 @@ class TimingResult(Model):
     _test_path = "sources.results[0].timing[0]"
 
     name: str
+    """ The name attribute """
+
     started_at: Optional[datetime.datetime]
+    """ The started_at attribute """
+
     completed_at: Optional[datetime.datetime]
+    """ The completed_at attribute """
 
 
 class SourceConfig(Model):
-    """An object containing details about a source's config
-
-    Attributes:
-        enabled: Whether the source is enabled
-    """
+    """An object containing details about a source's config"""
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].config"
 
     enabled: Optional[bool]
+    """ The enabled attribute """
 
 
 class Time(Model):
     """An object representing a time interval, used for example when
     configuring a source freshness check
-
-    Attributes:
-        period: The length of the time interval, eg days, hours, seconds
-        count: The number of periods associed with the time interval
     """
 
     _test_path = (
@@ -798,86 +958,94 @@ class Time(Model):
     )
 
     count: Optional[int]
+    """ The count attribute """
+
     period: Optional["str"]
+    """ The period attribute """
 
 
 class FreshnessThreshold(Model):
-    """Details of the criteria used when checking a source's freshness
-
-    Attributes:
-        warn_after: The freshness criteria after which a freshness check will
-                    raise a warning.
-        error_after: The freshness criteria after which a freshness check will
-                     raise an error.
-        filter: A SQL statement used to filter the table when running a
-                freshness check.
-    """
+    """Details of the criteria used when checking a source's freshness"""
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products'].freshness"
 
     warn_after: Optional[Time]
+    """ The warn_after attribute """
+
     error_after: Optional[Time]
+    """ The error_after attribute """
+
     filter: Optional["str"]
+    """ The filter attribute """
 
 
 class SourcesFreshnessResult(ArtifactNodeReader, Model):
-    """Result details from checking the freshness of a source.
-
-    Attributes:
-        unique_id: The unique_id attribute
-        status: The status attribute
-        error: The error attribute
-        max_loaded_at: The max_loaded_at attribute
-        snapshotted_at: The snapshotted_at attribute
-        max_loaded_at_time_ago_in_s: The max_loaded_at_time_ago_in_s attribute
-        criteria: The criteria attribute
-        adapter_response: The adapter_response attribute
-        timing: The timing attribute
-        thread_id: The thread_id attribute
-        execution_time: The execution_time attribute
-
-    """
+    """Result details from checking the freshness of a source."""
 
     _test_path = "sources.results[0]"
 
     unique_id: str
+    """ The unique_id attribute """
+
     status: str
+    """ The status attribute """
+
     error: Optional[str]
+    """ The error attribute """
+
     max_loaded_at: Optional[str]
+    """ The max_loaded_at attribute """
+
     snapshotted_at: Optional[str]
+    """ The snapshotted_at attribute """
+
     max_loaded_at_time_ago_in_s: Optional[float]
+    """ The max_loaded_at_time_ago_in_s attribute """
+
     criteria: Optional[FreshnessThreshold]
+    """ The criteria attribute """
+
     adapter_response: Optional[dict]
+    """ The adapter_response attribute """
+
     timing: Optional[List[TimingResult]]
+    """ The timing attribute """
+
     thread_id: Optional[str]
+    """ The thread_id attribute """
+
     execution_time: Optional[float]
+    """ The execution_time attribute """
 
 
 class RunResultNode(ArtifactNodeReader, Model):
-    """Details about the results of running a specific model, test, etc.
-
-    Attributes:
-        status: The status attribute
-        timing: The timing attribute
-        thread_id: The thread_id attribute
-        execution_time: The execution_time attribute
-        adapter_response: The adapter_response attribute
-        message: The message attribute
-        failures: The failures attribute
-        unique_id: The unique_id attribute
-
-    """
+    """Details about the results of running a specific model, test, etc."""
 
     _test_path = "run_results.results[0]"
 
     status: str
+    """ The status attribute """
+
     timing: List[TimingResult]
+    """ The timing attribute """
+
     thread_id: str
+    """ The thread_id attribute """
+
     execution_time: float
+    """ The execution_time attribute """
+
     adapter_response: dict
+    """ The adapter_response attribute """
+
     message: Optional["str"]
+    """ The message attribute """
+
     failures: Optional[int]
+    """ The failures attribute """
+
     unique_id: str
+    """ The unique_id attribute """
 
 
 class ManifestNodeReference(ArtifactNodeReader):
@@ -915,70 +1083,93 @@ class ManifestNodeReference(ArtifactNodeReader):
 
 
 class ManifestSourceNode(ArtifactNodeReader, Model):
-    """Details about a Source node.
-
-    Attributes:
-        fqn: The fqn attribute
-        database: The database attribute
-        db_schema: The db_schema attribute
-        unique_id: The unique_id attribute
-        package_name: The package_name attribute
-        root_path: The root_path attribute
-        path: The path attribute
-        original_file_path: The original_file_path attribute
-        name: The name attribute
-        source_name: The source_name attribute
-        source_description: The source_description attribute
-        loader: The loader attribute
-        identifier: The identifier attribute
-        resource_type: The resource_type attribute
-        quoting: The quoting attribute
-        loaded_at_field: The loaded_at_field attribute
-        freshness: The freshness attribute
-        external: The external attribute
-        description: The description attribute
-        columns: The columns attribute
-        meta: The meta attribute
-        source_meta: The source_meta attribute
-        tags: The tags attribute
-        config: The config attribute
-        patch_path: The patch_path attribute
-        unrendered_config: The unrendered_config attribute
-        relation_name: The relation_name attribute
-        created_at: The created_at attribute
-
-    """
+    """Details about a Source node."""
 
     _test_path = "manifest.sources['source.poffertjes_shop.raw.products']"
 
     fqn: List[str]
+    """ The fqn attribute """
+
     database: Optional[str]
+    """ The database attribute """
+
     db_schema: str
+    """ The db_schema attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     source_name: str
+    """ The source_name attribute """
+
     source_description: str
+    """ The source_description attribute """
+
     loader: str
+    """ The loader attribute """
+
     identifier: str
+    """ The identifier attribute """
+
     resource_type: str
+    """ The resource_type attribute """
+
     quoting: Optional[Quoting]
+    """ The quoting attribute """
+
     loaded_at_field: Optional[str]
+    """ The loaded_at_field attribute """
+
     freshness: Optional[FreshnessThreshold]
+    """ The freshness attribute """
+
     external: Optional[ExternalTable]
+    """ The external attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     columns: Optional[Dict[str, ColumnInfo]]
+    """ The columns attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     source_meta: Optional[Dict]
+    """ The source_meta attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     config: Optional[SourceConfig]
+    """ The config attribute """
+
     patch_path: Optional["str"]
+    """ The patch_path attribute """
+
     unrendered_config: Optional[Dict]
+    """ The unrendered_config attribute """
+
     relation_name: Optional["str"]
+    """ The relation_name attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
 
     class Config:
         fields = {
@@ -987,309 +1178,351 @@ class ManifestSourceNode(ArtifactNodeReader, Model):
 
 
 class MacroArgument(Model):
-    """Details about the arguments of a macro
-
-    Attributes:
-        name: The name attribute
-        type: The type attribute
-        description: The description attribute
-
-    """
+    """Details about the arguments of a macro"""
 
     _test_path = (
         'manifest.macros["macro.poffertjes_shop.convert_currency"].arguments[0]'
     )
 
     name: str
+    """ The name attribute """
+
     type: Optional["str"]
+    """ The type attribute """
+
     description: Optional["str"]
+    """ The description attribute """
 
 
 class ManifestMacroNode(ArtifactNodeReader, Model):
-    """Details about a Macro node.
-
-    Attributes:
-        unique_id: The unique_id attribute
-        package_name: The package_name attribute
-        root_path: The root_path attribute
-        path: The path attribute
-        original_file_path: The original_file_path attribute
-        name: The name attribute
-        macro_sql: The macro_sql attribute
-        resource_type: The resource_type attribute
-        tags: The tags attribute
-        patch_path: The patch_path attribute
-        created_at: The created_at attribute
-        description: The description attribute
-        meta: The meta attribute
-        docs: The docs attribute
-        arguments: The arguments attribute
-        depends_on: The depends_on attribute
-
-    """
+    """Details about a Macro node."""
 
     _test_path = (
         'manifest.macros["macro.poffertjes_shop.create_or_replace_table_raw_orders"]'
     )
 
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     macro_sql: str
+    """ The macro_sql attribute """
+
     resource_type: str
+    """ The resource_type attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     patch_path: Optional[str]
+    """ The patch_path attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     meta: Optional[dict]
+    """ The meta attribute """
+
     docs: Optional[dict]
+    """ The docs attribute """
+
     arguments: Optional[List[MacroArgument]]
+    """ The arguments attribute """
+
     depends_on: Optional[Dict[str, List[str]]]
+    """ The depends_on attribute """
 
 
 class ManifestDocsNode(Model):
-    """Details about a Docs node.
-
-    Attributes:
-        unique_id: The unique_id attribute
-        package_name: The package_name attribute
-        root_path: The root_path attribute
-        path: The path attribute
-        original_filepath: The original_filepath attribute
-        name: The name attribute
-        block_contents: The block_contents attribute
-
-    """
+    """Details about a Docs node."""
 
     _test_path = 'manifest.docs["dbt.__overview__"]'
 
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_filepath: Optional["str"]
+    """ The original_filepath attribute """
+
     name: str
+    """ The name attribute """
+
     block_contents: str
+    """ The block_contents attribute """
 
 
 class ManifestExposureNode(ArtifactNodeReader, Model):
-    """Details about an Exposure node.
-
-    Attributes:
-        fqn: Details about a fqn attribute
-        unique_id: Details about a unique_id attribute
-        package_name: Details about a package_name attribute
-        root_path: Details about a root_path attribute
-        path: Details about a path attribute
-        original_file_path: Details about a original_file_path attribute
-        name: Details about a name attribute
-        node_type: Details about a node_type attribute
-        owner: Details about a owner attribute
-        resource_type: Details about a resource_type attribute
-        description: Details about a description attribute
-        maturity: Details about a maturity attribute
-        meta: Details about a meta attribute
-        tags: Details about a tags attribute
-        url: Details about a url attribute
-        refs: Details about a refs attribute
-        sources: Details about a sources attribute
-        created_at: Details about a created_at attribute
-        depends_on: Details about a depends_on attribute
-
-    """
+    """Details about an Exposure node."""
 
     _test_path = 'manifest.exposures["exposure.poffertjes_shop.revenue_summary"]'
 
     fqn: List[str]
+    """ The fqn attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     node_type: str
+    """ The node_type attribute """
+
     owner: dict
+    """ The owner attribute """
+
     resource_type: Optional["str"]
+    """ The resource_type attribute """
+
     description: Optional["str"]
+    """ The description attribute """
+
     maturity: Optional["str"]
+    """ The maturity attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     url: Optional["str"]
+    """ The url attribute """
+
     refs: Optional[List[list]]
+    """ The refs attribute """
+
     sources: Optional[List[list]]
+    """ The sources attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     depends_on: Optional[Dict[str, list]]
+    """ The depends_on attribute """
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
 
 
 class MetricFilter(Model):
-    """Details about a Metric filter.
-
-    Attributes:
-        field: The field attribute
-        operator: The operator attribute
-        value: The value attribute
-    """
+    """Details about a Metric filter."""
 
     _test_path = "manifest.metrics['metric.poffertjes_shop.revenue'].filters[0]"
 
     field: str
+    """ The field attribute """
+
     operator: str
+    """ The operator attribute """
+
     value: str
+    """ The value attribute """
 
 
 class ManifestMetricNode(ArtifactNodeReader, Model):
-    """Details about a Metric node.
-
-    Attributes:
-        fqn: The fqn attribute
-        unique_id: The unique_id attribute
-        package_name: The package_name attribute
-        root_path: The root_path attribute
-        path: The path attribute
-        original_file_path: The original_file_path attribute
-        model: The model attribute
-        name: The name attribute
-        description: The description attribute
-        label: The label attribute
-        node_type: The node_type attribute
-        filters: The filters attribute
-        time_grains: The time_grains attribute
-        dimensions: The dimensions attribute
-        sql: The sql attribute
-        timestamp: The timestamp attribute
-        resource_type: The resource_type attribute
-        meta: The meta attribute
-        tags: The tags attribute
-        sources: The sources attribute
-        refs: The refs attribute
-        created_at: The created_at attribute
-        depends_on: The depends_on attribute
-
-    """
+    """Details about a Metric node."""
 
     _test_path = "manifest.metrics['metric.poffertjes_shop.revenue']"
 
     fqn: List[str]
+    """ The fqn attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     model: str
+    """ The model attribute """
+
     name: str
+    """ The name attribute """
+
     description: str
+    """ The description attribute """
+
     label: str
+    """ The label attribute """
+
     node_type: str
+    """ The node_type attribute """
+
     filters: List[MetricFilter]
+    """ The filters attribute """
+
     time_grains: List[str]
+    """ The time_grains attribute """
+
     dimensions: List[str]
+    """ The dimensions attribute """
+
     sql: Optional["str"]
+    """ The sql attribute """
+
     timestamp: Optional["str"]
+    """ The timestamp attribute """
+
     resource_type: Optional["str"]
+    """ The resource_type attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     tags: Optional[list]
+    """ The tags attribute """
+
     sources: Optional[List[str]]
+    """ The sources attribute """
+
     refs: Optional[List[List[str]]]
+    """ The refs attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     depends_on: Optional[Dict]
+    """ The depends_on attribute """
 
     class Config:
         fields = {"node_type": "type"}
 
 
 class CatalogNode(ArtifactNodeReader, Model):
-    """Details about a Catalog node.
-
-    Attributes:
-        metadata: The metadata attribute
-        columns: The columns attribute
-        stats: The stats attribute
-        unique_id: The unique_id attribute
-
-    """
+    """Details about a Catalog node."""
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"]'
 
     metadata: "CatalogNodeMetadata"
+    """ The metadata attribute """
+
     columns: Dict[str, "CatalogNodeColumn"]
+    """ The columns attribute """
+
     stats: Dict[str, "CatalogNodeStats"]
+    """ The stats attribute """
+
     unique_id: str
+    """ The unique_id attribute """
 
 
 class CatalogNodeMetadata(Model):
-    """Metadata details about a CatalogNode.
-
-    Attributes:
-        node_type: The node_type attribute
-        db_schema: The db_schema attribute
-        name: The name attribute
-        database: The database attribute
-        comment: The comment attribute
-        owner: The owner attribute
-
-    """
+    """Metadata details about a CatalogNode."""
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].metadata'
 
     node_type: str
+    """ The node_type attribute """
+
     db_schema: str
+    """ The db_schema attribute """
+
     name: str
+    """ The name attribute """
+
     database: Optional["str"]
+    """ The database attribute """
+
     comment: Optional["str"]
+    """ The comment attribute """
+
     owner: Optional["str"]
+    """ The owner attribute """
 
     class Config:
         fields = {"db_schema": "schema", "node_type": "type"}
 
 
 class CatalogNodeColumn(Model):
-    """Details about the columns in a CatalogNode.
-
-    Attributes:
-        node_type: The node_type attribute
-        index: The index attribute
-        name: The name attribute
-        comment: The comment attribute
-
-    """
+    """Details about the columns in a CatalogNode."""
 
     _test_path = (
         'catalog.nodes["model.poffertjes_shop.customers"].columns["customer_id"]'
     )
 
     node_type: str
+    """ The node_type attribute """
+
     index: int
+    """ The index attribute """
+
     name: str
+    """ The name attribute """
+
     comment: Optional["str"]
+    """ The comment attribute """
 
     class Config:
         fields = {"node_type": "type"}
 
 
 class CatalogNodeStats(Model):
-    """Statics about a CatalogNode.
-
-    Attributes:
-        description: The description of the statistic
-        id: The id of the statistic
-        include: TODO
-        label: The label of the statistic
-        value: The value of the statistic
-    """
+    """Statics about a CatalogNode."""
 
     _test_path = 'catalog.nodes["model.poffertjes_shop.customers"].stats["has_stats"]'
 
     description: Optional["str"]
+    """ The description attribute """
+
     id: str
+    """ The id attribute """
+
     include: bool
+    """ The include attribute """
+
     label: str
+    """ The label attribute """
+
     value: Optional["str"]
+    """ The value attribute """
 
 
 RunResultsModel.update_forward_refs()
