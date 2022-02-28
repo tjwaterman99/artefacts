@@ -331,6 +331,11 @@ the new model: you should trust this data</p></li>
 </dl>
 </dd></dl>
 <dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.CatalogNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.CatalogNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
+</dd></dl>
+<dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.CatalogNode.freshness_check_results">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freshness_check_results</span></span><a class="headerlink" href="#artefacts.models.CatalogNode.freshness_check_results" title="Permalink to this definition">#</a></dt>
 <dd><p>A reference to any freshness check result of the node, if it exists.</p>
@@ -594,9 +599,9 @@ the new model: you should trust this data</p></li>
 <p>The selectors attribute</p>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="artefacts.models.ManifestModel.disabled">
-<span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.disabled" title="Permalink to this definition">#</a></dt>
-<dd><p><strong>Type:</strong>    <code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>]</p>
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.raw_disabled">
+<span class="sig-name descname"><span class="pre">raw_disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestModel.raw_disabled" title="Permalink to this definition">#</a></dt>
+<dd><p><strong>Type:</strong>    <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#artefacts.models.ManifestModelNode" title="artefacts.models.ManifestModelNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestModelNode</span></code></a>, <a class="reference internal" href="#artefacts.models.ManifestTestNode" title="artefacts.models.ManifestTestNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestTestNode</span></code></a>, <a class="reference internal" href="#artefacts.models.ManifestOperationNode" title="artefacts.models.ManifestOperationNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestOperationNode</span></code></a>, <a class="reference internal" href="#artefacts.models.ManifestSnapshotNode" title="artefacts.models.ManifestSnapshotNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSnapshotNode</span></code></a>, <a class="reference internal" href="#artefacts.models.ManifestSeedNode" title="artefacts.models.ManifestSeedNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestSeedNode</span></code></a>, <a class="reference internal" href="#artefacts.models.ManifestAnalysisNode" title="artefacts.models.ManifestAnalysisNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManifestAnalysisNode</span></code></a>]]]</p>
 <p>The disabled attribute</p>
 </dd></dl>
 <dl class="py attribute">
@@ -621,16 +626,29 @@ the new model: you should trust this data</p></li>
 </dd>
 </dl>
 </dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModel.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span></em><a class="headerlink" href="#artefacts.models.ManifestModel.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>A dictionary containing all disabled resources defined in the dbt project</p>
+<p>See the discussion on Github for some caveats:
+<a class="reference external" href="https://github.com/tjwaterman99/artefacts/issues/89">https://github.com/tjwaterman99/artefacts/issues/89</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="artefacts.models.ManifestModel.iter_resource_type">
-<span class="sig-name descname"><span class="pre">iter_resource_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ManifestModel.iter_resource_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ManifestModel.iter_resource_type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">iter_resource_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_disabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artefacts/models.html#ManifestModel.iter_resource_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#artefacts.models.ManifestModel.iter_resource_type" title="Permalink to this definition">#</a></dt>
 <dd><p>Iterate over all resources of a specific type</p>
 <dl>
 <dt>Args:</dt><dd><dl class="simple">
 <dt>resource_type (str): The type of resource, eg ‘model’, ‘source’,</dt><dd><p>‘exposure’, etc.</p>
 </dd>
 </dl>
-<p>package_name (str): nly return resources from the specified dbt package.</p>
+<p>package_name (str): Only return resources from the specified dbt package.
+include_disabled: (bool): Include disabled resources. Default <cite>False</cite>.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -754,6 +772,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestExposureNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestExposureNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestExposureNode.freshness_check_results">
@@ -1224,6 +1247,11 @@ the new model: you should trust this data</p></li>
 </dl>
 </dd></dl>
 <dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestAnalysisNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestAnalysisNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
+</dd></dl>
+<dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestAnalysisNode.freshness_check_results">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freshness_check_results</span></span><a class="headerlink" href="#artefacts.models.ManifestAnalysisNode.freshness_check_results" title="Permalink to this definition">#</a></dt>
 <dd><p>A reference to any freshness check result of the node, if it exists.</p>
@@ -1372,6 +1400,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestMacroNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestMacroNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestMacroNode.freshness_check_results">
@@ -1618,6 +1651,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestMetricNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestMetricNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestMetricNode.freshness_check_results">
@@ -1930,6 +1968,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestSourceNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestSourceNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestSourceNode.freshness_check_results">
@@ -2330,6 +2373,11 @@ the new model: you should trust this data</p></li>
 </dl>
 </dd></dl>
 <dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.RunResultNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.RunResultNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
+</dd></dl>
+<dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.RunResultNode.freshness_check_results">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freshness_check_results</span></span><a class="headerlink" href="#artefacts.models.RunResultNode.freshness_check_results" title="Permalink to this definition">#</a></dt>
 <dd><p>A reference to any freshness check result of the node, if it exists.</p>
@@ -2578,6 +2626,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.SourcesFreshnessResult.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.SourcesFreshnessResult.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.SourcesFreshnessResult.freshness_check_results">
@@ -3227,6 +3280,11 @@ the new model: you should trust this data</p></li>
 </dl>
 </dd></dl>
 <dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestModelNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestModelNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
+</dd></dl>
+<dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestModelNode.freshness_check_results">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freshness_check_results</span></span><a class="headerlink" href="#artefacts.models.ManifestModelNode.freshness_check_results" title="Permalink to this definition">#</a></dt>
 <dd><p>A reference to any freshness check result of the node, if it exists.</p>
@@ -3579,6 +3637,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestOperationNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestOperationNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestOperationNode.freshness_check_results">
@@ -3935,6 +3998,11 @@ the new model: you should trust this data</p></li>
 </dl>
 </dd></dl>
 <dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestSeedNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestSeedNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
+</dd></dl>
+<dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestSeedNode.freshness_check_results">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freshness_check_results</span></span><a class="headerlink" href="#artefacts.models.ManifestSeedNode.freshness_check_results" title="Permalink to this definition">#</a></dt>
 <dd><p>A reference to any freshness check result of the node, if it exists.</p>
@@ -4289,6 +4357,11 @@ the new model: you should trust this data</p></li>
 </dl>
 </dd></dl>
 <dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestSnapshotNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestSnapshotNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
+</dd></dl>
+<dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestSnapshotNode.freshness_check_results">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freshness_check_results</span></span><a class="headerlink" href="#artefacts.models.ManifestSnapshotNode.freshness_check_results" title="Permalink to this definition">#</a></dt>
 <dd><p>A reference to any freshness check result of the node, if it exists.</p>
@@ -4641,6 +4714,11 @@ the new model: you should trust this data</p></li>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictStrAny</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="artefacts.models.ManifestTestNode.disabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disabled</span></span><a class="headerlink" href="#artefacts.models.ManifestTestNode.disabled" title="Permalink to this definition">#</a></dt>
+<dd><p>Whether the resource has been disabled</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="artefacts.models.ManifestTestNode.freshness_check_results">
