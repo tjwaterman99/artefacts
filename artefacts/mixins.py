@@ -103,3 +103,8 @@ class ArtifactNodeReader(ArtifactReader):
         """A list of any snapshots that reference the node"""
 
         return [s for s in self.children if s.resource_type == "snapshot"]
+
+    @property
+    def disabled(self):
+        """Whether the resource has been disabled"""
+        return self.unique_id in self.manifest_artifact.disabled

@@ -759,6 +759,9 @@ class ManifestModel(Model):
 
     class Config:
         arbitrary_types_allowed = True
+        fields = {
+            "raw_disabled": "disabled",
+        }
 
     metadata: "Metadata"
     """ The metadata attribute """
@@ -784,7 +787,7 @@ class ManifestModel(Model):
     selectors: dict
     """ The selectors attribute """
 
-    disabled: Optional[Dict]
+    raw_disabled: Dict[str, List[ManifestModelUnion]]
     """ The disabled attribute """
 
     parent_map: Optional[Dict[str, List["ManifestNodeReference"]]]
@@ -803,21 +806,38 @@ class ManifestModel(Model):
             **self.macros,
             **self.exposures,
             **self.metrics,
+            **self.disabled,
         }
 
+    @property
+    def disabled(self) -> Dict:
+        """A dictionary containing all disabled resources defined in the dbt project
+
+        See the discussion on Github for some caveats:
+        https://github.com/tjwaterman99/artefacts/issues/89
+        """
+
+        return {k: v[0] for k, v in self.raw_disabled.items()}
+
     def iter_resource_type(
-        self, resource_type: str, package_name: str = None
+        self,
+        resource_type: str,
+        package_name: str = None,
+        include_disabled: bool = False,
     ) -> Iterable:
         """Iterate over all resources of a specific type
 
         Args:
             resource_type (str): The type of resource, eg 'model', 'source',
                                  'exposure', etc.
-            package_name (str): nly return resources from the specified dbt package.
+            package_name (str): Only return resources from the specified dbt package.
+            include_disabled: (bool): Include disabled resources. Default `False`.
         """
 
         for k, v in self.resources.items():
             if package_name and v.package_name != package_name:
+                continue
+            if v.disabled and include_disabled is False:
                 continue
             if v.resource_type == resource_type:
                 yield v
