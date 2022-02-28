@@ -1,4 +1,5 @@
 import pytest
+from pydantic import BaseModel
 
 from .conftest import testing_poffertjes_shop  # noqa
 
@@ -95,3 +96,23 @@ def test_manifest_child_map(manifest):
         for node_reference in v:
             assert node_reference.node is not None
             assert node_reference.resource_type == node_reference.node.resource_type
+
+
+def test_models_have_attribute_docs(base_model, compiled_reference_docs):
+    errors = []
+    allowed_exceptions = ['get_artifact', 'validate_metadata']
+    attributes = [
+        a for a in dir(base_model) if a not in dir(BaseModel) and not a.startswith("_")
+    ] + list(base_model.__annotations__.keys())
+
+    attribute_docs_path = [
+        base_model._docs_path().split("#")[-1] + "." + a for a in attributes
+    ]
+    print(attribute_docs_path)
+    for docpath, attribute in zip(attribute_docs_path, attributes):
+        if docpath not in compiled_reference_docs and attribute not in allowed_exceptions:
+            errors.append(attribute)
+
+    if any(errors):
+        msg = f"Missing attribute docs for {str(base_model)} attributes: {errors}"
+        raise Exception(msg)

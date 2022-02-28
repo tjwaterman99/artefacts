@@ -33,44 +33,6 @@ class Model(pydantic.BaseModel):
 class ManifestModelNode(ArtifactNodeReader, Model):
     """
     An object representing a model in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -79,39 +41,106 @@ class ManifestModelNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    """ The raw_sql attribute """
+
     compiled: Optional["str"]
+    """ The compiled attribute """
+
     database: Optional["str"]
+    """ The database attribute """
+
     db_schema: str
+    """ The db_schema attribute """
+
     fqn: List[str]
+    """ The fqn attribute """
+
     unique_id: str
+    """ The unique_id attribute """
+
     package_name: str
+    """ The package_name attribute """
+
     root_path: str
+    """ The root_path attribute """
+
     path: str
+    """ The path attribute """
+
     original_file_path: str
+    """ The original_file_path attribute """
+
     name: str
+    """ The name attribute """
+
     resource_type: Literal["model"]
+    """ The resource_type attribute """
+
     alias: str
+    """ The alias attribute """
+
     checksum: dict
+    """ The checksum attribute """
+
     config: Optional[Dict]
+    """ The config attribute """
+
     tags: Optional[List[str]]
+    """ The tags attribute """
+
     refs: Optional[List]
+    """ The refs attribute """
+
     sources: Optional[List[List[str]]]
+    """ The sources attribute """
+
     depends_on: Optional[Dict]
+    """ The depends_on attribute """
+
     description: Optional[str]
+    """ The description attribute """
+
     columns: Optional[Dict]
+    """ The columns attribute """
+
     meta: Optional[Dict]
+    """ The meta attribute """
+
     docs: Optional[Dict]
+    """ The docs attribute """
+
     patch_path: Optional[str]
+    """ The patch_path attribute """
+
     compiled_path: Optional[str]
+    """ The compiled_path attribute """
+
     build_path: Optional[str]
+    """ The build_path attribute """
+
     deferred: Optional[bool]
+    """ The deferred attribute """
+
     unrendered_config: Optional[dict]
+    """ The unrendered_config attribute """
+
     created_at: Optional[float]
+    """ The created_at attribute """
+
     config_call_dict: Optional[dict]
+    """ The config_call_dict attribute """
+
     compiled_sql: Optional[str]
+    """ The compiled_sql attribute """
+
     extra_ctes_injected: Optional[bool]
+    """ The extra_ctes_injected attribute """
+
     extra_ctes: Optional[List[Dict]]
+    """ The extra_ctes attribute """
+
     relation_name: Optional[str]
+    """ The relation_name attribute """
 
     _test_path = "manifest.nodes['model.poffertjes_shop.products']"
 
@@ -119,44 +148,6 @@ class ManifestModelNode(ArtifactNodeReader, Model):
 class ManifestTestNode(ArtifactNodeReader, Model):
     """
     An object representing a test in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -165,39 +156,106 @@ class ManifestTestNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    "The raw_sql attribute"
+
     compiled: Optional["str"]
+    "The compiled attribute"
+
     database: Optional["str"]
+    "The database attribute"
+
     db_schema: str
+    "The db_schema attribute"
+
     fqn: List[str]
+    "The fqn attribute"
+
     unique_id: str
+    "The unique_id attribute"
+
     package_name: str
+    "The package_name attribute"
+
     root_path: str
+    "The root_path attribute"
+
     path: str
+    "The path attribute"
+
     original_file_path: str
+    "The original_file_path attribute"
+
     name: str
+    "The name attribute"
+
     resource_type: Literal["test"]
+    "The resource_type attribute"
+
     alias: str
+    "The alias attribute"
+
     checksum: dict
+    "The checksum attribute"
+
     config: Optional[Dict]
+    "The config attribute"
+
     tags: Optional[List[str]]
+    "The tags attribute"
+
     refs: Optional[List]
+    "The refs attribute"
+
     sources: Optional[List[List[str]]]
+    "The sources attribute"
+
     depends_on: Optional[Dict]
+    "The depends_on attribute"
+
     description: Optional[str]
+    "The description attribute"
+
     columns: Optional[Dict]
+    "The columns attribute"
+
     meta: Optional[Dict]
+    "The meta attribute"
+
     docs: Optional[Dict]
+    "The docs attribute"
+
     patch_path: Optional[str]
+    "The patch_path attribute"
+
     compiled_path: Optional[str]
+    "The compiled_path attribute"
+
     build_path: Optional[str]
+    "The build_path attribute"
+
     deferred: Optional[bool]
+    "The deferred attribute"
+
     unrendered_config: Optional[dict]
+    "The unrendered_config attribute"
+
     created_at: Optional[float]
+    "The created_at attribute"
+
     config_call_dict: Optional[dict]
+    "The config_call_dict attribute"
+
     compiled_sql: Optional[str]
+    "The compiled_sql attribute"
+
     extra_ctes_injected: Optional[bool]
+    "The extra_ctes_injected attribute"
+
     extra_ctes: Optional[List[Dict]]
+    "The extra_ctes attribute"
+
     relation_name: Optional[str]
+    "The relation_name attribute"
 
     _test_path = (
         "manifest.nodes['test.poffertjes_shop.not_null_base_"
@@ -208,44 +266,6 @@ class ManifestTestNode(ArtifactNodeReader, Model):
 class ManifestOperationNode(ArtifactNodeReader, Model):
     """
     An object representing a macro operation in the dbt project.
-
-    Attributes:
-        raw_sql: the raw_sql attribute
-        compiled: the compiled attribute
-        database: the database attribute
-        db_schema: the db_schema attribute
-        fqn: the fqn attribute
-        unique_id: the unique_id attribute
-        package_name: the package_name attribute
-        root_path: the root_path attribute
-        path: the path attribute
-        original_file_path: the original_file_path attribute
-        name: the name attribute
-        resource_type: the resource_type attribute
-        alias: the alias attribute
-        checksum: the checksum attribute
-        config: the config attribute
-        tags: the tags attribute
-        refs: the refs attribute
-        sources: the sources attribute
-        depends_on: the depends_on attribute
-        description: the description attribute
-        columns: the columns attribute
-        meta: the meta attribute
-        docs: the docs attribute
-        patch_path: the patch_path attribute
-        compiled_path: the compiled_path attribute
-        build_path: the build_path attribute
-        deferred: the deferred attribute
-        unrendered_config: the unrendered_config attribute
-        created_at: the created_at attribute
-        config_call_dict: the config_call_dict attribute
-        compiled_sql: the compiled_sql attribute
-        extra_ctes_injected: the extra_ctes_injected attribute
-        extra_ctes: the extra_ctes attribute
-        relation_name: the relation_name attribute
-        column_name: the column_name attribute
-        file_key_name: the file_key_name attribute
     """
 
     class Config:
@@ -254,39 +274,106 @@ class ManifestOperationNode(ArtifactNodeReader, Model):
         }
 
     raw_sql: str
+    """The raw_sql attribute"""
+
     compiled: Optional["str"]
+    """The compiled attribute"""
+
     database: Optional["str"]
+    """The database attribute"""
+
     db_schema: str
+    """The db_schema attribute"""
+
     fqn: List[str]
+    """The fqn attribute"""
+
     unique_id: str
+    """The unique_id attribute"""
+
     package_name: str
+    """The package_name attribute"""
+
     root_path: str
+    """The root_path attribute"""
+
     path: str
+    """The path attribute"""
+
     original_file_path: str
+    """The original_file_path attribute"""
+
     name: str
+    """The name attribute"""
+
     resource_type: Literal["operation"]
+    """The resource_type attribute"""
+
     alias: str
+    """The alias attribute"""
+
     checksum: dict
+    """The checksum attribute"""
+
     config: Optional[Dict]
+    """The config attribute"""
+
     tags: Optional[List[str]]
+    """The tags attribute"""
+
     refs: Optional[List]
+    """The refs attribute"""
+
     sources: Optional[List[List[str]]]
+    """The sources attribute"""
+
     depends_on: Optional[Dict]
+    """The depends_on attribute"""
+
     description: Optional[str]
+    """The description attribute"""
+
     columns: Optional[Dict]
+    """The columns attribute"""
+
     meta: Optional[Dict]
+    """The meta attribute"""
+
     docs: Optional[Dict]
+    """The docs attribute"""
+
     patch_path: Optional[str]
+    """The patch_path attribute"""
+
     compiled_path: Optional[str]
+    """The compiled_path attribute"""
+
     build_path: Optional[str]
+    """The build_path attribute"""
+
     deferred: Optional[bool]
+    """The deferred attribute"""
+
     unrendered_config: Optional[dict]
+    """The unrendered_config attribute"""
+
     created_at: Optional[float]
+    """The created_at attribute"""
+
     config_call_dict: Optional[dict]
+    """The config_call_dict attribute"""
+
     compiled_sql: Optional[str]
+    """The compiled_sql attribute"""
+
     extra_ctes_injected: Optional[bool]
+    """The extra_ctes_injected attribute"""
+
     extra_ctes: Optional[List[Dict]]
+    """The extra_ctes attribute"""
+
     relation_name: Optional[str]
+    """The relation_name attribute"""
 
     _test_path = (
         "manifest.nodes['operation.poffertjes_shop.poffertjes_" "shop-on-run-start-0']"
@@ -527,6 +614,8 @@ class ManifestModel(Model):
 
     @property
     def resources(self) -> Dict:
+        """A dictionary containing all resources defined in the dbt project"""
+
         return {
             **self.nodes,
             **self.sources,
@@ -622,6 +711,8 @@ class Metadata(Model):
         user_id: The user_id attribute
         send_anonymous_usage_stats: The send_anonymous_usage_stats attribute
         adapter_type: The adapter_type attribute
+        dbt_schema_version_raw: The raw string containing information about the dbt schema version
+        dbt_version_raw: The raw string containing information about the dbt-core version
 
     """
 
