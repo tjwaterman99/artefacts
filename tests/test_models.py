@@ -100,7 +100,7 @@ def test_manifest_child_map(manifest):
 
 def test_models_have_attribute_docs(base_model, compiled_reference_docs):
     errors = []
-    allowed_exceptions = ['get_artifact', 'validate_metadata']
+    allowed_exceptions = ["get_artifact", "validate_metadata"]
     attributes = [
         a for a in dir(base_model) if a not in dir(BaseModel) and not a.startswith("_")
     ] + list(base_model.__annotations__.keys())
@@ -110,7 +110,10 @@ def test_models_have_attribute_docs(base_model, compiled_reference_docs):
     ]
     print(attribute_docs_path)
     for docpath, attribute in zip(attribute_docs_path, attributes):
-        if docpath not in compiled_reference_docs and attribute not in allowed_exceptions:
+        if (
+            docpath not in compiled_reference_docs
+            and attribute not in allowed_exceptions
+        ):
             errors.append(attribute)
 
     if any(errors):
