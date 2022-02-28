@@ -108,7 +108,7 @@ def test_models_have_attribute_docs(base_model, compiled_reference_docs):
     attribute_docs_path = [
         base_model._docs_path().split("#")[-1] + "." + a for a in attributes
     ]
-    print(attribute_docs_path)
+
     for docpath, attribute in zip(attribute_docs_path, attributes):
         if (
             docpath not in compiled_reference_docs
