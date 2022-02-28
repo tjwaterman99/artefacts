@@ -450,6 +450,21 @@
 
     <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">selectors</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="tags"><a class="viewcode-back" href="../../api.html#artefacts.api.tags">[docs]</a><span class="k">def</span> <span class="nf">tags</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ManifestMetricNode</span><span class="p">]:</span>
+    <span class="sd">"""A dictionary mapping tags to their various resources</span>
+
+<span class="sd">    &gt;&gt;&gt; tags = artefacts.api.tags()</span>
+<span class="sd">    &gt;&gt;&gt; type(tags)</span>
+<span class="sd">    &lt;class 'dict'&gt;</span>
+<span class="sd">    &gt;&gt;&gt; type(tags['internal'])</span>
+<span class="sd">    &lt;class 'list'&gt;</span>
+
+<span class="sd">    """</span>
+
+    <span class="n">manifest</span> <span class="o">=</span> <span class="n">Manifest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">manifest</span><span class="o">.</span><span class="n">tags</span></div>
 </pre></div>
         </article>
       </div>
