@@ -19,3 +19,4 @@ poetry run dbt deps --project-dir $ARTEFACTS_DBT_PROJECT_DIR
 poetry run dbt build --project-dir $ARTEFACTS_DBT_PROJECT_DIR
 poetry run dbt docs generate --project-dir $ARTEFACTS_DBT_PROJECT_DIR
 poetry run dbt source freshness --project-dir $ARTEFACTS_DBT_PROJECT_DIR
+poetry run sphinx-build docs/ docs/_build
